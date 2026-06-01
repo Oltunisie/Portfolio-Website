@@ -8,9 +8,7 @@ import Experience from "./Experience";
 import Projects from "./Projects";
 import Skills from "./Skills";
 import Contact from "./Contact";
-
-// ── Swap this import when the new design is ready ──────────────────
-// import NewDesign from "./NewDesign";
+import HeroV2 from "./HeroV2";
 
 const COOKIE_NAME = "ol_preview";
 const COOKIE_VALUE = "enabled";
@@ -34,12 +32,9 @@ export default function PreviewGate() {
   if (!ready) return null;
 
   if (isPreview) {
-    // ── New design renders here once built ─────────────────────────
     return (
       <main>
-        <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#080d1a]">
-          <p className="text-slate-400 text-sm font-mono">v2 — coming soon</p>
-        </div>
+        <HeroV2 />
       </main>
     );
   }
