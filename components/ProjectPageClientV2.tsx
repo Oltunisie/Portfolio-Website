@@ -160,16 +160,27 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 }
 
 /* ─── 3D Model viewer with controls ─────────────────────────── */
-function ModelSection({ src, title }: { src: string; title: string }) {
-  const [autoRotate, setAutoRotate] = useState(true);
-  const [exposure, setExposure] = useState(0.9);
+function ModelSection({ src, explodedSrc, title }: { src: string; explodedSrc?: string; title: string }) {
+  const [autoRotate, setAutoRotate]   = useState(true);
+  const [exposure, setExposure]       = useState(0.9);
+  const [exploded, setExploded]       = useState(false);
+  const [loading, setLoading]         = useState(false);
   const mvRef = useRef<HTMLElement | null>(null);
 
+  const activeSrc = explodedSrc && exploded ? explodedSrc : src;
+
+  const toggleExplode = () => {
+    if (!explodedSrc) return;
+    setLoading(true);
+    setExploded((v) => !v);
+    setTimeout(() => setLoading(false), 1200);
+  };
+
   const views = [
-    { label: "FRONT",    orbit: "0deg 75deg 150%" },
-    { label: "TOP",      orbit: "0deg 0deg 150%"  },
-    { label: "SIDE",     orbit: "90deg 75deg 150%" },
-    { label: "ISO",      orbit: "45deg 60deg 130%" },
+    { label: "FRONT", orbit: "0deg 75deg 150%"   },
+    { label: "TOP",   orbit: "0deg 0deg 150%"    },
+    { label: "SIDE",  orbit: "90deg 75deg 150%"  },
+    { label: "ISO",   orbit: "45deg 60deg 130%"  },
   ];
 
   const setOrbit = (orbit: string) => {
@@ -190,21 +201,54 @@ function ModelSection({ src, title }: { src: string; title: string }) {
       </div>
 
       <div className="relative mx-6 md:mx-16 lg:mx-24 border border-[#181410] bg-[#030303] h-[560px]">
-        {/* Viewer */}
-        <div ref={(el) => { mvRef.current = el?.querySelector("model-viewer") ?? null; }} className="w-full h-full">
-          <ModelViewer src={src} alt={`${title} 3D model`} autoRotate={autoRotate} exposure={exposure} />
+        {/* Viewer — re-mounts when src changes for clean load */}
+        <div
+          key={activeSrc}
+          ref={(el) => { mvRef.current = el?.querySelector("model-viewer") ?? null; }}
+          className={`w-full h-full transition-opacity duration-500 ${loading ? "opacity-0" : "opacity-100"}`}
+        >
+          <ModelViewer src={activeSrc} alt={`${title} 3D model`} autoRotate={autoRotate} exposure={exposure} />
+        </div>
+
+        {/* Loading indicator */}
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e] animate-pulse"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>
+              {exploded ? "EXPLODING..." : "ASSEMBLING..."}
+            </span>
+          </div>
+        )}
+
+        {/* State badge */}
+        <div className="absolute top-4 right-4 flex items-center gap-1.5"
+          style={{ fontFamily: "var(--font-geist-mono)" }}>
+          <span className={`w-1 h-1 rounded-full ${exploded ? "bg-[#c4a97e] animate-pulse" : "bg-[#2a1f10]"}`} />
+          <span className="text-[8px] tracking-[0.2em] text-[#2a1f10]">
+            {exploded ? "EXPLODED VIEW" : "ASSEMBLED"}
+          </span>
         </div>
 
         {/* Control overlay */}
         <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 pointer-events-none">
-          {/* Left: viewpoint buttons */}
-          <div className="flex gap-1 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
+          {/* Left: viewpoint + explode */}
+          <div className="flex flex-wrap gap-1 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
             {views.map((v) => (
               <button key={v.label} onClick={() => setOrbit(v.orbit)}
                 className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
                 {v.label}
               </button>
             ))}
+            {explodedSrc && (
+              <button onClick={toggleExplode}
+                className={`px-3 py-1.5 backdrop-blur border text-[9px] tracking-[0.15em] transition-all duration-150 ${
+                  exploded
+                    ? "bg-[#c4a97e]/15 border-[#c4a97e] text-[#c4a97e]"
+                    : "bg-[#050505]/80 border-[#2e2010] hover:border-[#c4a97e] text-[#6b5a3e] hover:text-[#c4a97e]"
+                }`}>
+                {exploded ? "ASSEMBLE" : "EXPLODE"}
+              </button>
+            )}
           </div>
 
           {/* Right: auto-rotate + exposure */}
@@ -272,6 +316,8 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
 
   const modelSrc = project.model3d
     ? `${BASE}/projects/${project.slug}/${project.model3d}` : null;
+  const modelExplodedSrc = project.model3dExploded
+    ? `${BASE}/projects/${project.slug}/${project.model3dExploded}` : undefined;
 
   const videos = (project.media ?? []).filter((m) => m.type === "video" || m.type === "youtube");
 
@@ -413,7 +459,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       </section>
 
       {/* ── 3D Model ──────────────────────────────────────────── */}
-      {modelSrc && <ModelSection src={modelSrc} title={project.title} />}
+      {modelSrc && <ModelSection src={modelSrc} explodedSrc={modelExplodedSrc} title={project.title} />}
 
       {/* ── Videos ────────────────────────────────────────────── */}
       {videos.length > 0 && (

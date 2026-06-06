@@ -30,6 +30,7 @@ export type Project = {
   process?: ProcessStep[];
   outcome?: string;
   model3d?: string;        // .glb filename in public/projects/<slug>/
+  model3dExploded?: string; // exploded view .glb (same folder)
   // Drop files in public/projects/<slug>/ then list them here
   media?: MediaItem[];
 };
@@ -105,6 +106,7 @@ On the test side, I built the cold-flow test setup, led the hydrostatic proof te
 The system is on track to support a full static fire campaign ahead of the launch targeting the 20,000 ft altitude record — which would be the highest apogee in Rocket Project UCLA's history.`,
 
     model3d: "Prometheus Feed System 2026.glb",
+    model3dExploded: "Prometheus Feed System 2026 Exploded.glb",
 
     media: [
       { type: "image", file: "fire.jpg" },
