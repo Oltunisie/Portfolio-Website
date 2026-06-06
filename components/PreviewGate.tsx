@@ -45,16 +45,35 @@ export default function PreviewGate() {
     );
   }
 
-  // Current production site
+  // Coming soon teaser
   return (
-    <main>
-      <Navbar />
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Skills />
-      <Contact />
+    <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050505]">
+      {/* Blurred background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center scale-110"
+        style={{
+          backgroundImage: "url('/hero-bg.jpg')",
+          filter: "blur(18px) brightness(0.35)",
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 text-center px-6" style={{ fontFamily: "var(--font-geist-mono)" }}>
+        <p className="text-[#c4a97e] text-[10px] tracking-[0.35em] mb-6">◆ OL-001</p>
+        <h1
+          className="text-[clamp(3rem,10vw,7rem)] font-extralight text-[#f0e6d3] tracking-tight leading-none mb-4"
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+        >
+          Omar Lemkecher
+        </h1>
+        <div className="w-24 h-px bg-[#c4a97e] mx-auto my-6 opacity-60" />
+        <p className="text-[11px] tracking-[0.4em] text-[#c4a97e] uppercase mb-2">
+          New site — coming soon
+        </p>
+        <p className="text-[10px] tracking-[0.2em] text-[#3a2e1e]">
+          Aerospace Engineering · UCLA
+        </p>
+      </div>
     </main>
   );
 }
