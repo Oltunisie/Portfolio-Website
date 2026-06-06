@@ -81,7 +81,7 @@ export default function NavbarV2() {
               <button
                 key={l.href}
                 onClick={() => scrollTo(l.href)}
-                className="text-[10px] tracking-[0.2em] text-[#4a3824] hover:text-[#c4a97e] transition-colors duration-200"
+                className="text-xs tracking-[0.2em] text-[#b8a88a] hover:text-[#c4a97e] transition-colors duration-200"
               >
                 {l.label}
               </button>
@@ -94,7 +94,7 @@ export default function NavbarV2() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2 border border-[#2e2010] hover:border-[#c4a97e] text-[#4a3824] hover:text-[#c4a97e] text-[10px] tracking-[0.15em] rounded-sm transition-colors duration-200"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2 border border-[#4a3824] hover:border-[#c4a97e] text-[#b8a88a] hover:text-[#c4a97e] text-xs tracking-[0.15em] rounded-sm transition-colors duration-200"
               style={{ fontFamily: "var(--font-geist-mono)" }}
             >
               RESUME ↗
