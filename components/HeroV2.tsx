@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 /* ─── animation helpers ──────────────────────────────────────── */
 const row = (i: number) => ({
@@ -19,13 +20,13 @@ const line = (delay: number) => ({
   transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number,number,number,number], delay },
 });
 
-/* ─── data ───────────────────────────────────────────────────── */
+/* ─── data rows ──────────────────────────────────────────────── */
 const fields = [
-  { label: "ENGINEER",     value: "OMAR LEMKECHER",              highlight: true },
-  { label: "INSTITUTION",  value: "UCLA SAMUELI · LOS ANGELES"              },
-  { label: "DISCIPLINE",   value: "AEROSPACE ENGINEERING · PROPULSION"      },
-  { label: "GPA",          value: "4.0 / 4.0"                               },
-  { label: "AVAILABILITY", value: "SUMMER 2026 INTERNSHIP"                  },
+  { label: "ENGINEER",     value: "OMAR LEMKECHER",                       highlight: true },
+  { label: "INSTITUTION",  value: "UCLA SAMUELI · LOS ANGELES"                           },
+  { label: "DISCIPLINE",   value: "AEROSPACE ENGINEERING · PROPULSION"                   },
+  { label: "GPA",          value: "4.0 / 4.0"                                            },
+  { label: "AVAILABILITY", value: "SUMMER 2026 INTERNSHIP"                               },
 ];
 
 export default function HeroV2() {
@@ -39,13 +40,13 @@ export default function HeroV2() {
         style={{ backgroundImage: "url('/hero-bg.jpg')" }}
       />
 
-      {/* ── Gradient overlay: dark on left, revealing image right ─ */}
+      {/* ── Gradient overlay — wider dark zone on left ─────────── */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(100deg, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.85) 45%, rgba(5,5,5,0.45) 68%, rgba(5,5,5,0.10) 100%)",
+            "linear-gradient(100deg, rgba(5,5,5,0.98) 0%, rgba(5,5,5,0.96) 40%, rgba(5,5,5,0.80) 58%, rgba(5,5,5,0.40) 75%, rgba(5,5,5,0.08) 100%)",
         }}
       />
 
@@ -70,7 +71,7 @@ export default function HeroV2() {
       />
 
       {/* ── Main content ───────────────────────────────────────── */}
-      <div className="relative z-10 px-6 md:px-16 lg:px-24 py-20 w-full max-w-4xl">
+      <div className="relative z-10 px-6 md:px-16 lg:px-24 py-20 w-full max-w-5xl">
 
         {/* Mission header */}
         <motion.div
@@ -97,7 +98,7 @@ export default function HeroV2() {
 
         {/* Data rows */}
         <div
-          className="space-y-4"
+          className="space-y-5"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
           {fields.map((f, i) => (
@@ -105,7 +106,7 @@ export default function HeroV2() {
               key={f.label}
               {...row(i)}
               className="grid items-baseline"
-              style={{ gridTemplateColumns: "12rem 1fr" }}
+              style={{ gridTemplateColumns: "13rem 1fr" }}
             >
               {/* Label */}
               <span className="text-[11px] tracking-[0.2em] text-[#4a3824]">
@@ -115,7 +116,7 @@ export default function HeroV2() {
               {/* Value */}
               {f.highlight ? (
                 <span
-                  className="text-[clamp(1.6rem,4vw,2.6rem)] font-light leading-tight tracking-[-0.01em] text-[#f0e6d3]"
+                  className="text-[clamp(2.4rem,5.5vw,4.2rem)] font-light leading-[1] tracking-[-0.02em] text-[#f0e6d3]"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {f.value}
@@ -179,10 +180,37 @@ export default function HeroV2() {
             </span>
           </button>
         </motion.div>
-
       </div>
 
-      {/* ── Corner bracket decoration (bottom-right) ───────────── */}
+      {/* ── UCLA logo — bottom left ─────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 1.5 }}
+        className="group absolute bottom-8 left-6 md:left-16 lg:left-24 z-10"
+      >
+        {/* Hover tooltip */}
+        <div
+          className="absolute bottom-full left-0 mb-3 px-3 py-2 bg-[#0f0f0f] border border-[#2e2010] opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap"
+          style={{ fontFamily: "var(--font-geist-mono)" }}
+        >
+          <p className="text-[10px] tracking-[0.2em] text-[#c4a97e]">UCLA SAMUELI</p>
+          <p className="text-[10px] tracking-[0.15em] text-[#4a3824] mt-0.5">SCHOOL OF ENGINEERING</p>
+        </div>
+
+        {/* Logo image — B&W via CSS filter */}
+        <Image
+          src="/ucla-eng.png"
+          alt="UCLA Samueli School of Engineering"
+          width={120}
+          height={48}
+          className="object-contain opacity-30 group-hover:opacity-60 transition-opacity duration-300"
+          style={{ filter: "grayscale(1) brightness(2)" }}
+          unoptimized
+        />
+      </motion.div>
+
+      {/* ── Corner marker — bottom right ───────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -191,7 +219,7 @@ export default function HeroV2() {
         className="absolute bottom-8 right-6 md:right-16 lg:right-24 z-10"
         style={{ fontFamily: "var(--font-geist-mono)" }}
       >
-        <div className="text-[#1e1508] text-[10px] tracking-[0.2em] text-right">
+        <div className="text-[#2a1f10] text-[10px] tracking-[0.2em] text-right">
           <div>// 01</div>
           <div className="mt-1">HERO</div>
         </div>
