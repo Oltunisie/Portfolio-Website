@@ -24,24 +24,42 @@ interface ViewerState {
   target:         number;   // 0 = assembled, 1 = exploded
 }
 
-/* Walk the scene to find the best level to explode:
-   the first level that has ≥2 children containing meshes */
-function findExplodableParts(scene: THREE_Object3D): THREE_Object3D[] {
+/* Walk the scene hierarchy to find the best level to explode.
+   Strategy: find the deepest level with ≥2 children that contain meshes.
+   Fallback: if assembly is flat, explode individual meshes directly. */
+function findExplodableParts(root: THREE_Object3D): THREE_Object3D[] {
   function hasMesh(obj: THREE_Object3D): boolean {
     if (obj.isMesh) return true;
-    return obj.children.some((c: THREE_Object3D) => hasMesh(c));
+    return (obj.children ?? []).some((c: THREE_Object3D) => hasMesh(c));
   }
 
-  let current: THREE_Object3D[] = [scene];
-
-  for (let depth = 0; depth < 8; depth++) {
-    if (current.length > 1) return current;
-    const children = current[0].children.filter(hasMesh);
-    if (children.length === 0) return current;
-    if (children.length > 1) return children;
-    current = children;
+  function childrenWithMeshes(obj: THREE_Object3D): THREE_Object3D[] {
+    return (obj.children ?? []).filter(hasMesh);
   }
-  return current;
+
+  // Walk down, collecting best candidate (most children at any level)
+  let best: THREE_Object3D[] = [];
+  let queue: THREE_Object3D[] = [root];
+
+  for (let depth = 0; depth < 12; depth++) {
+    const next: THREE_Object3D[] = [];
+    for (const node of queue) {
+      const kids = childrenWithMeshes(node);
+      if (kids.length > best.length) best = kids;
+      next.push(...kids);
+    }
+    if (next.length === 0) break;
+    queue = next;
+  }
+
+  // If best is just one part (flat GLB), fall back to individual meshes
+  if (best.length <= 1) {
+    const meshes: THREE_Object3D[] = [];
+    root.traverse((c: THREE_Object3D) => { if (c.isMesh) meshes.push(c); });
+    if (meshes.length > 1) return meshes;
+  }
+
+  return best.length > 0 ? best : [root];
 }
 
 export default function ExplodedViewer({
@@ -120,9 +138,9 @@ export default function ExplodedViewer({
           model.position.sub(center);
           scene.add(model);
 
-          /* Fit camera */
+          /* Fit camera — zoomed in */
           const size = box.getSize(new THREE.Vector3()).length();
-          camera.position.set(0, size * 0.25, size * 1.8);
+          camera.position.set(0, size * 0.15, size * 0.95);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (controls as any).maxDistance = size * 6;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -150,7 +168,7 @@ export default function ExplodedViewer({
             }
             dir.normalize();
 
-            const explodeDistance = size * 0.55;
+            const explodeDistance = size * 0.85;
 
             return {
               obj:    part,

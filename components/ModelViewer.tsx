@@ -38,6 +38,7 @@ export default function ModelViewer({
       src={src}
       alt={alt}
       camera-controls
+      camera-orbit="0deg 75deg 80%"
       {...(autoRotate ? { "auto-rotate": true } : {})}
       shadow-intensity={1}
       exposure={exposure}
