@@ -30,7 +30,6 @@ export default function NavbarV2() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -42,15 +41,13 @@ export default function NavbarV2() {
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{
-          background: scrolled
-            ? "rgba(5,5,5,0.92)"
-            : "transparent",
+          background: scrolled ? "rgba(5,5,5,0.92)" : "transparent",
           backdropFilter: scrolled ? "blur(12px)" : "none",
           borderBottom: scrolled ? "1px solid #1e1508" : "1px solid transparent",
         }}
       >
-        {/* Scroll-progress line — beige, grows left→right */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent overflow-hidden">
+        {/* Top horizontal progress bar */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] overflow-hidden">
           <div
             className="h-full bg-[#c4a97e] transition-none"
             style={{ width: `${progress}%` }}
@@ -59,7 +56,7 @@ export default function NavbarV2() {
 
         <div className="px-6 md:px-16 lg:px-24 h-14 flex items-center justify-between">
 
-          {/* ── Logo / wordmark ──────────────────────────────────── */}
+          {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex items-center gap-2 group"
@@ -72,7 +69,7 @@ export default function NavbarV2() {
             </span>
           </button>
 
-          {/* ── Desktop nav ──────────────────────────────────────── */}
+          {/* Desktop nav */}
           <nav
             className="hidden md:flex items-center gap-8"
             style={{ fontFamily: "var(--font-geist-mono)" }}
@@ -88,7 +85,7 @@ export default function NavbarV2() {
             ))}
           </nav>
 
-          {/* ── Desktop CTA + mobile burger ──────────────────────── */}
+          {/* CTA + hamburger */}
           <div className="flex items-center gap-4">
             <a
               href="/resume.pdf"
@@ -100,7 +97,6 @@ export default function NavbarV2() {
               RESUME ↗
             </a>
 
-            {/* Hamburger — mobile only */}
             <button
               className="md:hidden flex flex-col gap-[5px] p-1"
               onClick={() => setMenuOpen((v) => !v)}
@@ -126,7 +122,31 @@ export default function NavbarV2() {
         </div>
       </header>
 
-      {/* ── Mobile full-screen overlay ───────────────────────────── */}
+      {/* ── Vertical side scroll bar (right edge) ───────────────── */}
+      <div
+        className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-2"
+        style={{ fontFamily: "var(--font-geist-mono)" }}
+      >
+        {/* Track */}
+        <div className="relative w-px h-32 bg-[#1a1208]">
+          {/* Beige fill */}
+          <div
+            className="absolute top-0 left-0 w-full bg-[#c4a97e] transition-none"
+            style={{ height: `${progress}%` }}
+          />
+          {/* Dot at progress point */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#c4a97e] transition-none"
+            style={{ top: `calc(${progress}% - 3px)` }}
+          />
+        </div>
+        {/* Percentage */}
+        <span className="text-[8px] tracking-[0.15em] text-[#2a1f10] rotate-90 mt-2">
+          {Math.round(progress).toString().padStart(2, "0")}%
+        </span>
+      </div>
+
+      {/* ── Mobile overlay menu ──────────────────────────────────── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -136,7 +156,6 @@ export default function NavbarV2() {
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-40 bg-[#050505] flex flex-col justify-center px-8"
           >
-            {/* Thin beige accent at top */}
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#c4a97e]" />
 
             <nav className="space-y-8" style={{ fontFamily: "var(--font-geist-mono)" }}>
@@ -172,7 +191,6 @@ export default function NavbarV2() {
               </motion.div>
             </nav>
 
-            {/* Bottom tagline */}
             <p
               className="absolute bottom-10 left-8 text-[10px] tracking-[0.25em] text-[#2a1f10]"
               style={{ fontFamily: "var(--font-geist-mono)" }}
