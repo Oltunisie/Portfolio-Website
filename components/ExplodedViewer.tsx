@@ -113,7 +113,44 @@ export default function ExplodedViewer({
 
           const model = gltf.scene;
 
-          /* Center model */
+          /* ── Fix missing / white materials ── */
+          const PALETTE = [
+            { color: 0x8a9ab5, metalness: 0.85, roughness: 0.25 }, // aluminium blue-grey
+            { color: 0x6b7d8f, metalness: 0.90, roughness: 0.20 }, // dark steel
+            { color: 0xc4a97e, metalness: 0.60, roughness: 0.40 }, // brass / fitting
+            { color: 0x9baab8, metalness: 0.80, roughness: 0.30 }, // light aluminium
+            { color: 0x4a5568, metalness: 0.70, roughness: 0.35 }, // anodised dark
+            { color: 0xb0b8c4, metalness: 0.75, roughness: 0.28 }, // polished alu
+          ];
+          let paletteIdx = 0;
+          const matMap = new Map<string, unknown>();
+
+          model.traverse((child: THREE_Object3D) => {
+            if (!child.isMesh) return;
+            const mat = child.material as THREE_Object3D;
+            const isWhiteOrMissing = !mat
+              || (mat.color
+                && mat.color.r > 0.85
+                && mat.color.g > 0.85
+                && mat.color.b > 0.85
+                && !mat.map);
+            if (!isWhiteOrMissing) return;
+
+            // Group meshes by their parent name so related parts share a colour
+            const key = child.parent?.name ?? `part_${paletteIdx}`;
+            if (!matMap.has(key)) {
+              const p = PALETTE[paletteIdx % PALETTE.length];
+              paletteIdx++;
+              matMap.set(key, new THREE.MeshStandardMaterial({
+                color:     p.color,
+                metalness: p.metalness,
+                roughness: p.roughness,
+              }));
+            }
+            child.material = matMap.get(key);
+          });
+
+          /* ── Center model ── */
           const box    = new THREE.Box3().setFromObject(model);
           const center = new THREE.Vector3();
           box.getCenter(center);
