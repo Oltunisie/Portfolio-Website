@@ -30,7 +30,7 @@ const fields = [
 
 export default function HeroV2() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#080603]">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#050505]">
 
       {/* ── Background image ───────────────────────────────────── */}
       <div
@@ -45,7 +45,7 @@ export default function HeroV2() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(100deg, rgba(8,6,3,0.97) 0%, rgba(8,6,3,0.88) 45%, rgba(8,6,3,0.55) 70%, rgba(8,6,3,0.25) 100%)",
+            "linear-gradient(100deg, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.85) 45%, rgba(5,5,5,0.45) 68%, rgba(5,5,5,0.10) 100%)",
         }}
       />
 
