@@ -19,6 +19,7 @@ export type Project = {
   period?: string;
   status?: string;
   coverFit?: "cover" | "contain";
+  specs?: { label: string; value: string }[];
   // ── Project page sections ──────────────────────────────────────
   problem?: string;
   goals?: string[];
@@ -33,6 +34,14 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "hybrid-rocket-feed-system",
+    specs: [
+      { label: "THRUST TARGET",   value: "586 lbf"         },
+      { label: "MAX PRESSURE",    value: "750 psi MEOP"    },
+      { label: "OXIDIZER",        value: "N₂O"             },
+      { label: "FUEL",            value: "HTPB"            },
+      { label: "TARGET APOGEE",   value: "20,000 ft"       },
+      { label: "STATUS",          value: "Test & Integration" },
+    ],
     title: "Hybrid Rocket Feed System",
     description:
       "Lead engineer for a 586 lbf N₂O/HTPB hybrid rocket feed system targeting a club record 20,000 ft apogee. Designed full oxidizer plumbing at 750 psi MEOP, performed discharge coefficient modeling, FEA-validated endcaps and brackets, and led cold-flow and static fire campaigns.",
@@ -106,6 +115,14 @@ The system is on track to support a full static fire campaign ahead of the launc
 
   {
     slug: "cubesat-adcs-bruinspace",
+    specs: [
+      { label: "FORMAT",        value: "CubeSat"                     },
+      { label: "CONTROL",       value: "3-Axis Active"               },
+      { label: "ACTUATORS",     value: "Magnetorquers + Reaction Wheel" },
+      { label: "SENSORS",       value: "Magnetometer · Sun Sensor · Gyro" },
+      { label: "ORBIT",         value: "Low Earth Orbit"             },
+      { label: "STATUS",        value: "In Development"              },
+    ],
     title: "CubeSat ADCS — BruinSpace",
     description:
       "Leading design and development of the Attitude Determination and Control System for UCLA BruinSpace's satellite. Built the ADCS test setup to validate sensors, actuators, and control algorithms, and coordinating integration across electronics and structures subsystems.",
@@ -163,6 +180,14 @@ The system represents one of the most technically complex subsystems on the sate
   {
     slug: "zero-g-experiments-cnes",
     coverFit: "contain",
+    specs: [
+      { label: "CAMPAIGN",      value: "66th Parabolic Flight"   },
+      { label: "AGENCY",        value: "CNES"                    },
+      { label: "0-g WINDOWS",   value: "~20 sec / parabola"      },
+      { label: "LOCATION",      value: "Bordeaux, France"        },
+      { label: "EXPERIMENTS",   value: "3 (Thermo · Newton · Centrifugal)" },
+      { label: "OUTCOME",       value: "Full campaign success"   },
+    ],
     title: "Zero-G Experiments — CNES",
 
     description:
@@ -221,6 +246,14 @@ The win earned two of our students a flight aboard the CNES Zero-G aircraft, and
 
   {
     slug: "space-probe-project-x",
+    specs: [
+      { label: "COMPETITION",   value: "Project X — Tunisia"     },
+      { label: "AWARD",         value: "Young Searchers Prize"   },
+      { label: "WINS",          value: "2 consecutive (2023·2024)" },
+      { label: "2023 THEME",    value: "Space Probe Design"      },
+      { label: "2024 THEME",    value: "Zero-G Experiment"       },
+      { label: "2025",          value: "Awards Presenter"        },
+    ],
     title: "Space Probe — Project X",
     description:
       "Won the Young Searchers Prize at the 2023 Project X engineering competition with a space probe design concept. Repeated the win in 2024 with a Zero-G experiment design, and was selected to present awards at the 2025 closing ceremony.",

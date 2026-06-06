@@ -1,6 +1,6 @@
 import { projects } from "@/data/projects";
 import { notFound } from "next/navigation";
-import ProjectPageClient from "@/components/ProjectPageClient";
+import ProjectPageClientV2 from "@/components/ProjectPageClientV2";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -16,5 +16,5 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
-  return <ProjectPageClient project={project} />;
+  return <ProjectPageClientV2 project={project} />;
 }
