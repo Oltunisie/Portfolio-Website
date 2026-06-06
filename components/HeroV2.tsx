@@ -2,178 +2,201 @@
 
 import { motion } from "framer-motion";
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 28 },
-  animate: { opacity: 1, y: 0 },
+/* ─── animation helpers ──────────────────────────────────────── */
+const row = (i: number) => ({
+  initial: { opacity: 0, x: -12 },
+  animate: { opacity: 1, x: 0 },
   transition: {
-    duration: 0.85,
-    ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-    delay,
+    duration: 0.5,
+    ease: "easeOut" as const,
+    delay: 0.6 + i * 0.12,
   },
 });
 
-const fadeIn = (delay = 0) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.7, ease: "easeOut" as const, delay },
+const line = (delay: number) => ({
+  initial: { scaleX: 0 },
+  animate: { scaleX: 1 },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number,number,number,number], delay },
 });
+
+/* ─── data ───────────────────────────────────────────────────── */
+const fields = [
+  { label: "ENGINEER",     value: "OMAR LEMKECHER",              highlight: true },
+  { label: "INSTITUTION",  value: "UCLA SAMUELI · LOS ANGELES"              },
+  { label: "DISCIPLINE",   value: "AEROSPACE ENGINEERING · PROPULSION"      },
+  { label: "GPA",          value: "4.0 / 4.0"                               },
+  { label: "AVAILABILITY", value: "SUMMER 2026 INTERNSHIP"                  },
+];
 
 export default function HeroV2() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#080704]">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#080603]">
 
-      {/* ── Background image ─────────────────────────────────────── */}
-      {/* Drop any image at public/hero-bg.jpg and it will appear here */}
+      {/* ── Background image ───────────────────────────────────── */}
       <div
         aria-hidden
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/hero-bg.jpg')" }}
       />
 
-      {/* ── Dark gradient overlay ─────────────────────────────────── */}
-      {/* Keeps text readable whether the image is light or dark */}
+      {/* ── Gradient overlay: dark on left, revealing image right ─ */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(105deg, rgba(8,7,4,0.88) 0%, rgba(8,7,4,0.72) 50%, rgba(8,7,4,0.40) 100%)",
+            "linear-gradient(100deg, rgba(8,6,3,0.97) 0%, rgba(8,6,3,0.88) 45%, rgba(8,6,3,0.55) 70%, rgba(8,6,3,0.25) 100%)",
         }}
       />
 
-      {/* ── Subtle warm grain ────────────────────────────────────── */}
+      {/* ── Scanline sweep on load ─────────────────────────────── */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c4a97e] to-transparent z-20"
+        initial={{ top: "-2px", opacity: 0.6 }}
+        animate={{ top: "102%", opacity: 0 }}
+        transition={{ duration: 1.4, ease: "linear", delay: 0.1 }}
+      />
+
+      {/* ── Subtle grid ────────────────────────────────────────── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E\")",
+            "linear-gradient(#c4a97e 1px, transparent 1px), linear-gradient(90deg, #c4a97e 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
         }}
       />
 
-      {/* ── Content ──────────────────────────────────────────────── */}
-      <div className="relative z-10 px-6 md:px-16 lg:px-24 max-w-6xl">
+      {/* ── Main content ───────────────────────────────────────── */}
+      <div className="relative z-10 px-6 md:px-16 lg:px-24 py-20 w-full max-w-4xl">
 
-        {/* Eyebrow */}
-        <motion.p
-          {...fadeIn(0.1)}
-          className="text-[#c4a97e] text-xs tracking-[0.3em] uppercase mb-7 flex items-center gap-2.5"
+        {/* Mission header */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="flex items-center justify-between mb-4"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
-          <span>◆</span>
-          Aerospace Engineering · UCLA
-        </motion.p>
-
-        {/* Name — Space Grotesk, light weight, enormous */}
-        <motion.h1
-          {...fadeUp(0.2)}
-          className="text-[clamp(3.5rem,11vw,9rem)] font-light leading-[0.92] tracking-[-0.02em] text-[#f0e6d3] mb-8"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          Omar
-          <br />
-          <span className="text-[#c4a97e]">Lemkecher</span>
-        </motion.h1>
-
-        {/* Tagline */}
-        <motion.p
-          {...fadeUp(0.35)}
-          className="text-base md:text-lg text-[#7a6e60] font-light max-w-sm mb-10 leading-relaxed"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          Building the future of flight —
-          <br />
-          one equation at a time.
-        </motion.p>
-
-        {/* Status pill */}
-        <motion.div {...fadeIn(0.45)} className="mb-10">
-          <span
-            className="inline-flex items-center gap-2 border border-[#2e2619] rounded-full px-4 py-1.5 text-xs text-[#7a6e60] bg-[#0f0d09]"
-            style={{ fontFamily: "var(--font-geist-mono)" }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c4a97e] animate-pulse" />
-            Available for internships · Summer 2026
+          <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]">
+            MISSION: OL-001
+          </span>
+          <span className="flex items-center gap-2 text-[10px] tracking-[0.2em] text-[#6b5a3e]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            STATUS: ACTIVE
           </span>
         </motion.div>
 
+        {/* Top rule */}
+        <motion.div
+          {...line(0.35)}
+          className="origin-left h-px bg-[#2e2010] mb-8"
+        />
+
+        {/* Data rows */}
+        <div
+          className="space-y-4"
+          style={{ fontFamily: "var(--font-geist-mono)" }}
+        >
+          {fields.map((f, i) => (
+            <motion.div
+              key={f.label}
+              {...row(i)}
+              className="grid items-baseline"
+              style={{ gridTemplateColumns: "12rem 1fr" }}
+            >
+              {/* Label */}
+              <span className="text-[11px] tracking-[0.2em] text-[#4a3824]">
+                {f.label}
+              </span>
+
+              {/* Value */}
+              {f.highlight ? (
+                <span
+                  className="text-[clamp(1.6rem,4vw,2.6rem)] font-light leading-tight tracking-[-0.01em] text-[#f0e6d3]"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
+                  {f.value}
+                </span>
+              ) : (
+                <span className="text-sm tracking-[0.08em] text-[#8a7055]">
+                  {f.value}
+                </span>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Bottom rule */}
+        <motion.div
+          {...line(0.6 + fields.length * 0.12 + 0.1)}
+          className="origin-left h-px bg-[#2e2010] mt-8 mb-8"
+        />
+
         {/* CTAs */}
         <motion.div
-          {...fadeUp(0.55)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 + fields.length * 0.12 + 0.3 }}
           className="flex flex-wrap gap-3"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
+          style={{ fontFamily: "var(--font-geist-mono)" }}
         >
-          {/* Primary */}
           <button
             onClick={() =>
-              document
-                .getElementById("projects")
-                ?.scrollIntoView({ behavior: "smooth" })
+              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group inline-flex items-center gap-2 px-7 py-3 bg-[#c4a97e] hover:bg-[#d4b98e] text-[#080704] text-sm font-medium rounded-full transition-colors duration-200"
+            className="group inline-flex items-center gap-2.5 px-6 py-2.5 bg-[#c4a97e] hover:bg-[#d4b98e] text-[#080603] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
           >
-            View Projects
-            <span className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-base leading-none">
+            INITIATE
+            <span className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
               ↗
             </span>
           </button>
 
-          {/* Resume */}
           <a
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-7 py-3 border border-[#2e2619] hover:border-[#c4a97e] text-[#7a6e60] hover:text-[#c4a97e] text-sm font-medium rounded-full transition-colors duration-200"
+            className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#2e2010] hover:border-[#c4a97e] text-[#4a3824] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
           >
-            Resume
-            <span className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-base leading-none">
+            RESUME
+            <span className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
               ↗
             </span>
           </a>
 
-          {/* Contact */}
           <button
             onClick={() =>
-              document
-                .getElementById("contact")
-                ?.scrollIntoView({ behavior: "smooth" })
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group inline-flex items-center gap-2 px-7 py-3 border border-[#2e2619] hover:border-[#c4a97e] text-[#7a6e60] hover:text-[#c4a97e] text-sm font-medium rounded-full transition-colors duration-200"
+            className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#2e2010] hover:border-[#c4a97e] text-[#4a3824] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
           >
-            Get in Touch
-            <span className="transition-transform duration-200 group-hover:translate-x-1 text-base leading-none">
+            CONTACT
+            <span className="transition-transform duration-150 group-hover:translate-x-1">
               →
             </span>
           </button>
         </motion.div>
+
       </div>
 
-      {/* ── Bottom left scroll indicator ─────────────────────────── */}
+      {/* ── Corner bracket decoration (bottom-right) ───────────── */}
       <motion.div
-        {...fadeIn(1.2)}
-        className="absolute bottom-10 left-6 md:left-16 lg:left-24 flex items-center gap-3 z-10"
-      >
-        <motion.div
-          animate={{ y: [0, 7, 0] }}
-          transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" as const }}
-          className="w-px h-10 bg-gradient-to-b from-[#2e2619] to-transparent"
-        />
-        <span
-          className="text-[10px] tracking-[0.25em] uppercase text-[#3a3026]"
-          style={{ fontFamily: "var(--font-geist-mono)" }}
-        >
-          Scroll
-        </span>
-      </motion.div>
-
-      {/* ── Section marker ───────────────────────────────────────── */}
-      <motion.p
-        {...fadeIn(1.2)}
-        className="absolute bottom-10 right-6 md:right-16 lg:right-24 text-[10px] tracking-[0.25em] text-[#2e2619] z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 1.4 }}
+        aria-hidden
+        className="absolute bottom-8 right-6 md:right-16 lg:right-24 z-10"
         style={{ fontFamily: "var(--font-geist-mono)" }}
       >
-        // 01
-      </motion.p>
+        <div className="text-[#1e1508] text-[10px] tracking-[0.2em] text-right">
+          <div>// 01</div>
+          <div className="mt-1">HERO</div>
+        </div>
+      </motion.div>
+
     </section>
   );
 }
