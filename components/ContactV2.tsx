@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 const EMAIL    = "olemkecher@ucla.edu";
 const GITHUB   = "https://github.com/Oltunisie";
@@ -93,10 +94,11 @@ function ContactCard({
 
 /* ─── Main ───────────────────────────────────────────────────── */
 export default function ContactV2() {
-  const [copied, setCopied] = useState(false);
-  const [name,   setName]   = useState("");
-  const [msg,    setMsg]    = useState("");
-  const [sent,   setSent]   = useState(false);
+  const [copied,  setCopied]  = useState(false);
+  const [name,    setName]    = useState("");
+  const [email,   setEmail]   = useState("");
+  const [msg,     setMsg]     = useState("");
+  const [status,  setStatus]  = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const copyEmail = () => {
     navigator.clipboard.writeText(EMAIL);
@@ -104,17 +106,26 @@ export default function ContactV2() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const transmit = () => {
-    if (!msg.trim()) return;
-    const subject = name.trim()
-      ? `Message from ${name.trim()} — Portfolio`
-      : "Portfolio inquiry";
-    window.open(
-      `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`
-    );
-    setSent(true);
-    setTimeout(() => { setSent(false); setName(""); setMsg(""); }, 3000);
+  const transmit = async () => {
+    if (!email.trim() || !msg.trim()) return;
+    setStatus("sending");
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  ?? "",
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "",
+        { from_name: name.trim() || "Anonymous", from_email: email.trim(), message: msg.trim() },
+        { publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "" }
+      );
+      setStatus("sent");
+      setName(""); setEmail(""); setMsg("");
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
   };
+
+  const canSend = email.trim() && msg.trim() && status === "idle";
 
   return (
     <section
@@ -211,30 +222,48 @@ export default function ContactV2() {
           <span className="text-[8px] tracking-[0.2em] text-[#4a3824]">SECURE CHANNEL</span>
         </div>
 
-        <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#241e14]">
-          <div className="px-6 py-5">
-            <label className="block text-[9px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
-              YOUR NAME
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Jane Smith"
-              className="w-full bg-transparent text-sm text-[#c8bfb0] placeholder-[#4a3824] outline-none border-b border-[#241e14] focus:border-[#c4a97e] transition-colors duration-200 pb-1"
-              style={{ fontFamily: SANS }}
-            />
+        <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#241e14]">
+          {/* Left col: name + email */}
+          <div className="divide-y divide-[#241e14]">
+            <div className="px-6 py-5">
+              <label className="block text-[9px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
+                YOUR NAME
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. Jane Smith"
+                className="w-full bg-transparent text-sm text-[#c8bfb0] placeholder-[#4a3824] outline-none border-b border-[#241e14] focus:border-[#c4a97e] transition-colors duration-200 pb-1"
+                style={{ fontFamily: SANS }}
+              />
+            </div>
+            <div className="px-6 py-5">
+              <label className="block text-[9px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
+                YOUR EMAIL <span className="text-[#c4a97e]">*</span>
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="w-full bg-transparent text-sm text-[#c8bfb0] placeholder-[#4a3824] outline-none border-b border-[#241e14] focus:border-[#c4a97e] transition-colors duration-200 pb-1"
+                style={{ fontFamily: SANS }}
+              />
+            </div>
           </div>
-          <div className="md:col-span-2 px-6 py-5">
+
+          {/* Right col: message */}
+          <div className="px-6 py-5 flex flex-col">
             <label className="block text-[9px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
-              MESSAGE
+              MESSAGE <span className="text-[#c4a97e]">*</span>
             </label>
             <textarea
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
               placeholder="What are you working on?"
-              rows={3}
-              className="w-full bg-transparent text-sm text-[#c8bfb0] placeholder-[#4a3824] outline-none resize-none border-b border-[#241e14] focus:border-[#c4a97e] transition-colors duration-200 pb-1"
+              rows={4}
+              className="flex-1 w-full bg-transparent text-sm text-[#c8bfb0] placeholder-[#4a3824] outline-none resize-none border-b border-[#241e14] focus:border-[#c4a97e] transition-colors duration-200 pb-1"
               style={{ fontFamily: SANS }}
             />
           </div>
@@ -242,23 +271,26 @@ export default function ContactV2() {
 
         <div className="flex items-center justify-between px-6 py-4 border-t border-[#241e14]">
           <span className="text-[9px] tracking-[0.15em] text-[#5a4a30]" style={{ fontFamily: MONO }}>
-            OPENS YOUR EMAIL CLIENT — NO DATA STORED
+            {status === "error"
+              ? "⚠ TRANSMISSION FAILED — TRY AGAIN"
+              : "SENT DIRECTLY — NO OUTLOOK, NO REDIRECTS"}
           </span>
           <button
             onClick={transmit}
-            disabled={!msg.trim()}
+            disabled={!canSend}
             className={`group inline-flex items-center gap-2 px-6 py-2.5 text-[10px] tracking-[0.2em] transition-all duration-200 ${
-              sent
-                ? "bg-emerald-400/20 border border-emerald-400/40 text-emerald-400"
-                : msg.trim()
-                  ? "bg-[#c4a97e] hover:bg-[#d4b98e] text-[#050505]"
-                  : "border border-[#241e14] text-[#4a3824] cursor-not-allowed"
+              status === "sent"  ? "bg-emerald-400/20 border border-emerald-400/40 text-emerald-400" :
+              status === "error" ? "bg-red-400/10 border border-red-400/30 text-red-400" :
+              status === "sending" ? "border border-[#c4a97e]/40 text-[#c4a97e] opacity-70 cursor-wait" :
+              canSend ? "bg-[#c4a97e] hover:bg-[#d4b98e] text-[#050505]" :
+              "border border-[#241e14] text-[#4a3824] cursor-not-allowed"
             }`}
             style={{ fontFamily: MONO }}
           >
-            {sent ? <>TRANSMITTED ✓</> : (
-              <>TRANSMIT <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150">↗</span></>
-            )}
+            {status === "sent"    ? <>TRANSMITTED ✓</> :
+             status === "sending" ? <>TRANSMITTING…</> :
+             status === "error"   ? <>FAILED — RETRY</> :
+             <>TRANSMIT <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150 inline-block">↗</span></>}
           </button>
         </div>
       </motion.div>
