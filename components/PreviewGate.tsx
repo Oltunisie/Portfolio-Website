@@ -11,6 +11,7 @@ import Contact from "./Contact";
 import HeroV2 from "./HeroV2";
 import NavbarV2 from "./NavbarV2";
 import ProjectsV2 from "./ProjectsV2";
+import ContactV2 from "./ContactV2";
 
 const COOKIE_NAME = "ol_preview";
 const COOKIE_VALUE = "enabled";
@@ -40,6 +41,7 @@ export default function PreviewGate() {
         <main>
           <HeroV2 />
           <ProjectsV2 />
+          <ContactV2 />
         </main>
       </>
     );
