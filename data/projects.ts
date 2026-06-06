@@ -18,6 +18,7 @@ export type Project = {
   link?: string;
   period?: string;
   status?: string;
+  coverFit?: "cover" | "contain";
   // ── Project page sections ──────────────────────────────────────
   problem?: string;
   goals?: string[];
@@ -161,7 +162,9 @@ The system represents one of the most technically complex subsystems on the sate
 
   {
     slug: "zero-g-experiments-cnes",
+    coverFit: "contain",
     title: "Zero-G Experiments — CNES",
+
     description:
       "Selected for the 66th Parabolic Flight Campaign of the French CNES. Designed and conducted microgravity experiments covering thermodynamics, centrifugal forces, and Newton's Laws aboard a Zero-G aircraft in Bordeaux.",
     tags: ["Microgravity", "Thermodynamics", "Experimental", "CNES"],
@@ -211,7 +214,9 @@ I designed the data acquisition system used to log sensor data during the parabo
 
 The win earned two of our students a flight aboard the CNES Zero-G aircraft, and positioned the club for two consecutive Young Searchers Prize victories in the years that followed. It remains one of the most formative engineering and leadership experiences of my career so far.`,
 
-    media: [],
+    media: [
+      { type: "image", file: "zero-g.png" },
+    ],
   },
 
   {

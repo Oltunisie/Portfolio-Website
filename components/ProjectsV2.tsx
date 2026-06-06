@@ -22,8 +22,9 @@ const fallbacks: Record<string, string> = {
 };
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const cover  = getCover(project);
-  const isLive = project.status === "In Progress";
+  const cover   = getCover(project);
+  const fit     = project.coverFit ?? "cover";
+  const isLive  = project.status === "In Progress";
 
   return (
     <motion.div
@@ -36,12 +37,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
         {/* ── Background image / gradient ──────────────────────── */}
         <div
-          className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className={`absolute inset-0 transition-transform duration-700 ease-out ${fit === "cover" ? "group-hover:scale-[1.04]" : ""}`}
           style={{
-            background: cover ? undefined : fallbacks[project.slug] ?? "#050505",
+            background: fallbacks[project.slug] ?? "#050505",
             backgroundImage: cover ? `url('${cover}')` : undefined,
-            backgroundSize:  "cover",
+            backgroundSize:     fit === "contain" ? "65%" : "cover",
             backgroundPosition: "center",
+            backgroundRepeat:   "no-repeat",
           }}
         />
 
