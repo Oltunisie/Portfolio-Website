@@ -19,7 +19,16 @@ declare global {
   }
 }
 
-export default function ModelViewer({ src, alt }: { src: string; alt: string }) {
+export default function ModelViewer({
+  src, alt,
+  autoRotate = true,
+  exposure = 0.9,
+}: {
+  src: string;
+  alt: string;
+  autoRotate?: boolean;
+  exposure?: number;
+}) {
   useEffect(() => {
     import("@google/model-viewer");
   }, []);
@@ -29,9 +38,9 @@ export default function ModelViewer({ src, alt }: { src: string; alt: string }) 
       src={src}
       alt={alt}
       camera-controls
-      auto-rotate
+      {...(autoRotate ? { "auto-rotate": true } : {})}
       shadow-intensity={1}
-      exposure={0.9}
+      exposure={exposure}
       style={{
         width: "100%",
         height: "100%",

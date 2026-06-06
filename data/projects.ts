@@ -19,7 +19,10 @@ export type Project = {
   period?: string;
   status?: string;
   coverFit?: "cover" | "contain";
-  specs?: { label: string; value: string }[];
+  specs?: { label: string; value: string; redacted?: boolean }[];
+  analysis?: { caption?: string; file: string }[];
+  tests?:    { caption?: string; file: string }[];
+  integration?: { caption?: string; file: string }[];
   // ── Project page sections ──────────────────────────────────────
   problem?: string;
   goals?: string[];
@@ -39,8 +42,9 @@ export const projects: Project[] = [
       { label: "MAX PRESSURE",    value: "750 psi MEOP"    },
       { label: "OXIDIZER",        value: "N₂O"             },
       { label: "FUEL",            value: "HTPB"            },
-      { label: "TARGET APOGEE",   value: "20,000 ft"       },
+      { label: "TARGET APOGEE",   value: "13,400 ft"       },
       { label: "STATUS",          value: "Test & Integration" },
+      { label: "CLASSIFICATION",  value: "UNCLASSIFIED", redacted: true },
     ],
     title: "Hybrid Rocket Feed System",
     description:
