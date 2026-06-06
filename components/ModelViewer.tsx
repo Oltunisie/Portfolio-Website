@@ -39,10 +39,9 @@ export default function ModelViewer({
       alt={alt}
       camera-controls
       {...(autoRotate ? { "auto-rotate": true } : {})}
-      shadow-intensity={0.8}
+      shadow-intensity={1}
       exposure={exposure}
       environment-image="neutral"
-      tone-mapping="commerce"
       style={{
         width: "100%",
         height: "100%",
