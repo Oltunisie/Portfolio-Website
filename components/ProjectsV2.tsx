@@ -83,7 +83,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <Link
         href={`/projects/${project.slug}`}
-        className="group block relative overflow-hidden h-[500px] border border-[#151208]
+        className="group block relative overflow-hidden h-[380px] md:h-[500px] border border-[#151208]
           hover:border-[#2e2010] transition-colors duration-500"
         style={{
           boxShadow: "0 0 0 0 transparent",

@@ -83,7 +83,7 @@ function ImageSlot({ src, caption, onClick }: { src: string; caption?: string; o
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="flex-shrink-0"
+      className="flex-shrink-0 w-[260px] md:w-80"
     >
       <button onClick={onClick} className="group block w-full text-left">
         <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors duration-300">
@@ -270,7 +270,7 @@ function ModelSection({ src, title }: { src: string; explodedSrc?: string; title
 function StatCallout({ value, unit, label }: { value: string; unit: string; label: string }) {
   return (
     <div className="py-16 px-6 md:px-16 lg:px-24 flex items-end gap-6 border-y border-[#0f0d09]">
-      <span className="text-[clamp(4rem,12vw,9rem)] font-extralight text-[#c4a97e] leading-none tracking-tight"
+      <span className="text-[clamp(3rem,12vw,9rem)] font-extralight text-[#c4a97e] leading-none tracking-tight"
         style={{ fontFamily: "var(--font-space-grotesk)" }}>{value}</span>
       <div className="mb-4">
         <div className="text-2xl font-light text-[#3a2e1e]"
@@ -387,7 +387,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
 
       {/* ── Specs grid — full width ────────────────────────────── */}
       {project.specs && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-[#181410]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[1px] bg-[#181410]">
           {project.specs.map((s) => (
             <SpecCell key={s.label} label={s.label} value={s.value} redacted={s.redacted} />
           ))}
@@ -511,7 +511,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       <div className="grid grid-cols-2 border-t border-[#0f0d09]">
         {prev ? (
           <Link href={`/projects/${prev.slug}`}
-            className="group flex flex-col gap-3 p-8 md:p-12 border-r border-[#0f0d09] hover:bg-[#08060 3] transition-colors duration-300">
+            className="group flex flex-col gap-3 p-6 md:p-12 border-r border-[#0f0d09] hover:bg-[#080603] transition-colors duration-300">
             <span className="text-[9px] tracking-[0.25em] text-[#2a1f10] group-hover:text-[#c4a97e] transition-colors duration-200"
               style={{ fontFamily: "var(--font-geist-mono)" }}>← PREVIOUS</span>
             <span className="text-lg font-light text-[#4a3824] group-hover:text-[#c8bfb0] transition-colors duration-200"
@@ -520,7 +520,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
         ) : <div />}
         {next ? (
           <Link href={`/projects/${next.slug}`}
-            className="group flex flex-col gap-3 p-8 md:p-12 text-right hover:bg-[#080603] transition-colors duration-300">
+            className="group flex flex-col gap-3 p-6 md:p-12 text-right hover:bg-[#080603] transition-colors duration-300">
             <span className="text-[9px] tracking-[0.25em] text-[#2a1f10] group-hover:text-[#c4a97e] transition-colors duration-200"
               style={{ fontFamily: "var(--font-geist-mono)" }}>NEXT →</span>
             <span className="text-lg font-light text-[#4a3824] group-hover:text-[#c8bfb0] transition-colors duration-200"

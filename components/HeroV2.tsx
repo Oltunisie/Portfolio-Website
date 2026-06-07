@@ -105,18 +105,18 @@ export default function HeroV2() {
             <motion.div
               key={f.label}
               {...row(i)}
-              className="grid items-baseline"
+              className="flex flex-col md:grid md:items-baseline gap-1 md:gap-0"
               style={{ gridTemplateColumns: "13rem 1fr" }}
             >
               {/* Label */}
-              <span className="text-[11px] tracking-[0.2em] text-[#4a3824]">
+              <span className="text-[10px] tracking-[0.2em] text-[#4a3824]">
                 {f.label}
               </span>
 
               {/* Value */}
               {f.highlight ? (
                 <span
-                  className="text-[clamp(2.4rem,5.5vw,4.2rem)] font-light leading-[1] tracking-[-0.02em] text-[#f0e6d3]"
+                  className="text-[clamp(2.2rem,8vw,4.2rem)] font-light leading-[1] tracking-[-0.02em] text-[#f0e6d3]"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {f.value}

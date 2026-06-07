@@ -138,7 +138,7 @@ export default function ContactV2() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex items-center gap-6 mb-20"
+        className="flex items-center gap-6 mb-10 md:mb-20"
       >
         <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]" style={{ fontFamily: MONO }}>
           // 05
@@ -150,7 +150,7 @@ export default function ContactV2() {
       </motion.div>
 
       {/* ── Statement + status panel ─────────────────────────── */}
-      <div className="grid md:grid-cols-5 gap-12 md:gap-20 mb-20">
+      <div className="grid md:grid-cols-5 gap-10 md:gap-20 mb-12 md:mb-20">
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -215,11 +215,11 @@ export default function ContactV2() {
       >
         <div className="flex items-center justify-between px-6 py-3 border-b border-[#241e14]"
           style={{ fontFamily: MONO }}>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <span className="text-[9px] tracking-[0.25em] text-[#c4a97e]">◆ NEW TRANSMISSION</span>
-            <span className="text-[9px] tracking-[0.15em] text-[#6b5a3e]">TO: {EMAIL}</span>
+            <span className="text-[9px] tracking-[0.15em] text-[#6b5a3e] hidden sm:inline">TO: {EMAIL}</span>
           </div>
-          <span className="text-[8px] tracking-[0.2em] text-[#4a3824]">SECURE CHANNEL</span>
+          <span className="text-[8px] tracking-[0.2em] text-[#4a3824] hidden md:inline">SECURE CHANNEL</span>
         </div>
 
         <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#241e14]">
@@ -269,11 +269,11 @@ export default function ContactV2() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between px-6 py-4 border-t border-[#241e14]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-6 py-4 border-t border-[#241e14]">
           <span className="text-[9px] tracking-[0.15em] text-[#5a4a30]" style={{ fontFamily: MONO }}>
             {status === "error"
               ? "⚠ TRANSMISSION FAILED — TRY AGAIN"
-              : "SENT DIRECTLY — NO OUTLOOK, NO REDIRECTS"}
+              : "SENT DIRECTLY — NO OUTLOOK"}
           </span>
           <button
             onClick={transmit}
