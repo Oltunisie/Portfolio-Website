@@ -19,10 +19,27 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+const SITE_URL = "https://omarlemkecher.com";
+
 export const metadata: Metadata = {
   title: "Omar Lemkecher — Aerospace Engineering",
-  description: "Portfolio of Omar Lemkecher, Aerospace Engineering student at UCLA.",
+  description:
+    "Portfolio of Omar Lemkecher — Aerospace Engineering student at UCLA Samueli (4.0 GPA). Hybrid rocket propulsion, CubeSat ADCS, microgravity experiments.",
+  metadataBase: new URL(SITE_URL),
   icons: { icon: "/favicon.svg" },
+  openGraph: {
+    title:       "Omar Lemkecher — Aerospace Engineering · UCLA",
+    description: "Hybrid rocket propulsion · CubeSat ADCS · Zero-G experiments. Aerospace Engineering student at UCLA Samueli.",
+    url:         SITE_URL,
+    siteName:    "Omar Lemkecher",
+    locale:      "en_US",
+    type:        "website",
+  },
+  twitter: {
+    card:        "summary_large_image",
+    title:       "Omar Lemkecher — Aerospace Engineering · UCLA",
+    description: "Hybrid rocket propulsion · CubeSat ADCS · Zero-G experiments.",
+  },
 };
 
 export default function RootLayout({
