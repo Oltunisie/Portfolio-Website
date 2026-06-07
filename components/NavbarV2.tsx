@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const links = [
-  { label: "01  PROJECTS", href: "#projects" },
-  { label: "02  ABOUT",    href: "#about"    },
-  { label: "03  CONTACT",  href: "#contact"  },
+  { label: "01  PROJECTS",   href: "#projects",    scroll: true  },
+  { label: "02  TRAJECTORY", href: "/trajectory",  scroll: false },
+  { label: "03  CONTACT",    href: "#contact",     scroll: true  },
 ];
 
 function scrollTo(id: string) {
@@ -74,15 +75,25 @@ export default function NavbarV2() {
             className="hidden md:flex items-center gap-8"
             style={{ fontFamily: "var(--font-geist-mono)" }}
           >
-            {links.map((l) => (
-              <button
-                key={l.href}
-                onClick={() => scrollTo(l.href)}
-                className="text-xs tracking-[0.2em] text-[#b8a88a] hover:text-[#c4a97e] transition-colors duration-200"
-              >
-                {l.label}
-              </button>
-            ))}
+            {links.map((l) =>
+              l.scroll ? (
+                <button
+                  key={l.href}
+                  onClick={() => scrollTo(l.href)}
+                  className="text-xs tracking-[0.2em] text-[#b8a88a] hover:text-[#c4a97e] transition-colors duration-200"
+                >
+                  {l.label}
+                </button>
+              ) : (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="text-xs tracking-[0.2em] text-[#b8a88a] hover:text-[#c4a97e] transition-colors duration-200"
+                >
+                  {l.label}
+                </Link>
+              )
+            )}
           </nav>
 
           {/* CTA + hamburger */}
@@ -166,12 +177,22 @@ export default function NavbarV2() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.07, duration: 0.3 }}
                 >
-                  <button
-                    onClick={() => { setMenuOpen(false); setTimeout(() => scrollTo(l.href), 300); }}
-                    className="text-2xl tracking-[0.15em] text-[#f0e6d3] hover:text-[#c4a97e] transition-colors duration-200"
-                  >
-                    {l.label}
-                  </button>
+                  {l.scroll ? (
+                    <button
+                      onClick={() => { setMenuOpen(false); setTimeout(() => scrollTo(l.href), 300); }}
+                      className="text-2xl tracking-[0.15em] text-[#f0e6d3] hover:text-[#c4a97e] transition-colors duration-200"
+                    >
+                      {l.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={l.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="text-2xl tracking-[0.15em] text-[#f0e6d3] hover:text-[#c4a97e] transition-colors duration-200"
+                    >
+                      {l.label}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
 
