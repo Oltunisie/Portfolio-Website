@@ -74,8 +74,8 @@ export default function CustomCursor() {
           translateX: "-50%",
           translateY: "-50%",
           opacity: visible ? (hovering ? 0.7 : 0.25) : 0,
-          width:  hovering ? 40 : 28,
-          height: hovering ? 40 : 28,
+          width:  hovering ? 48 : 34,
+          height: hovering ? 48 : 34,
           scale:  clicking ? 0.75 : 1,
           transition: "width 0.25s ease, height 0.25s ease, opacity 0.2s ease, scale 0.1s ease",
         }}
@@ -91,8 +91,8 @@ export default function CustomCursor() {
           translateX: "-50%",
           translateY: "-50%",
           opacity: visible ? (hovering ? 0 : 1) : 0,
-          width:  clicking ? 3 : 5,
-          height: clicking ? 3 : 5,
+          width:  clicking ? 6 : 10,
+          height: clicking ? 6 : 10,
           transition: "width 0.1s ease, height 0.1s ease, opacity 0.15s ease",
         }}
       />
