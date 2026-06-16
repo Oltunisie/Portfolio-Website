@@ -1,0 +1,59 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background -->
+  <rect width="100" height="100" rx="16" fill="#050505"/>
+
+  <!-- Outer ring -->
+  <circle cx="50" cy="50" r="45" fill="none" stroke="#1a1208" stroke-width="1"/>
+
+  <!-- Full gauge track (dark, 7 o'clock → 5 o'clock, 300° CW arc) -->
+  <path d="M 30,84.6 A 40,40 0 1,1 70,84.6"
+    fill="none" stroke="#1e1508" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Active arc (beige, needle at ~75% = between 3 and 4 o'clock position) -->
+  <!-- 75% of 300° = 225°, starting at SVG 120°, end at SVG 345° → (88.6, 39.6) -->
+  <path d="M 30,84.6 A 40,40 0 1,1 88.6,39.6"
+    fill="none" stroke="#c4a97e" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Tick marks — 11 positions (7 to 5 o'clock) -->
+  <!-- Hour 7  SVG 120° -->
+  <line x1="30.0" y1="84.6" x2="33.3" y2="78.8" stroke="#2e2010" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Hour 8  SVG 150° -->
+  <line x1="15.4" y1="70.0" x2="20.8" y2="66.7" stroke="#2e2010" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Hour 9  SVG 180° — leftmost, slightly brighter -->
+  <line x1="10.0" y1="50.0" x2="16.5" y2="50.0" stroke="#3a2e1e" stroke-width="2"   stroke-linecap="round"/>
+  <!-- Hour 10 SVG 210° -->
+  <line x1="15.4" y1="30.0" x2="20.8" y2="33.3" stroke="#2e2010" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Hour 11 SVG 240° -->
+  <line x1="30.0" y1="15.4" x2="33.3" y2="20.8" stroke="#2e2010" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Hour 12 SVG 270° — top, brightest -->
+  <line x1="50.0" y1="10.0" x2="50.0" y2="17.0" stroke="#4a3824" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Hour 1  SVG 300° -->
+  <line x1="70.0" y1="15.4" x2="66.7" y2="20.8" stroke="#2e2010" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Hour 2  SVG 330° -->
+  <line x1="84.6" y1="30.0" x2="79.2" y2="33.3" stroke="#2e2010" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Hour 3  SVG 0°  — rightmost -->
+  <line x1="90.0" y1="50.0" x2="83.5" y2="50.0" stroke="#3a2e1e" stroke-width="2"   stroke-linecap="round"/>
+  <!-- Hour 4  SVG 30° — in active zone, beige -->
+  <line x1="84.6" y1="70.0" x2="79.2" y2="66.7" stroke="#8a7a5a" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Hour 5  SVG 60° -->
+  <line x1="70.0" y1="84.6" x2="66.7" y2="78.8" stroke="#2e2010" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Needle shadow (subtle depth) -->
+  <line x1="42.5" y1="53.5" x2="81.0" y2="42.5"
+    stroke="#000" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- Needle -->
+  <line x1="42.5" y1="52.6" x2="81.5" y2="41.5"
+    stroke="#f0e6d3" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Center hub ring -->
+  <circle cx="50" cy="50" r="5" fill="#0a0805" stroke="#c4a97e" stroke-width="1.5"/>
+  <!-- Center pin -->
+  <circle cx="50" cy="50" r="2" fill="#c4a97e"/>
+
+  <!-- "PSI" label in the dead zone -->
+  <text x="50" y="73" text-anchor="middle"
+    fill="#3a2e1e" font-size="6.5" font-family="monospace" letter-spacing="1.5">PSI</text>
+
+</svg>

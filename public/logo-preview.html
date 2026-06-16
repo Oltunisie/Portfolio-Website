@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Logo Options</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f8fafc; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 48px 32px; }
+    h1 { font-size: 13px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+         color: #94a3b8; margin-bottom: 40px; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; max-width: 800px; }
+    .card { background: white; border-radius: 16px; border: 1px solid #e2e8f0;
+            padding: 32px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .card:hover { border-color: #3b82f6; box-shadow: 0 4px 24px rgba(59,130,246,0.1); }
+    .sizes { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .size-label { font-size: 10px; color: #94a3b8; letter-spacing: 0.1em; text-align: center; margin-bottom: 4px; }
+    .row { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .letter { font-size: 11px; font-weight: 600; color: #1e293b; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 8px; }
+    .desc { font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.5; max-width: 160px; }
+    /* Dark background swatch */
+    .on-dark { background: #080d1a; border-radius: 10px; padding: 12px 16px; display: flex; gap: 14px; align-items: center; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Logo options — pick one</h1>
+  <div class="grid">
+
+    <!-- A -->
+    <div class="card">
+      <div class="letter">A — Planet</div>
+      <div class="sizes">
+        <div>
+          <div class="size-label">128 px</div>
+          <img src="logo-a.svg" width="128" height="128"/>
+        </div>
+        <div>
+          <div class="size-label">32 px &nbsp; 16 px</div>
+          <div class="row">
+            <img src="logo-a.svg" width="32" height="32"/>
+            <img src="logo-a.svg" width="16" height="16"/>
+          </div>
+        </div>
+      </div>
+      <div class="desc">Orbit ring + planet + OL initials. Classic aerospace, personal.</div>
+    </div>
+
+    <!-- B -->
+    <div class="card">
+      <div class="letter">B — Rocket</div>
+      <div class="sizes">
+        <div>
+          <div class="size-label">128 px</div>
+          <img src="logo-b.svg" width="128" height="128"/>
+        </div>
+        <div>
+          <div class="size-label">32 px &nbsp; 16 px</div>
+          <div class="row">
+            <img src="logo-b.svg" width="32" height="32"/>
+            <img src="logo-b.svg" width="16" height="16"/>
+          </div>
+        </div>
+      </div>
+      <div class="desc">Rocket on a launch arc. Directly represents your propulsion work.</div>
+    </div>
+
+    <!-- C -->
+    <div class="card">
+      <div class="letter">C — Crosshair</div>
+      <div class="sizes">
+        <div>
+          <div class="size-label">128 px</div>
+          <img src="logo-c.svg" width="128" height="128"/>
+        </div>
+        <div>
+          <div class="size-label">32 px &nbsp; 16 px</div>
+          <div class="row">
+            <img src="logo-c.svg" width="32" height="32"/>
+            <img src="logo-c.svg" width="16" height="16"/>
+          </div>
+        </div>
+      </div>
+      <div class="desc">Engineering crosshair with bold O initial. Technical and minimal.</div>
+    </div>
+
+    <!-- D -->
+    <div class="card">
+      <div class="letter">D — CubeSat</div>
+      <div class="sizes">
+        <div>
+          <div class="size-label">128 px</div>
+          <img src="logo-d.svg" width="128" height="128"/>
+        </div>
+        <div>
+          <div class="size-label">32 px &nbsp; 16 px</div>
+          <div class="row">
+            <img src="logo-d.svg" width="32" height="32"/>
+            <img src="logo-d.svg" width="16" height="16"/>
+          </div>
+        </div>
+      </div>
+      <div class="desc">CubeSat with solar panels. Specific to your BruinSpace project.</div>
+    </div>
+
+  </div>
+</body>
+</html>

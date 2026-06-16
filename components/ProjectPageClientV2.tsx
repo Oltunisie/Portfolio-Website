@@ -390,7 +390,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-lg text-[#7a6a54] font-light leading-relaxed"
+            className="text-lg text-[#a89876] font-light leading-relaxed"
             style={{ fontFamily: "var(--font-space-grotesk)" }}>
             {project.description}
           </motion.p>
@@ -407,7 +407,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                 <div key={i} className="flex gap-3 items-start">
                   <span className="shrink-0 text-[#c4a97e] text-[10px] mt-1"
                     style={{ fontFamily: "var(--font-geist-mono)" }}>◆</span>
-                  <p className="text-sm text-[#5a4a30] leading-relaxed"
+                  <p className="text-sm text-[#9a8a6a] leading-relaxed"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}>{g}</p>
                 </div>
               ))}
@@ -415,9 +415,6 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
           )}
         </div>
       </section>
-
-      {/* ── 3D Model ──────────────────────────────────────────── */}
-      {modelSrc && <ModelSection src={modelSrc} title={project.title} />}
 
       {/* ── Process sections with integrated media ────────────────── */}
       {project.process && project.process.length > 0 && project.process.map((step, stepIdx) => (
@@ -428,7 +425,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
               style={{ fontFamily: "var(--font-space-grotesk)" }}>
               {step.title}
             </h2>
-            <p className="text-base text-[#b8a98a] leading-relaxed mt-6"
+            <p className="text-lg text-[#d4c5a9] leading-relaxed mt-6"
               style={{ fontFamily: "var(--font-space-grotesk)" }}>
               {step.description}
             </p>
@@ -439,6 +436,32 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
             <div className="px-6 md:px-16 lg:px-24 pb-16">
               {<ModelSection src={modelSrc} title={project.title} />}
             </div>
+          )}
+
+          {/* Design images */}
+          {stepIdx === 0 && project.design && project.design.length > 0 && (
+            <section className="px-6 md:px-16 lg:px-24 pb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {project.design.map((img, i) => (
+                  <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                    <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                      className="group block w-full text-left">
+                      <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                      {img.caption && (
+                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
+                          style={{ fontFamily: "var(--font-geist-mono)" }}>
+                          {img.caption}
+                        </p>
+                      )}
+                    </button>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
           )}
 
           {/* Analysis section images */}
@@ -455,7 +478,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                           className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       {img.caption && (
-                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
+                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
                           style={{ fontFamily: "var(--font-geist-mono)" }}>
                           {img.caption}
                         </p>
@@ -481,7 +504,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                           className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       {img.caption && (
-                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
+                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
                           style={{ fontFamily: "var(--font-geist-mono)" }}>
                           {img.caption}
                         </p>
@@ -517,26 +540,6 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
           )}
         </div>
       ))}
-
-      {/* ── Process Steps ────────────────────────────────────────────── */}
-      {project.process && project.process.length > 0 && (
-        <section className="py-20 px-6 md:px-16 lg:px-24">
-          <div className="space-y-10">
-            {project.process.map((step, i) => (
-              <div key={i} className="border-l-2 border-[#c4a97e] pl-6">
-                <h3 className="text-xl font-light text-[#f0e6d3] mb-4"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                  {step.title}
-                </h3>
-                <p className="text-base text-[#b8a98a] leading-relaxed"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* ── Outcome ───────────────────────────────────────────── */}
       {project.outcome && (
