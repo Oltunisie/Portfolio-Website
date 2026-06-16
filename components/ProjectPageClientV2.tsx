@@ -242,17 +242,21 @@ function ModelSection({ src, title }: { src: string; title: string }) {
 }
 
 /* ─── Big stat callout (breaks the layout) ───────────────────── */
-function StatCallout({ value, unit, label }: { value: string; unit: string; label: string }) {
+function StatCallout({ stats }: { stats: { value: string; unit: string; label: string }[] }) {
   return (
-    <div className="py-16 px-6 md:px-16 lg:px-24 flex items-end gap-6 border-y border-[#0f0d09]">
-      <span className="text-[clamp(3rem,12vw,9rem)] font-extralight text-[#c4a97e] leading-none tracking-tight"
-        style={{ fontFamily: "var(--font-space-grotesk)" }}>{value}</span>
-      <div className="mb-4">
-        <div className="text-2xl font-light text-[#3a2e1e]"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}>{unit}</div>
-        <div className="text-[10px] tracking-[0.25em] text-[#2a1f10] mt-1"
-          style={{ fontFamily: "var(--font-geist-mono)" }}>{label}</div>
-      </div>
+    <div className="py-16 px-6 md:px-16 lg:px-24 flex items-end gap-12 md:gap-20 border-y border-[#0f0d09]">
+      {stats.map((s, i) => (
+        <div key={i} className="flex items-end gap-4">
+          <span className="text-[clamp(3rem,10vw,8rem)] font-extralight text-[#c4a97e] leading-none tracking-tight"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}>{s.value}</span>
+          <div className="mb-3">
+            <div className="text-xl font-light text-[#4a3824]"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>{s.unit}</div>
+            <div className="text-[10px] tracking-[0.25em] text-[#2a1f10] mt-1"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>{s.label}</div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -281,10 +285,22 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
 
   const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
 
-  // Pick a key stat for the callout
-  const calloutSpec = project.specs?.find((s) =>
+  // Build callout stats array (primary + optional secondary)
+  const calloutPrimarySpec = project.specs?.find((s) =>
     ["THRUST TARGET", "WINS", "0-g WINDOWS", "ORBIT"].includes(s.label)
   );
+  const calloutSecondarySpec = project.specs?.find((s) =>
+    ["TARGET APOGEE"].includes(s.label)
+  );
+  const calloutStats = (() => {
+    const out: { value: string; unit: string; label: string }[] = [];
+    for (const spec of [calloutPrimarySpec, calloutSecondarySpec]) {
+      if (!spec) continue;
+      const match = spec.value.match(/^([\d,]+)\s*(.*)$/);
+      if (match) out.push({ value: match[1], unit: match[2], label: spec.label });
+    }
+    return out;
+  })();
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#f0e6d3]">
@@ -368,11 +384,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       )}
 
       {/* ── Big stat callout ──────────────────────────────────── */}
-      {calloutSpec && (() => {
-        const match = calloutSpec.value.match(/^([\d,]+)\s*(.*)$/);
-        if (!match) return null;
-        return <StatCallout value={match[1]} unit={match[2]} label={calloutSpec.label} />;
-      })()}
+      {calloutStats.length > 0 && <StatCallout stats={calloutStats} />}
 
       {/* ── Brief — two columns ───────────────────────────────── */}
       <section className="py-20 px-6 md:px-16 lg:px-24">

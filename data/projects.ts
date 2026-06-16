@@ -100,11 +100,14 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
     design: [
       { file: "Endcap.png", caption: "Endcap design and geometry" },
       { file: "P&ID.png", caption: "Plumbing and instrumentation diagram" },
+      { file: "feedsystem_plumbing.JPG", caption: "Feed system plumbing layout" },
     ],
 
     analysis: [
       { file: "endcap_fea.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
       { file: "bracket_fea.png", caption: "Support bracket FEA under combined loading" },
+      { file: "hf3graphs.png", caption: "HF3 performance data" },
+      { file: "waterflow_data.png", caption: "Cold flow waterflow test data" },
     ],
 
     tests: [
@@ -112,7 +115,9 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
       { file: "endcap_machining2.jpg", caption: "Finished endcap assembly" },
       { file: "bracket_machining.jpg", caption: "Support bracket post-machining" },
       { file: "machining.jpg", caption: "Radial Holes Manufacturing" },
-      { file: "waterflow1.png", caption: "Waterflow" },
+      { file: "me_and_endcap.PNG", caption: "Endcap integration" },
+      { file: "endcap_removal.PNG", caption: "Endcap removal after testing" },
+      { file: "waterflow1.png", caption: "Pressure vs time during cold flow test" },
     ],
 
     media: [
