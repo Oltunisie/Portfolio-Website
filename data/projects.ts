@@ -72,12 +72,12 @@ export const projects: Project[] = [
       {
         title: "01 · DESIGN",
         description:
-          "Selected components (ball valves, burst discs, check valves) and laid out the plumbing schematic to deliver N₂O at 750 psi while maintaining simplicity for field operation. Designed lightweight aluminum endcaps for the pressure vessel and support brackets for structural integration.",
+          "Selected components (ball valves, pneumatic actuators, check valves) and laid out the plumbing schematic to deliver N₂O at 750 psi while maintaining simplicity for field operation. Designed lightweight aluminum endcaps for the pressure vessel and support brackets for structural integration.",
       },
       {
         title: "02 · ANALYSIS",
         description:
-          "Built a Python flow model to predict steady-state and transient pressure losses. Performed discharge coefficient (Cd) calculations for each orifice and fitting, validating against published data from Halfcat Rocketry and peer-reviewed sources. FEA-validated all structural components under combined loading (internal pressure, bolt preload, bending). Margin of Safety on endcaps: 0.67 (yield), 1.2 (ultimate). ",
+          "Built a  flow model to predict steady-state and transient pressure losses. Performed discharge coefficient (Cd) calculations for each orifice and fitting, validating against published data from peer-reviewed sources. FEA-validated all structural components under combined loading (internal pressure, bolt preload, bending). Factor of Safety on endcaps:  2 (yield), 2.5 (ultimate). ",
       },
       {
         title: "03 · MANUFACTURING & TESTING",
@@ -91,7 +91,7 @@ export const projects: Project[] = [
       },
     ],
 
-    outcome: `The system performed flawlessly under test and in flight. Hydrostatic proof testing confirmed structural integrity at 1.5× operational pressure. Cold-flow campaign validated all flow paths and valve timing. Static fire delivered 586 lbf sustained thrust and achieved 13,400 ft apogee — the highest in UCLA Rocket Project history.
+    outcome: `The system performed flawlessly under test and in flight. Hydrostatic proof testing confirmed structural integrity at 1.5× operational pressure (1125 psi). Cold-flow campaign validated all flow paths and valve timing. Static fire delivered 586 lbf sustained thrust and achieved 13,400 ft apogee.
 
 This was real engineering: pressure testing, iteration from FEA to hardware, instrumented testing, and flight-proven performance. The work proved that with rigorous analysis and testing discipline, a student team can design systems that operate at professional aerospace standards.`,
 
@@ -111,8 +111,8 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
       { file: "endcap_machining1.jpg", caption: "Endcap after CNC machining" },
       { file: "endcap_machining2.jpg", caption: "Finished endcap assembly" },
       { file: "bracket_machining.jpg", caption: "Support bracket post-machining" },
-      { file: "machining.jpg", caption: "Full assembly during integration" },
-      { file: "waterflow1.png", caption: "Pressure vs time during cold flow test" },
+      { file: "machining.jpg", caption: "Radial Holes Manufacturing" },
+      { file: "waterflow1.png", caption: "Waterflow" },
     ],
 
     media: [
