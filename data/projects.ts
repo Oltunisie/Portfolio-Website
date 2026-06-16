@@ -72,22 +72,22 @@ export const projects: Project[] = [
       {
         title: "01 · DESIGN",
         description:
-          "Selected components (ball valves, burst discs, check valves) and laid out the plumbing schematic to deliver N₂O at 750 psi while maintaining simplicity for field operation. Designed lightweight aluminum endcaps for the pressure vessel and support brackets for structural integration. {/* CAD assembly rendering goes here */}",
+          "Selected components (ball valves, burst discs, check valves) and laid out the plumbing schematic to deliver N₂O at 750 psi while maintaining simplicity for field operation. Designed lightweight aluminum endcaps for the pressure vessel and support brackets for structural integration.",
       },
       {
         title: "02 · ANALYSIS",
         description:
-          "Built a Python flow model to predict steady-state and transient pressure losses. Performed discharge coefficient (Cd) calculations for each orifice and fitting, validating against published data from Halfcat Rocketry and peer-reviewed sources. FEA-validated all structural components under combined loading (internal pressure, bolt preload, bending). Margin of Safety on endcaps: 0.67 (yield), 1.2 (ultimate). {/* FEA stress plot goes here */} {/* Cd validation graph goes here */}",
+          "Built a Python flow model to predict steady-state and transient pressure losses. Performed discharge coefficient (Cd) calculations for each orifice and fitting, validating against published data from Halfcat Rocketry and peer-reviewed sources. FEA-validated all structural components under combined loading (internal pressure, bolt preload, bending). Margin of Safety on endcaps: 0.67 (yield), 1.2 (ultimate). ",
       },
       {
         title: "03 · MANUFACTURING & TESTING",
         description:
-          "Machined aluminum endcaps and brackets, then executed hydrostatic proof testing at 1.5× MEOP (1125 psi). System passed with zero leaks. Led cold-flow campaign validating oxidizer flow rates, system timing, and valve sequences — each run instrumented with pressure transducers. {/* Hydrostatic test photo goes here */} {/* Pressure vs time graph goes here */} {/* Cold flow waterflow data goes here */}",
+          "Machined aluminum endcaps and brackets, then executed hydrostatic proof testing at 1.5× MEOP (1125 psi). System passed with zero leaks. Led cold-flow campaign validating oxidizer flow rates, system timing, and valve sequences — each run instrumented with pressure transducers.",
       },
       {
         title: "04 · STATIC FIRE & RESULTS",
         description:
-          "Coordinated static fire integration with motor and avionics teams. Launch day: 586 lbf thrust confirmed. System delivered stable combustion and record apogee. {/* Launch video embed goes here */} {/* Launch photo goes here */}",
+          "Coordinated static fire integration with motor and avionics teams. Launch day: 586 lbf thrust confirmed. System delivered stable combustion and record apogee.",
       },
     ],
 
