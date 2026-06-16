@@ -60,10 +60,10 @@ export default function CrossSectionViewer({
       try {
         const THREE = await import("three");
         const { GLTFLoader } = await import(
-          "three/addons/loaders/GLTFLoader.js" as never
+          "three/examples/jsm/loaders/GLTFLoader.js" as never
         ) as { GLTFLoader: new () => Any };
         const { OrbitControls } = await import(
-          "three/addons/controls/OrbitControls.js" as never
+          "three/examples/jsm/controls/OrbitControls.js" as never
         ) as { OrbitControls: new (cam: Any, el: HTMLElement) => Any };
 
         if (!alive) return;
