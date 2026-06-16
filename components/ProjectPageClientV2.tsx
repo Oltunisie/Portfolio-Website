@@ -202,9 +202,11 @@ function ModelSection({ src, title }: { src: string; explodedSrc?: string; title
         </div>
 
         {/* ExplodedViewer — shown when exploded (stays mounted so spring is continuous) */}
-        <div className={`absolute inset-0 transition-opacity duration-500 ${exploded ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-          <ExplodedViewer src={src} exploded={exploded} />
-        </div>
+        {modelExplodedSrc && (
+          <div className={`absolute inset-0 transition-opacity duration-500 ${exploded ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+            <ExplodedViewer src={modelExplodedSrc} exploded={exploded} />
+          </div>
+        )}
 
         {/* State badge */}
         <div className="absolute top-4 right-4 flex items-center gap-1.5 z-10"
