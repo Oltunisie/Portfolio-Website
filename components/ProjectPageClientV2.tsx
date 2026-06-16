@@ -161,7 +161,7 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 }
 
 /* ─── 3D Model viewer with controls ─────────────────────────── */
-function ModelSection({ src, title }: { src: string; explodedSrc?: string; title: string }) {
+function ModelSection({ src, title, explodedSrc }: { src: string; explodedSrc?: string; title: string }) {
   const [autoRotate, setAutoRotate] = useState(true);
   const [exposure,   setExposure]   = useState(0.9);
   const [exploded,   setExploded]   = useState(false);
