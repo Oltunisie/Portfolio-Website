@@ -419,134 +419,104 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       {/* ── 3D Model ──────────────────────────────────────────── */}
       {modelSrc && <ModelSection src={modelSrc} title={project.title} />}
 
-      {/* ── Analysis (Design + FEA) ──────────────────────────────── */}
-      {project.analysis && project.analysis.length > 0 && (
-        <section className="py-20 px-6 md:px-16 lg:px-24">
-          <div className="flex items-center gap-6 mb-12">
-            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
-              style={{ fontFamily: "var(--font-geist-mono)" }}>// 04</span>
+      {/* ── Process sections with integrated media ────────────────── */}
+      {project.process && project.process.length > 0 && project.process.map((step, stepIdx) => (
+        <div key={stepIdx}>
+          {/* Section header */}
+          <section className="py-16 px-6 md:px-16 lg:px-24">
             <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}>Analysis</h2>
-            <div className="flex-1 h-px bg-[#1a1208]" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {project.analysis.map((img, i) => (
-              <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                viewport={{ once: true }} transition={{ duration: 0.5 }}>
-                <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
-                  className="group block w-full text-left">
-                  <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                    <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
-                  </div>
-                  {img.caption && (
-                    <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
-                      style={{ fontFamily: "var(--font-geist-mono)" }}>
-                      {img.caption}
-                    </p>
-                  )}
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              {step.title}
+            </h2>
+            <p className="text-base text-[#b8a98a] leading-relaxed mt-6"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              {step.description}
+            </p>
+          </section>
 
-      {/* ── Tests & Waterflows ────────────────────────────────── */}
-      {project.tests && project.tests.length > 0 && (
-        <section className="py-20 px-6 md:px-16 lg:px-24">
-          <div className="flex items-center gap-6 mb-12">
-            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
-              style={{ fontFamily: "var(--font-geist-mono)" }}>// 05</span>
-            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}>Tests & Waterflows</h2>
-            <div className="flex-1 h-px bg-[#1a1208]" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {project.tests.map((img, i) => (
-              <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                viewport={{ once: true }} transition={{ duration: 0.5 }}>
-                <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
-                  className="group block w-full text-left">
-                  <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                    <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
-                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
-                  </div>
-                  {img.caption && (
-                    <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
-                      style={{ fontFamily: "var(--font-geist-mono)" }}>
-                      {img.caption}
-                    </p>
-                  )}
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
+          {/* 3D Model for Design section */}
+          {stepIdx === 0 && modelSrc && (
+            <div className="px-6 md:px-16 lg:px-24 pb-16">
+              {<ModelSection src={modelSrc} title={project.title} />}
+            </div>
+          )}
 
-      {/* ── Videos ────────────────────────────────────────────── */}
-      {videos.length > 0 && (
-        <section className="py-20 px-6 md:px-16 lg:px-24">
-          <div className="flex items-center gap-6 mb-12">
-            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
-              style={{ fontFamily: "var(--font-geist-mono)" }}>// 06</span>
-            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}>Launch</h2>
-            <div className="flex-1 h-px bg-[#1a1208]" />
-          </div>
-          <div className="space-y-4">
-            {videos.map((v, i) => (
-              <div key={i} className="border border-[#181410]">
-                {v.type === "youtube" ? (
-                  <div className="aspect-video">
-                    <iframe src={`https://www.youtube.com/embed/${v.id}`}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen />
-                  </div>
-                ) : v.type === "video" ? (
-                  <video src={`${BASE}/projects/${project.slug}/${v.file}`}
-                    controls className="w-full" style={{ background: "#030303" }} />
-                ) : null}
+          {/* Analysis section images */}
+          {stepIdx === 1 && project.analysis && project.analysis.length > 0 && (
+            <section className="px-6 md:px-16 lg:px-24 pb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {project.analysis.map((img, i) => (
+                  <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                    <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                      className="group block w-full text-left">
+                      <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                      {img.caption && (
+                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
+                          style={{ fontFamily: "var(--font-geist-mono)" }}>
+                          {img.caption}
+                        </p>
+                      )}
+                    </button>
+                  </motion.div>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+            </section>
+          )}
 
-      {/* ── General gallery ───────────────────────────────────── */}
-      {allImages.length > 0 && (
-        <section className="py-20 px-6 md:px-16 lg:px-24">
-          <div className="flex items-center gap-6 mb-12">
-            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
-              style={{ fontFamily: "var(--font-geist-mono)" }}>// 07</span>
-            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}>Documentation</h2>
-            <div className="flex-1 h-px bg-[#1a1208]" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {allImages.map((img, i) => (
-              <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                viewport={{ once: true }} transition={{ duration: 0.5 }}>
-                <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
-                  className="group block w-full text-left">
-                  <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                    <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
-                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+          {/* Tests section images */}
+          {stepIdx === 2 && project.tests && project.tests.length > 0 && (
+            <section className="px-6 md:px-16 lg:px-24 pb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {project.tests.map((img, i) => (
+                  <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                    <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                      className="group block w-full text-left">
+                      <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                          className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                      {img.caption && (
+                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
+                          style={{ fontFamily: "var(--font-geist-mono)" }}>
+                          {img.caption}
+                        </p>
+                      )}
+                    </button>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Static Fire section with videos (smaller) */}
+          {stepIdx === 3 && videos.length > 0 && (
+            <section className="px-6 md:px-16 lg:px-24 pb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {videos.map((v, i) => (
+                  <div key={i} className="border border-[#181410]">
+                    {v.type === "youtube" ? (
+                      <div className="aspect-video">
+                        <iframe src={`https://www.youtube.com/embed/${v.id}`}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen />
+                      </div>
+                    ) : v.type === "video" ? (
+                      <video src={`${BASE}/projects/${project.slug}/${v.file}`}
+                        controls className="w-full" style={{ background: "#030303" }} />
+                    ) : null}
                   </div>
-                  {img.caption && (
-                    <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
-                      style={{ fontFamily: "var(--font-geist-mono)" }}>
-                      {img.caption}
-                    </p>
-                  )}
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      ))}
 
       {/* ── Process Steps ────────────────────────────────────────────── */}
       {project.process && project.process.length > 0 && (
