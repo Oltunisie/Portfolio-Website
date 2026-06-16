@@ -459,6 +459,26 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
           onOpen={openLightbox} />
       )}
 
+      {/* ── Process Steps ────────────────────────────────────────────── */}
+      {project.process && project.process.length > 0 && (
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="space-y-10">
+            {project.process.map((step, i) => (
+              <div key={i} className="border-l-2 border-[#c4a97e] pl-6">
+                <h3 className="text-xl font-light text-[#f0e6d3] mb-4"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                  {step.title}
+                </h3>
+                <p className="text-base text-[#b8a98a] leading-relaxed"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* ── Outcome ───────────────────────────────────────────── */}
       {project.outcome && (
         <section className="py-20 px-6 md:px-16 lg:px-24">
@@ -471,7 +491,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
           </div>
           <div className="grid md:grid-cols-2 gap-12">
             <div className="border-l-2 border-[#c4a97e] pl-6">
-              <p className="text-base text-[#6b5a40] leading-relaxed whitespace-pre-line"
+              <p className="text-lg text-[#c4b5a0] leading-relaxed whitespace-pre-line"
                 style={{ fontFamily: "var(--font-space-grotesk)" }}>
                 {project.outcome}
               </p>
