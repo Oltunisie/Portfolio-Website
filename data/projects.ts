@@ -97,6 +97,8 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
     model3d: "Prometheus_Feed_System_2026.glb",
 
     analysis: [
+      { file: "Endcap.png", caption: "Endcap design and geometry" },
+      { file: "P&ID.png", caption: "Plumbing and instrumentation diagram" },
       { file: "endcap_fea.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
       { file: "bracket_fea.png", caption: "Support bracket FEA under combined loading" },
     ],
@@ -106,13 +108,7 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
       { file: "endcap_machining2.jpg", caption: "Finished endcap assembly" },
       { file: "bracket_machining.jpg", caption: "Support bracket post-machining" },
       { file: "machining.jpg", caption: "Full assembly during integration" },
-      { file: "hotfire1.jpg", caption: "Hydrostatic test setup at 1.5× MEOP" },
       { file: "waterflow1.png", caption: "Pressure vs time during cold flow test" },
-    ],
-
-    integration: [
-      { file: "Endcap.png", caption: "Endcap design detail" },
-      { file: "P&ID.png", caption: "Plumbing and instrumentation diagram" },
     ],
 
     media: [

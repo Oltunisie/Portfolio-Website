@@ -419,44 +419,133 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       {/* ── 3D Model ──────────────────────────────────────────── */}
       {modelSrc && <ModelSection src={modelSrc} title={project.title} />}
 
-      {/* ── Videos ────────────────────────────────────────────── */}
-      {videos.length > 0 && (
-        <section className="py-12 px-6 md:px-16 lg:px-24 space-y-4">
-          {videos.map((v, i) => (
-            <div key={i} className="border border-[#181410]">
-              {v.type === "youtube" ? (
-                <div className="aspect-video">
-                  <iframe src={`https://www.youtube.com/embed/${v.id}`}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen />
-                </div>
-              ) : v.type === "video" ? (
-                <video src={`${BASE}/projects/${project.slug}/${v.file}`}
-                  controls className="w-full" style={{ background: "#030303" }} />
-              ) : null}
-            </div>
-          ))}
+      {/* ── Analysis (Design + FEA) ──────────────────────────────── */}
+      {project.analysis && project.analysis.length > 0 && (
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="flex items-center gap-6 mb-12">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// 04</span>
+            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>Analysis</h2>
+            <div className="flex-1 h-px bg-[#1a1208]" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {project.analysis.map((img, i) => (
+              <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                  className="group block w-full text-left">
+                  <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                    <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                  {img.caption && (
+                    <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
+                      style={{ fontFamily: "var(--font-geist-mono)" }}>
+                      {img.caption}
+                    </p>
+                  )}
+                </button>
+              </motion.div>
+            ))}
+          </div>
         </section>
       )}
 
-      {/* ── Analysis ─────────────────────────────────────────── */}
-      <FullGallery title="Analysis" num="04" slug={project.slug}
-        items={project.analysis ?? []} onOpen={openLightbox} />
-
       {/* ── Tests & Waterflows ────────────────────────────────── */}
-      <FullGallery title="Tests & Waterflows" num="05" slug={project.slug}
-        items={project.tests ?? []} onOpen={openLightbox} />
+      {project.tests && project.tests.length > 0 && (
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="flex items-center gap-6 mb-12">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// 05</span>
+            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>Tests & Waterflows</h2>
+            <div className="flex-1 h-px bg-[#1a1208]" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {project.tests.map((img, i) => (
+              <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                  className="group block w-full text-left">
+                  <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                    <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                  {img.caption && (
+                    <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
+                      style={{ fontFamily: "var(--font-geist-mono)" }}>
+                      {img.caption}
+                    </p>
+                  )}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
 
-      {/* ── Integration ──────────────────────────────────────── */}
-      <FullGallery title="Integration" num="06" slug={project.slug}
-        items={project.integration ?? []} onOpen={openLightbox} />
+      {/* ── Videos ────────────────────────────────────────────── */}
+      {videos.length > 0 && (
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="flex items-center gap-6 mb-12">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// 06</span>
+            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>Launch</h2>
+            <div className="flex-1 h-px bg-[#1a1208]" />
+          </div>
+          <div className="space-y-4">
+            {videos.map((v, i) => (
+              <div key={i} className="border border-[#181410]">
+                {v.type === "youtube" ? (
+                  <div className="aspect-video">
+                    <iframe src={`https://www.youtube.com/embed/${v.id}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen />
+                  </div>
+                ) : v.type === "video" ? (
+                  <video src={`${BASE}/projects/${project.slug}/${v.file}`}
+                    controls className="w-full" style={{ background: "#030303" }} />
+                ) : null}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── General gallery ───────────────────────────────────── */}
       {allImages.length > 0 && (
-        <FullGallery title="Documentation" num="07" slug={project.slug}
-          items={allImages.map((m) => m.type === "image" ? { file: m.file, caption: m.caption } : { file: "" }).filter(m => m.file)}
-          onOpen={openLightbox} />
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="flex items-center gap-6 mb-12">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// 07</span>
+            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>Documentation</h2>
+            <div className="flex-1 h-px bg-[#1a1208]" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {allImages.map((img, i) => (
+              <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                  className="group block w-full text-left">
+                  <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                    <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                  {img.caption && (
+                    <p className="mt-2 text-[10px] tracking-[0.12em] text-[#3a2e1e] leading-snug"
+                      style={{ fontFamily: "var(--font-geist-mono)" }}>
+                      {img.caption}
+                    </p>
+                  )}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </section>
       )}
 
       {/* ── Process Steps ────────────────────────────────────────────── */}
