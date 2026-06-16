@@ -206,7 +206,7 @@ export default function ExplodedViewer({
           onLoad?.();
         },
         undefined,
-        () => { setError(true); });
+        (err: unknown) => { console.error("GLB load error:", err, "src:", src); setError(true); });
 
         /* ── Resize ── */
         const onResize = () => {
