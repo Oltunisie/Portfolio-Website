@@ -201,10 +201,10 @@ function ModelSection({ src, title, explodedSrc }: { src: string; explodedSrc?: 
           <ModelViewer src={src} alt={`${title} 3D model`} autoRotate={autoRotate} exposure={exposure} />
         </div>
 
-        {/* ExplodedViewer — shown when exploded (stays mounted so spring is continuous) */}
+        {/* Exploded model-viewer — shown when exploded */}
         {explodedSrc && (
           <div className={`absolute inset-0 transition-opacity duration-500 ${exploded ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-            <ExplodedViewer src={explodedSrc} exploded={exploded} />
+            <ModelViewer src={explodedSrc} alt={`${title} exploded view`} autoRotate={autoRotate} exposure={exposure} />
           </div>
         )}
 
