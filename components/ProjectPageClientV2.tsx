@@ -6,8 +6,9 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { projects, type Project } from "@/data/projects";
 
-const ModelViewer    = dynamic(() => import("./ModelViewer"),    { ssr: false });
-const ExplodedViewer = dynamic(() => import("./ExplodedViewer"), { ssr: false });
+const ModelViewer        = dynamic(() => import("./ModelViewer"),        { ssr: false });
+const ExplodedViewer     = dynamic(() => import("./ExplodedViewer"),     { ssr: false });
+const CrossSectionViewer = dynamic(() => import("./CrossSectionViewer"), { ssr: false });
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 /* ─── Redacted-decode animation ─────────────────────────────── */
@@ -162,8 +163,9 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 
 /* ─── 3D Model viewer with controls ─────────────────────────── */
 function ModelSection({ src, title }: { src: string; title: string }) {
-  const [autoRotate, setAutoRotate] = useState(true);
-  const [exposure,   setExposure]   = useState(0.9);
+  const [autoRotate,   setAutoRotate]   = useState(true);
+  const [exposure,     setExposure]     = useState(0.9);
+  const [sectionMode,  setSectionMode]  = useState(false);
   const mvRef = useRef<HTMLElement | null>(null);
 
   /* model-viewer viewpoint presets */
@@ -192,50 +194,63 @@ function ModelSection({ src, title }: { src: string; title: string }) {
 
       <div className="relative mx-6 md:mx-16 lg:mx-24 border border-[#181410] bg-[#030303] h-[560px]">
 
-        {/* model-viewer */}
+        {/* model-viewer (hidden when section mode active) */}
         <div
           ref={(el) => { mvRef.current = el?.querySelector("model-viewer") ?? null; }}
           className="absolute inset-0"
+          style={{ visibility: sectionMode ? "hidden" : "visible" }}
         >
           <ModelViewer src={src} alt={`${title} 3D model`} autoRotate={autoRotate} exposure={exposure} />
         </div>
 
-        {/* Control overlay */}
-        <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 pointer-events-none z-10">
-          {/* Left: viewpoint buttons */}
-          <div className="flex flex-wrap gap-1 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
-            {views.map((v) => (
-              <button key={v.label} onClick={() => setOrbit(v.orbit)}
-                className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
-                {v.label}
-              </button>
-            ))}
-          </div>
+        {/* Cross-section viewer overlay */}
+        {sectionMode && (
+          <CrossSectionViewer src={src} onClose={() => setSectionMode(false)} />
+        )}
 
-          {/* Right: auto-rotate + exposure */}
-          <div className="flex items-center gap-3 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
-            <div className="flex items-center gap-2">
-              <span className="text-[8px] tracking-[0.15em] text-[#3a2e1e]">EXPOSURE</span>
-              <input type="range" min="0.3" max="2" step="0.05" value={exposure}
-                onChange={(e) => setExposure(parseFloat(e.target.value))}
-                className="w-20 accent-[#c4a97e] cursor-pointer" />
+        {/* Control overlay — only when not in section mode */}
+        {!sectionMode && (
+          <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 pointer-events-none z-10">
+            {/* Left: viewpoint + section button */}
+            <div className="flex flex-wrap gap-1 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              {views.map((v) => (
+                <button key={v.label} onClick={() => setOrbit(v.orbit)}
+                  className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
+                  {v.label}
+                </button>
+              ))}
+              <button onClick={() => setSectionMode(true)}
+                className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
+                ✦ CROSS-SECTION
+              </button>
             </div>
-            {/* Auto-rotate toggle */}
-            <button onClick={() => setAutoRotate((v) => !v)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 border text-[9px] tracking-[0.15em] transition-all duration-150 ${
-                autoRotate ? "border-[#c4a97e] text-[#c4a97e] bg-[#c4a97e]/10" : "border-[#2e2010] text-[#3a2e1e]"
-              }`}>
-              <span className={`w-1 h-1 rounded-full ${autoRotate ? "bg-[#c4a97e] animate-pulse" : "bg-[#3a2e1e]"}`} />
-              AUTO-ROTATE
-            </button>
+
+            {/* Right: auto-rotate + exposure */}
+            <div className="flex items-center gap-3 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              <div className="flex items-center gap-2">
+                <span className="text-[8px] tracking-[0.15em] text-[#3a2e1e]">EXPOSURE</span>
+                <input type="range" min="0.3" max="2" step="0.05" value={exposure}
+                  onChange={(e) => setExposure(parseFloat(e.target.value))}
+                  className="w-20 accent-[#c4a97e] cursor-pointer" />
+              </div>
+              <button onClick={() => setAutoRotate((v) => !v)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 border text-[9px] tracking-[0.15em] transition-all duration-150 ${
+                  autoRotate ? "border-[#c4a97e] text-[#c4a97e] bg-[#c4a97e]/10" : "border-[#2e2010] text-[#3a2e1e]"
+                }`}>
+                <span className={`w-1 h-1 rounded-full ${autoRotate ? "bg-[#c4a97e] animate-pulse" : "bg-[#3a2e1e]"}`} />
+                AUTO-ROTATE
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Corner label */}
-        <div className="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-[#2a1f10] z-10"
-          style={{ fontFamily: "var(--font-geist-mono)" }}>
-          3D · DRAG TO ORBIT · SCROLL TO ZOOM
-        </div>
+        {!sectionMode && (
+          <div className="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-[#2a1f10] z-10"
+            style={{ fontFamily: "var(--font-geist-mono)" }}>
+            3D · DRAG TO ORBIT · SCROLL TO ZOOM
+          </div>
+        )}
       </div>
     </section>
   );
@@ -250,9 +265,9 @@ function StatCallout({ stats }: { stats: { value: string; unit: string; label: s
           <span className="text-[clamp(3rem,10vw,8rem)] font-extralight text-[#c4a97e] leading-none tracking-tight"
             style={{ fontFamily: "var(--font-space-grotesk)" }}>{s.value}</span>
           <div className="mb-3">
-            <div className="text-xl font-light text-[#4a3824]"
+            <div className="text-xl font-light text-[#c4a97e]"
               style={{ fontFamily: "var(--font-space-grotesk)" }}>{s.unit}</div>
-            <div className="text-[10px] tracking-[0.25em] text-[#2a1f10] mt-1"
+            <div className="text-[10px] tracking-[0.25em] text-[#7a6a50] mt-1"
               style={{ fontFamily: "var(--font-geist-mono)" }}>{s.label}</div>
           </div>
         </div>
