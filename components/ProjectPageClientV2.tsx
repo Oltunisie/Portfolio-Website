@@ -202,9 +202,9 @@ function ModelSection({ src, title, explodedSrc }: { src: string; explodedSrc?: 
         </div>
 
         {/* ExplodedViewer — shown when exploded (stays mounted so spring is continuous) */}
-        {modelExplodedSrc && (
+        {explodedSrc && (
           <div className={`absolute inset-0 transition-opacity duration-500 ${exploded ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-            <ExplodedViewer src={modelExplodedSrc} exploded={exploded} />
+            <ExplodedViewer src={explodedSrc} exploded={exploded} />
           </div>
         )}
 
