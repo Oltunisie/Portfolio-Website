@@ -212,8 +212,7 @@ function ModelSection({ src, title }: { src: string; title: string }) {
             ))}
           </div>
 
-          {/* Right: auto-rotate + exposure (model-viewer only) */}
-          {!exploded && (
+          {/* Right: auto-rotate + exposure */}
           <div className="flex items-center gap-3 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
             <div className="flex items-center gap-2">
               <span className="text-[8px] tracking-[0.15em] text-[#3a2e1e]">EXPOSURE</span>
@@ -230,13 +229,12 @@ function ModelSection({ src, title }: { src: string; title: string }) {
               AUTO-ROTATE
             </button>
           </div>
-          )}
         </div>
 
         {/* Corner label */}
         <div className="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-[#2a1f10] z-10"
           style={{ fontFamily: "var(--font-geist-mono)" }}>
-          {exploded ? "3D · DRAG TO ORBIT · SCROLL TO ZOOM" : "3D · DRAG TO ORBIT · SCROLL TO ZOOM"}
+          3D · DRAG TO ORBIT · SCROLL TO ZOOM
         </div>
       </div>
     </section>
