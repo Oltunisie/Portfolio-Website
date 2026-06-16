@@ -106,7 +106,7 @@ On the test side, I built the cold-flow test setup, led the hydrostatic proof te
 The system is on track to support a full static fire campaign ahead of the launch targeting the 20,000 ft altitude record — which would be the highest apogee in Rocket Project UCLA's history.`,
 
     model3d: "Prometheus_Feed_System_2026.glb",
-    model3dExploded: "Prometheus_Feed_System_2026_Exploded.glb",
+    model3dExploded: "Exploded_Feed_System_Assembly.glb",
 
     media: [
       { type: "image", file: "fire.jpg" },
