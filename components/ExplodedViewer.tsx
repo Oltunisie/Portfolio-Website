@@ -246,8 +246,8 @@ export default function ExplodedViewer({
   }, [exploded]);
 
   return (
-    <div className="relative w-full h-full bg-[#030303]">
-      <div ref={mountRef} className="w-full h-full" />
+    <div className="relative w-full h-full bg-[#030303] overflow-hidden">
+      <div ref={mountRef} className="w-full h-full absolute inset-0" />
 
       {!ready && !error && (
         <div className="absolute inset-0 flex items-center justify-center">
