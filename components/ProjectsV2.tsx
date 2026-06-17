@@ -221,11 +221,11 @@ export default function ProjectsV2() {
             className="text-4xl md:text-5xl font-light text-[#f0e6d3] tracking-tight"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            // 02&nbsp;&nbsp;Projects
+            // 03&nbsp;&nbsp;Projects
           </h2>
         </div>
         <p
-          className="hidden md:block text-[10px] tracking-[0.2em] text-[#2a1f10]"
+          className="hidden md:block text-[10px] tracking-[0.2em] text-[#6b5a3e]"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
           {projects.length} MISSIONS
@@ -233,11 +233,35 @@ export default function ProjectsV2() {
       </motion.div>
 
       {/* ── 2×2 card grid — 2px gap feels like tiles ────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px] border border-[#151208]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px] border border-[#2e2415]">
         {projects.map((p, i) => (
           <ProjectCard key={p.slug} project={p} index={i} />
         ))}
       </div>
+
+      {/* ── Forward path → Contact ───────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" as const }}
+        className="mt-16 flex items-center gap-5"
+      >
+        <button
+          onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+          className="group inline-flex items-center gap-3 px-7 py-3 border border-[#6b5a3e] hover:border-[#c4a97e] bg-[#0c0a06] hover:bg-[#c4a97e] text-[#cabb9f] hover:text-[#080603] text-[11px] tracking-[0.18em] rounded-sm transition-all duration-200"
+          style={{ fontFamily: "var(--font-geist-mono)" }}
+        >
+          GET IN TOUCH
+          <span className="transition-transform duration-150 group-hover:translate-x-1">→</span>
+        </button>
+        <span
+          className="hidden sm:block text-[10px] tracking-[0.2em] text-[#6b5a3e]"
+          style={{ fontFamily: "var(--font-geist-mono)" }}
+        >
+          NEXT &mdash; 03 CONTACT
+        </span>
+      </motion.div>
 
     </section>
   );

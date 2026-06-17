@@ -93,7 +93,7 @@ export default function HeroV2() {
         {/* Top rule */}
         <motion.div
           {...line(0.35)}
-          className="origin-left h-px bg-[#2e2010] mb-8"
+          className="origin-left h-px bg-[#4a3a26] mb-8"
         />
 
         {/* Data rows */}
@@ -109,7 +109,7 @@ export default function HeroV2() {
               style={{ gridTemplateColumns: "13rem 1fr" }}
             >
               {/* Label */}
-              <span className="text-[10px] tracking-[0.2em] text-[#4a3824]">
+              <span className="text-[10px] tracking-[0.2em] text-[#8a7458]">
                 {f.label}
               </span>
 
@@ -122,7 +122,7 @@ export default function HeroV2() {
                   {f.value}
                 </span>
               ) : (
-                <span className="text-sm tracking-[0.08em] text-[#8a7055]">
+                <span className="text-sm tracking-[0.08em] text-[#c4b89e]">
                   {f.value}
                 </span>
               )}
@@ -133,7 +133,7 @@ export default function HeroV2() {
         {/* Bottom rule */}
         <motion.div
           {...line(0.6 + fields.length * 0.12 + 0.1)}
-          className="origin-left h-px bg-[#2e2010] mt-8 mb-8"
+          className="origin-left h-px bg-[#4a3a26] mt-8 mb-8"
         />
 
         {/* CTAs */}
@@ -148,9 +148,9 @@ export default function HeroV2() {
             onClick={() =>
               document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group inline-flex items-center gap-2.5 px-6 py-2.5 bg-[#c4a97e] hover:bg-[#d4b98e] text-[#080603] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
+            className="group inline-flex items-center gap-2.5 px-6 py-2.5 bg-[#c4a97e] hover:bg-[#e4c397] text-[#080603] font-medium text-[11px] tracking-[0.15em] rounded-sm shadow-[0_0_20px_rgba(196,169,126,0.25)] hover:shadow-[0_0_28px_rgba(196,169,126,0.45)] transition-all duration-200"
           >
-            INITIATE
+            VIEW PROJECTS
             <span className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
               ↗
             </span>
@@ -160,7 +160,7 @@ export default function HeroV2() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#2e2010] hover:border-[#c4a97e] text-[#4a3824] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
+            className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#6b5a3e] hover:border-[#c4a97e] text-[#cabb9f] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
           >
             RESUME
             <span className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
@@ -172,7 +172,7 @@ export default function HeroV2() {
             onClick={() =>
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#2e2010] hover:border-[#c4a97e] text-[#4a3824] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
+            className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#6b5a3e] hover:border-[#c4a97e] text-[#cabb9f] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
           >
             CONTACT
             <span className="transition-transform duration-150 group-hover:translate-x-1">

@@ -67,7 +67,7 @@ function ContactCard({
       <Tag
         {...(href ? { href, target: "_blank", rel: "noopener noreferrer" } : {})}
         {...(onClick ? { onClick } : {})}
-        className="group block w-full text-left border border-[#241e14] hover:border-[#c4a97e] transition-colors duration-300 p-6 relative overflow-hidden bg-[#050505] hover:bg-[#0a0804]"
+        className="group block w-full text-left border border-[#3a3020] hover:border-[#c4a97e] transition-colors duration-300 p-6 relative overflow-hidden bg-[#050505] hover:bg-[#0a0804]"
       >
         {/* Scan line */}
         <div className="absolute top-0 left-0 right-0 h-px bg-[#c4a97e] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />

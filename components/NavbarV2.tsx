@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const links = [
-  { label: "01  PROJECTS", href: "#projects", scroll: true },
-  { label: "02  ABOUT",    href: "#about",    scroll: true },
+  { label: "01  ABOUT",    href: "#about",    scroll: true },
+  { label: "02  PROJECTS", href: "#projects", scroll: true },
   { label: "03  CONTACT",  href: "#contact",  scroll: true },
 ];
 
@@ -92,7 +92,7 @@ export default function NavbarV2() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2 border border-[#4a3824] hover:border-[#c4a97e] text-[#b8a88a] hover:text-[#c4a97e] text-xs tracking-[0.15em] rounded-sm transition-colors duration-200"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2 border border-[#6b5a3e] hover:border-[#c4a97e] hover:bg-[#c4a97e]/10 text-[#cabb9f] hover:text-[#c4a97e] text-xs tracking-[0.15em] rounded-sm transition-colors duration-200"
               style={{ fontFamily: "var(--font-geist-mono)" }}
             >
               RESUME ↗
