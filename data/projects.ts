@@ -265,59 +265,70 @@ The win earned two of our students a flight aboard the CNES Zero-G aircraft, and
   },
 
   {
-    slug: "space-probe-project-x",
+    slug: "pressure-vessel-analysis",
     specs: [
-      { label: "COMPETITION",   value: "Project X — Tunisia"     },
-      { label: "AWARD",         value: "Young Searchers Prize"   },
-      { label: "WINS",          value: "2 consecutive (2023·2024)" },
-      { label: "2023 THEME",    value: "Space Probe Design"      },
-      { label: "2024 THEME",    value: "Zero-G Experiment"       },
-      { label: "2025",          value: "Awards Presenter"        },
+      { label: "MEOP",          value: "750 psi"            },
+      { label: "PROOF PRESSURE", value: "1125 psi (1.5×)"   },
+      { label: "FoS — YIELD",   value: "2.0"                },
+      { label: "FoS — ULTIMATE", value: "2.5"               },
+      { label: "MATERIAL",      value: "6061-T6 Aluminum"   },
+      { label: "METHOD",        value: "FEA (ANSYS) + Hand Calc" },
     ],
-    title: "Space Probe — Project X",
+    title: "Pressure Vessel Analysis",
     description:
-      "Won the Young Searchers Prize at the 2023 Project X engineering competition with a space probe design concept. Repeated the win in 2024 with a Zero-G experiment design, and was selected to present awards at the 2025 closing ceremony.",
-    tags: ["Systems Design", "Space Probe", "Competition"],
-    period: "2023 – 2025",
+      "Structural analysis of the hybrid rocket's N₂O oxidizer tank and endcaps at 750 psi MEOP. Sized the pressure vessel by hand, FEA-validated the tank wall and endcaps under combined loading, and confirmed margins of safety with a hydrostatic proof test at 1.5× operating pressure.",
+    tags: ["FEA", "ANSYS", "Pressure Vessel", "Structures", "SolidWorks"],
+    period: "2025",
     status: "Completed",
 
-    problem: `Project X is a national engineering competition in Tunisia that challenges student teams to tackle a new technical theme each year and present a fully developed engineering concept to a jury of industry experts and academics. The competition demands both technical depth and the ability to communicate ideas clearly under pressure — skills that are rare at the student level.
+    problem: `The oxidizer feed system stores N₂O at 750 psi MEOP, and the tank and its endcaps sit directly in the pressure boundary — a failure here is catastrophic. The challenge was to prove, analytically and with FEA, that both the tank wall and the endcaps carry the internal pressure (plus bolt preload on the caps) with required margins of safety, while staying as light as possible.
 
-Our team entered three consecutive years, each time with a different theme and a different design challenge. The question each year was the same: can we out-engineer and out-present every other team in the country?`,
+There was no room for "looks strong enough." Every load path had to be backed by hand calculations, correlated with finite-element analysis, and finally confirmed on the bench with a hydrostatic proof test.`,
 
     goals: [
-      "Develop a rigorous engineering concept that addresses the yearly competition theme",
-      "Present a technically credible and well-communicated proposal to a jury of experts",
-      "Win the Young Searchers Prize — the top award at Project X",
-      "Build on each year's experience to deepen the technical quality of successive entries",
+      "Size the tank wall and endcaps to contain 750 psi MEOP within required margins of safety",
+      "Validate against both yield (FoS 2.0) and ultimate (FoS 2.5)",
+      "FEA the endcaps under combined loading — internal pressure plus bolt preload",
+      "Correlate FEA results with closed-form hoop/longitudinal stress hand calculations",
+      "Confirm structural integrity with a hydrostatic proof test at 1.5× MEOP (1125 psi)",
     ],
 
-    myRole: `I led the technical development and the presentation strategy for our team across all three years. In 2023, I drove the space probe concept — defining the mission architecture, the systems breakdown, and the key engineering trades. In 2024, I built on the CNES Zero-G experience to develop our microgravity experiment design, bringing real flight data into the competition context.
-
-In both winning years, I led the final jury presentation. In 2025, I was invited back to present the awards at the closing ceremony — recognizing the team's three-year run.`,
+    myRole: `I owned the structural analysis of the pressure vessel end-to-end. I built the closed-form sizing calculations for the tank wall (hoop and longitudinal stress) and the endcaps, set up and ran the FEA in ANSYS under combined pressure and bolt-preload loading, and reconciled the two methods to make sure the model and the math agreed before committing to hardware. I then defined and supported the hydrostatic proof test that validated the analysis on the real article.`,
 
     process: [
       {
-        title: "2023 — Space Probe Design",
+        title: "01 · HAND CALCULATIONS & SIZING",
         description:
-          "The 2023 theme called for an innovative space exploration concept. Our team designed a compact space probe with a defined mission profile, instrument suite, and trajectory plan. I developed the systems architecture, performed the mass and power budget, and led the jury presentation. We won the Young Searchers Prize.",
+          "Started from first principles: hoop and longitudinal stress for the tank wall, bolt-circle and gasket loads for the endcaps. Sized wall thickness and endcap geometry in 6061-T6 aluminum to meet a factor of safety of 2.0 on yield and 2.5 on ultimate at 750 psi MEOP. These closed-form numbers set the baseline and the targets the FEA had to match.",
       },
       {
-        title: "2024 — Zero-G Experiment Design",
+        title: "02 · ENDCAP FEA",
         description:
-          "For 2024, the theme aligned with our CNES experience. We designed a suite of microgravity experiments with real scientific objectives, drawing on the lessons and data from the parabolic flight campaign. The proposal included detailed experiment hardware designs and expected results. We won for the second consecutive year.",
+          "Modeled the endcaps in ANSYS under combined loading — internal pressure plus bolt preload — to capture stress concentrations the hand calculations can't see (fillets, bolt holes, sealing surfaces). Checked peak von Mises stress against the material allowables and confirmed the endcaps held the required margins of safety.",
       },
       {
-        title: "2025 — Recognition",
+        title: "03 · TANK WALL & BRACKET ANALYSIS",
         description:
-          "In 2025, having won the award two years in a row, I was selected by the organizers to present the awards at the Project X closing ceremony — acknowledging the team's consistency and impact on the competition.",
+          "Analyzed the tank wall and the support brackets under the same pressure case combined with mounting and bending loads. Verified that the FEA stress fields agreed with the closed-form hoop/longitudinal predictions, giving confidence that the model was trustworthy across the full assembly.",
+      },
+      {
+        title: "04 · HYDROSTATIC PROOF TEST",
+        description:
+          "Validated the analysis on the real hardware with a hydrostatic proof test at 1.5× MEOP (1125 psi). The vessel held with zero leaks and no yielding — confirming the analysis and clearing the pressure vessel for the cold-flow and static fire campaigns.",
       },
     ],
 
-    outcome: `Three consecutive years of recognition at Project X — two first-place wins (2023, 2024) and a closing ceremony invitation in 2025. Beyond the awards, the competition sharpened our ability to develop engineering concepts under tight constraints, communicate complex ideas to expert audiences, and iterate rapidly on feedback.
+    outcome: `Both the tank and the endcaps were validated analytically, confirmed in FEA, and proof-tested to 1.5× operating pressure (1125 psi) with zero leaks and no permanent deformation. The hand calculations and FEA agreed, which is exactly what you want before trusting a pressure vessel with a high-pressure oxidizer.
 
-The 2024 win was especially meaningful because it connected directly to real experimental work — the proposal was grounded in data and experience from the CNES Zero-G campaign, not just theory.`,
+The work turned "we think it's strong enough" into a defensible margin of safety backed by two independent methods and a physical proof test — the standard real aerospace pressure vessels are held to.`,
 
-    media: [],
+    analysis: [
+      { file: "endcap_fea.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
+      { file: "bracket_fea.png", caption: "Support bracket FEA under combined loading" },
+    ],
+
+    media: [
+      { type: "image", file: "endcap_fea.png" },
+    ],
   },
 ];
