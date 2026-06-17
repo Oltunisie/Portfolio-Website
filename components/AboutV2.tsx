@@ -84,12 +84,33 @@ export default function AboutV2() {
           </motion.p>
         </div>
 
-        {/* ── Quick facts ──────────────────────────────────────── */}
-        <motion.div
-          {...fade(0.15)}
-          className="border-t border-[#2e2415] pt-2"
-          style={{ fontFamily: "var(--font-geist-mono)" }}
-        >
+        {/* ── Photo + quick facts (right column) ───────────────── */}
+        <div className="space-y-8">
+
+          {/* On-site portrait */}
+          <motion.figure {...fade(0.1)} className="relative">
+            <div className="overflow-hidden border border-[#2e2415]">
+              <img
+                src="/omar-onsite.jpg"
+                alt="Omar at a rocket test site in the Mojave"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <figcaption
+              className="mt-2 flex items-center gap-2 text-[10px] tracking-[0.2em] text-[#7a6a4e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}
+            >
+              <span className="w-1 h-1 rounded-full bg-[#c4a97e]" />
+              ON SITE &middot; MOJAVE TEST RANGE
+            </figcaption>
+          </motion.figure>
+
+          {/* Quick facts */}
+          <motion.div
+            {...fade(0.15)}
+            className="border-t border-[#2e2415] pt-2"
+            style={{ fontFamily: "var(--font-geist-mono)" }}
+          >
           {FACTS.map((f) => (
             <div
               key={f.label}
@@ -106,7 +127,8 @@ export default function AboutV2() {
               </span>
             </div>
           ))}
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
       {/* ── Forward path → Projects ──────────────────────────────── */}
