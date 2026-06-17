@@ -46,7 +46,6 @@ export const projects: Project[] = [
       { label: "FUEL",            value: "HTPB"            },
       { label: "TARGET APOGEE",   value: "13,400 ft"       },
       { label: "STATUS",          value: "Test & Integration" },
-      { label: "CLASSIFICATION",  value: "UNCLASSIFIED", redacted: true },
     ],
     title: "Hybrid Rocket Feed System",
     description:

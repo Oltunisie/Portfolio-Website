@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ROWS = [
@@ -10,9 +11,10 @@ const ROWS = [
 ];
 
 const ROW_DELAY  = 0.09;
-const AUTO_CLOSE = 2500;
+const AUTO_CLOSE = 1800;
 
 export default function IntroAnimation() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
 
@@ -25,12 +27,14 @@ export default function IntroAnimation() {
   }, [leaving]);
 
   useEffect(() => {
+    // Only on the landing page — never gate direct links to project pages
+    if (pathname !== "/") return;
     if (sessionStorage.getItem("ol_intro_seen")) return;
     setVisible(true);
     document.body.style.overflow = "hidden";
     const t = setTimeout(dismiss, AUTO_CLOSE);
     return () => clearTimeout(t);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <AnimatePresence>
