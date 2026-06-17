@@ -14,14 +14,17 @@ type PartData = {
 export default function ExplodedViewer({
   src,
   exploded,
+  autoRotate = true,
   onLoad,
 }: {
-  src:      string;
-  exploded: boolean;
-  onLoad?:  () => void;
+  src:        string;
+  exploded:   boolean;
+  autoRotate?: boolean;
+  onLoad?:    () => void;
 }) {
   const mountRef   = useRef<HTMLDivElement>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
+  const controlsRef = useRef<Any>(null);
 
   // progress: 0 = assembled, 1 = fully exploded (spring-animated)
   const progressRef = useRef(0);
@@ -111,8 +114,9 @@ export default function ExplodedViewer({
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping  = true;
         controls.dampingFactor  = 0.06;
-        controls.autoRotate     = true;
+        controls.autoRotate     = autoRotate;
         controls.autoRotateSpeed = 0.6;
+        controlsRef.current = controls;
 
         log("Attaching DRACOLoader (decoder from gstatic CDN)…");
         const draco = new DRACOLoader();
@@ -196,32 +200,41 @@ export default function ExplodedViewer({
             log(`Exploding ${best.length} parts`);
 
             // ── Compute explosion vectors ─────────────────────────
+            // Proportional spread: each part moves outward by an amount
+            // proportional to its offset from the assembly center. This keeps
+            // the assembly's overall shape readable instead of scattering
+            // small central parts far away. A fixed-additive scheme made some
+            // parts fly much further than others.
             const sceneCtr = new THREE.Vector3();
             new THREE.Box3().setFromObject(model).getCenter(sceneCtr);
-            const explodeDistance = size * 0.85;
+            const explodeFactor = 0.6;  // 0 = assembled, higher = wider spread
 
             const parts: PartData[] = best.map((part: Any, i: number) => {
               const pb = new THREE.Box3().setFromObject(part);
               const pc = new THREE.Vector3();
               pb.getCenter(pc);
 
-              let dir = pc.clone().sub(sceneCtr);
-              if (dir.length() < 0.0001) {
-                // Part sits exactly at center — give it a pseudo-random direction
+              // World-space offset of this part from the assembly center
+              const offset = pc.clone().sub(sceneCtr);
+
+              if (offset.length() < 0.0001) {
+                // Part sits exactly at center — nudge it radially so it still moves
                 const angle = (i / best.length) * Math.PI * 2;
-                dir = new THREE.Vector3(Math.cos(angle), (i % 3) - 1, Math.sin(angle));
+                offset.set(Math.cos(angle), (i % 3) - 1, Math.sin(angle)).multiplyScalar(size * 0.12);
               }
-              dir.normalize();
+
+              // Displacement proportional to distance from center (not fixed)
+              const displacement = offset.multiplyScalar(explodeFactor);
 
               return {
                 obj:    part,
                 origin: part.position.clone(),
-                target: part.position.clone().addScaledVector(dir, explodeDistance),
+                target: part.position.clone().add(displacement),
               };
             });
 
             partsRef.current = parts;
-            log(`Part vectors computed (explode distance: ${explodeDistance.toFixed(3)})`);
+            log(`Part vectors computed (proportional factor: ${explodeFactor})`);
 
             // ── Render loop ───────────────────────────────────────
             const animate = () => {
@@ -283,6 +296,11 @@ export default function ExplodedViewer({
     targetRef.current = exploded ? 1 : 0;
     console.log(`[ExplodedViewer] target set to ${targetRef.current}`);
   }, [exploded]);
+
+  // Sync autoRotate prop → controls without re-mounting
+  useEffect(() => {
+    if (controlsRef.current) controlsRef.current.autoRotate = autoRotate;
+  }, [autoRotate]);
 
   return (
     <div className="relative w-full h-full bg-[#030303] overflow-hidden">

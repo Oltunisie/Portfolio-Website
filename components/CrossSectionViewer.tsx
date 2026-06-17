@@ -20,7 +20,7 @@ export default function CrossSectionViewer({
   const [status,    setStatus]    = useState("INITIALIZING…");
   const [ready,     setReady]     = useState(false);
   const [error,     setError]     = useState<string | null>(null);
-  const [axis,      setAxis]      = useState<Axis>("X");
+  const [axis,      setAxis]      = useState<Axis>("Y");
   const [sliderVal, setSliderVal] = useState(50);
 
   // Shared mutable refs so axis/slider changes can update the live scene
@@ -117,7 +117,7 @@ export default function CrossSectionViewer({
         controls.dampingFactor = 0.06;
 
         // Clipping plane — normal + constant define the cut position
-        const plane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
+        const plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0);
         planeRef.current = plane;
 
         log("Attaching DRACOLoader (decoder from gstatic CDN)…");
@@ -182,8 +182,8 @@ export default function CrossSectionViewer({
             controls.minDistance = size * 0.15;
             controls.update();
 
-            // Initial clip at 50% along X
-            applyClip("X", 50);
+            // Initial clip at 50% along Y (default axis)
+            applyClip("Y", 50);
 
             const animate = () => {
               if (!alive) return;

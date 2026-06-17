@@ -169,6 +169,7 @@ function ModelSection({ src, title, explodedSrc }: { src: string; title: string;
   const [exposure,    setExposure]    = useState(0.9);
   const [viewMode,    setViewMode]    = useState<ViewMode>("model");
   const [isExploded,  setIsExploded]  = useState(false);
+  const [explRotate,  setExplRotate]  = useState(true);
   const mvRef = useRef<HTMLElement | null>(null);
 
   const views = [
@@ -215,7 +216,7 @@ function ModelSection({ src, title, explodedSrc }: { src: string; title: string;
         {/* Exploded view overlay */}
         {viewMode === "exploded" && explodedSrc && (
           <div className="absolute inset-0 bg-[#030303]" style={{ zIndex: 20 }}>
-            <ExplodedViewer src={explodedSrc} exploded={isExploded} />
+            <ExplodedViewer src={explodedSrc} exploded={isExploded} autoRotate={explRotate} />
 
             {/* top label */}
             <div className="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-[#2a1f10] z-10"
@@ -236,10 +237,20 @@ function ModelSection({ src, title, explodedSrc }: { src: string; title: string;
                 <span className={`w-1.5 h-1.5 rounded-full transition-colors ${isExploded ? "bg-[#c4a97e] animate-pulse" : "bg-[#3a2e1e]"}`} />
                 {isExploded ? "ASSEMBLE" : "EXPLODE"}
               </button>
-              <button onClick={closeOverlay}
-                className="px-3 py-1.5 text-[9px] tracking-[0.15em] border border-[#2e2010] text-[#4a3824] hover:border-[#c4a97e] hover:text-[#c4a97e] transition-all duration-150">
-                CLOSE ✕
-              </button>
+
+              <div className="flex items-center gap-3">
+                <button onClick={() => setExplRotate((v) => !v)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 border text-[9px] tracking-[0.15em] transition-all duration-150 ${
+                    explRotate ? "border-[#c4a97e] text-[#c4a97e] bg-[#c4a97e]/10" : "border-[#2e2010] text-[#3a2e1e] hover:border-[#c4a97e] hover:text-[#c4a97e]"
+                  }`}>
+                  <span className={`w-1 h-1 rounded-full ${explRotate ? "bg-[#c4a97e] animate-pulse" : "bg-[#3a2e1e]"}`} />
+                  AUTO-ROTATE
+                </button>
+                <button onClick={closeOverlay}
+                  className="px-3 py-1.5 text-[9px] tracking-[0.15em] border border-[#2e2010] text-[#4a3824] hover:border-[#c4a97e] hover:text-[#c4a97e] transition-all duration-150">
+                  CLOSE ✕
+                </button>
+              </div>
             </div>
           </div>
         )}
