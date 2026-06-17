@@ -33,12 +33,18 @@ export default function HeroV2() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#050505]">
 
-      {/* ── Background image ───────────────────────────────────── */}
-      <div
+      {/* ── Background video (loops, muted, autoplay) ──────────── */}
+      <video
         aria-hidden
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
-      />
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="/hero-bg.jpg"
+        className="absolute inset-0 h-full w-full object-cover"
+      >
+        <source src="/website_video.mp4" type="video/mp4" />
+      </video>
 
       {/* ── Gradient overlay — wider dark zone on left ─────────── */}
       <div
