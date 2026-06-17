@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider }   from "@/components/ThemeProvider";
 import IntroAnimation      from "@/components/IntroAnimation";
+import Analytics           from "@/components/Analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +58,7 @@ export default function RootLayout({
           <IntroAnimation />
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
