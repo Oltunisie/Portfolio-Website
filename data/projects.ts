@@ -44,8 +44,8 @@ export const projects: Project[] = [
       { label: "MAX PRESSURE",    value: "750 psi MEOP"    },
       { label: "OXIDIZER",        value: "N₂O"             },
       { label: "FUEL",            value: "HTPB"            },
-      { label: "TARGET APOGEE",   value: "13,400 ft"       },
-      { label: "STATUS",          value: "Test & Integration" },
+      { label: "APOGEE",          value: "13,400 ft"       },
+      { label: "STATUS",          value: "Successful Launch" },
     ],
     title: "Hybrid Rocket Feed System",
     description:
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     tags: ["Propulsion", "SolidWorks", "FEA", "ANSYS", "N₂O", "Python"],
     github: "https://github.com/Oltunisie",
     period: "2025 – Present",
-    status: "In Progress",
+    status: "Done",
 
     problem: `As Feed Systems Lead, I designed and tested a complete 750 psi N₂O oxidizer feed system for UCLA's hybrid rocket targeting a 20,000 ft altitude record. The challenge: reliable N₂O delivery at extreme pressure while meeting mass, safety, and integration constraints — all with zero margin for failure.`,
 

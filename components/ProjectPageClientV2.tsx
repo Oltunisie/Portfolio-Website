@@ -361,7 +361,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
     ["THRUST TARGET", "WINS", "0-g WINDOWS", "ORBIT"].includes(s.label)
   );
   const calloutSecondarySpec = project.specs?.find((s) =>
-    ["TARGET APOGEE"].includes(s.label)
+    ["APOGEE"].includes(s.label)
   );
   const calloutStats = (() => {
     const out: { value: string; unit: string; label: string }[] = [];
@@ -447,7 +447,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
 
       {/* ── Specs grid — full width ────────────────────────────── */}
       {project.specs && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[1px] bg-[#181410]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[1px] bg-[#181410]">
           {project.specs.map((s) => (
             <SpecCell key={s.label} label={s.label} value={s.value} redacted={s.redacted} />
           ))}
