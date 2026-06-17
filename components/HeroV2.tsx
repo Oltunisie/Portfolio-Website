@@ -25,7 +25,6 @@ const fields = [
   { label: "ENGINEER",     value: "OMAR LEMKECHER",                       highlight: true },
   { label: "INSTITUTION",  value: "UCLA SAMUELI · LOS ANGELES"                           },
   { label: "DISCIPLINE",   value: "AEROSPACE ENGINEERING · PROPULSION"                   },
-  { label: "GPA",          value: "4.0 / 4.0"                                            },
   { label: "AVAILABILITY", value: "SUMMER 2026 INTERNSHIP"                               },
 ];
 
