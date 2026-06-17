@@ -52,7 +52,7 @@ export default function AboutV2() {
             <img
               src="/flag-tn.svg"
               alt="Tunisian flag"
-              className="inline-block h-[0.8em] w-auto mx-1.5 align-[0.02em] rounded-[1px]"
+              className="inline-block h-[0.8em] w-auto mx-1.5 align-[-0.12em] rounded-[1px]"
             />
             and born in Reunion Island. I build rocket propulsion systems, but
             what actually pulls me in is the moment a design leaves the screen
