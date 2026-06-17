@@ -85,15 +85,16 @@ export default function AboutV2() {
         </div>
 
         {/* ── Photo + quick facts (right column) ───────────────── */}
-        <div className="space-y-5">
+        <div className="flex flex-col lg:h-full">
 
-          {/* On-site portrait */}
-          <motion.figure {...fade(0.1)} className="relative">
-            <div className="overflow-hidden border border-[#2e2415]">
+          {/* On-site portrait — flexes to fill the column so it matches
+              the text column height; image crops via object-cover. */}
+          <figure className="flex flex-col flex-1 min-h-0">
+            <div className="relative flex-1 min-h-[260px] lg:min-h-0 overflow-hidden border border-[#2e2415]">
               <img
                 src="/omar-onsite.jpg"
                 alt="Omar at a rocket test site in the Mojave"
-                className="w-full h-auto object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-[62%_30%]"
               />
             </div>
             <figcaption
@@ -103,31 +104,30 @@ export default function AboutV2() {
               <span className="w-1 h-1 rounded-full bg-[#c4a97e]" />
               ON SITE &middot; MOJAVE TEST RANGE
             </figcaption>
-          </motion.figure>
+          </figure>
 
           {/* Quick facts */}
-          <motion.div
-            {...fade(0.15)}
-            className="border-t border-[#2e2415] pt-2"
+          <div
+            className="mt-5 border-t border-[#2e2415]"
             style={{ fontFamily: "var(--font-geist-mono)" }}
           >
-          {FACTS.map((f) => (
-            <div
-              key={f.label}
-              className="flex flex-col gap-1 py-3 border-b border-[#2e2415]"
-            >
-              <span className="text-[9px] tracking-[0.28em] text-[#9a8460]">
-                {f.label}
-              </span>
-              <span
-                className="text-sm text-[#c8bca6] tracking-[0.04em]"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
+            {FACTS.map((f) => (
+              <div
+                key={f.label}
+                className="flex flex-col gap-1 py-3 border-b border-[#2e2415]"
               >
-                {f.value}
-              </span>
-            </div>
-          ))}
-          </motion.div>
+                <span className="text-[9px] tracking-[0.28em] text-[#9a8460]">
+                  {f.label}
+                </span>
+                <span
+                  className="text-sm text-[#c8bca6] tracking-[0.04em]"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
+                  {f.value}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
