@@ -96,7 +96,7 @@ export const projects: Project[] = [
 This was real engineering: pressure testing, iteration from FEA to hardware, instrumented testing, and flight-proven performance. The work proved that with rigorous analysis and testing discipline, a student team can design systems that operate at professional aerospace standards.`,
 
     model3d: "Prometheus_Feed_System_2026.glb",
-    model3dExploded: "Exploded_Feed_System_Assembly.glb",
+    model3dExploded: "Exploded_Feed_System_Assembly_v2.glb",
 
     design: [
       { file: "Endcap.png", caption: "Endcap design and geometry" },

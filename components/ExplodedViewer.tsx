@@ -71,6 +71,12 @@ export default function ExplodedViewer({
         };
         if (!alive) return;
 
+        log("Importing DRACOLoader…");
+        const { DRACOLoader } = await import("three/addons/loaders/DRACOLoader.js" as never) as {
+          DRACOLoader: new () => { setDecoderPath(p: string): void; dispose(): void };
+        };
+        if (!alive) return;
+
         log(`Canvas size: ${el.clientWidth}×${el.clientHeight}`);
         if (el.clientWidth === 0 || el.clientHeight === 0) {
           fail("Container has zero size — layout not ready");
@@ -108,8 +114,13 @@ export default function ExplodedViewer({
         controls.autoRotate     = true;
         controls.autoRotateSpeed = 0.6;
 
+        log("Attaching DRACOLoader (decoder from gstatic CDN)…");
+        const draco = new DRACOLoader();
+        draco.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+
         log(`Fetching GLB: ${src}`);
         const loader = new GLTFLoader();
+        (loader as Any).setDRACOLoader(draco);
         loader.load(
           src,
           (gltf: Any) => {

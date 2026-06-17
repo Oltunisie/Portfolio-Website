@@ -79,6 +79,12 @@ export default function CrossSectionViewer({
         };
         if (!alive) return;
 
+        log("Importing DRACOLoader…");
+        const { DRACOLoader } = await import("three/addons/loaders/DRACOLoader.js" as never) as {
+          DRACOLoader: new () => { setDecoderPath(p: string): void; dispose(): void };
+        };
+        if (!alive) return;
+
         log(`Canvas size: ${el.clientWidth}×${el.clientHeight}`);
         if (el.clientWidth === 0 || el.clientHeight === 0) {
           fail("Container has zero size — layout not ready");
@@ -114,8 +120,13 @@ export default function CrossSectionViewer({
         const plane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
         planeRef.current = plane;
 
+        log("Attaching DRACOLoader (decoder from gstatic CDN)…");
+        const draco = new DRACOLoader();
+        draco.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+
         log(`Fetching GLB: ${src}`);
         const loader = new GLTFLoader();
+        (loader as Any).setDRACOLoader(draco);
         loader.load(
           src,
           (gltf: Any) => {
