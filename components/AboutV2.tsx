@@ -85,7 +85,7 @@ export default function AboutV2() {
         </div>
 
         {/* ── Photo + quick facts (right column) ───────────────── */}
-        <div className="space-y-8">
+        <div className="space-y-5">
 
           {/* On-site portrait */}
           <motion.figure {...fade(0.1)} className="relative">
@@ -114,7 +114,7 @@ export default function AboutV2() {
           {FACTS.map((f) => (
             <div
               key={f.label}
-              className="flex flex-col gap-1 py-4 border-b border-[#2e2415]"
+              className="flex flex-col gap-1 py-3 border-b border-[#2e2415]"
             >
               <span className="text-[9px] tracking-[0.28em] text-[#9a8460]">
                 {f.label}
