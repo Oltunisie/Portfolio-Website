@@ -162,13 +162,15 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 }
 
 /* ─── 3D Model viewer with controls ─────────────────────────── */
-function ModelSection({ src, title }: { src: string; title: string }) {
-  const [autoRotate,   setAutoRotate]   = useState(true);
-  const [exposure,     setExposure]     = useState(0.9);
-  const [sectionMode,  setSectionMode]  = useState(false);
+type ViewMode = "model" | "section" | "exploded";
+
+function ModelSection({ src, title, explodedSrc }: { src: string; title: string; explodedSrc?: string }) {
+  const [autoRotate,  setAutoRotate]  = useState(true);
+  const [exposure,    setExposure]    = useState(0.9);
+  const [viewMode,    setViewMode]    = useState<ViewMode>("model");
+  const [isExploded,  setIsExploded]  = useState(false);
   const mvRef = useRef<HTMLElement | null>(null);
 
-  /* model-viewer viewpoint presets */
   const views = [
     { label: "FRONT", orbit: "0deg 75deg 150%"  },
     { label: "TOP",   orbit: "0deg 0deg 150%"   },
@@ -179,6 +181,8 @@ function ModelSection({ src, title }: { src: string; title: string }) {
     const mv = mvRef.current as HTMLElement & { cameraOrbit?: string };
     if (mv) mv.cameraOrbit = orbit;
   };
+
+  const closeOverlay = () => { setViewMode("model"); setIsExploded(false); };
 
   return (
     <section className="py-20">
@@ -194,24 +198,56 @@ function ModelSection({ src, title }: { src: string; title: string }) {
 
       <div className="relative mx-6 md:mx-16 lg:mx-24 border border-[#181410] bg-[#030303] h-[560px]">
 
-        {/* model-viewer (hidden when section mode active) */}
+        {/* model-viewer (hidden in overlay modes) */}
         <div
           ref={(el) => { mvRef.current = el?.querySelector("model-viewer") ?? null; }}
           className="absolute inset-0"
-          style={{ visibility: sectionMode ? "hidden" : "visible" }}
+          style={{ visibility: viewMode === "model" ? "visible" : "hidden" }}
         >
           <ModelViewer src={src} alt={`${title} 3D model`} autoRotate={autoRotate} exposure={exposure} />
         </div>
 
-        {/* Cross-section viewer overlay */}
-        {sectionMode && (
-          <CrossSectionViewer src={src} onClose={() => setSectionMode(false)} />
+        {/* Cross-section overlay */}
+        {viewMode === "section" && (
+          <CrossSectionViewer src={src} onClose={closeOverlay} />
         )}
 
-        {/* Control overlay — only when not in section mode */}
-        {!sectionMode && (
+        {/* Exploded view overlay */}
+        {viewMode === "exploded" && explodedSrc && (
+          <div className="absolute inset-0 bg-[#030303]" style={{ zIndex: 20 }}>
+            <ExplodedViewer src={explodedSrc} exploded={isExploded} />
+
+            {/* top label */}
+            <div className="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-[#2a1f10] z-10"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>
+              EXPLODED VIEW · DRAG TO ORBIT · SCROLL TO ZOOM
+            </div>
+
+            {/* controls */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 z-10"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>
+              <button
+                onClick={() => setIsExploded((v) => !v)}
+                className={`flex items-center gap-2 px-4 py-2 border text-[9px] tracking-[0.15em] transition-all duration-150 ${
+                  isExploded
+                    ? "border-[#c4a97e] text-[#c4a97e] bg-[#c4a97e]/10"
+                    : "border-[#2e2010] text-[#6b5a3e] hover:border-[#c4a97e] hover:text-[#c4a97e]"
+                }`}>
+                <span className={`w-1.5 h-1.5 rounded-full transition-colors ${isExploded ? "bg-[#c4a97e] animate-pulse" : "bg-[#3a2e1e]"}`} />
+                {isExploded ? "ASSEMBLE" : "EXPLODE"}
+              </button>
+              <button onClick={closeOverlay}
+                className="px-3 py-1.5 text-[9px] tracking-[0.15em] border border-[#2e2010] text-[#4a3824] hover:border-[#c4a97e] hover:text-[#c4a97e] transition-all duration-150">
+                CLOSE ✕
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Control overlay — only in model mode */}
+        {viewMode === "model" && (
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 pointer-events-none z-10">
-            {/* Left: viewpoint + section button */}
+            {/* Left: viewpoints + tool buttons */}
             <div className="flex flex-wrap gap-1 pointer-events-auto" style={{ fontFamily: "var(--font-geist-mono)" }}>
               {views.map((v) => (
                 <button key={v.label} onClick={() => setOrbit(v.orbit)}
@@ -219,10 +255,16 @@ function ModelSection({ src, title }: { src: string; title: string }) {
                   {v.label}
                 </button>
               ))}
-              <button onClick={() => setSectionMode(true)}
+              <button onClick={() => setViewMode("section")}
                 className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
                 ✦ CROSS-SECTION
               </button>
+              {explodedSrc && (
+                <button onClick={() => setViewMode("exploded")}
+                  className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
+                  ✦ EXPLODED VIEW
+                </button>
+              )}
             </div>
 
             {/* Right: auto-rotate + exposure */}
@@ -245,7 +287,7 @@ function ModelSection({ src, title }: { src: string; title: string }) {
         )}
 
         {/* Corner label */}
-        {!sectionMode && (
+        {viewMode === "model" && (
           <div className="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-[#2a1f10] z-10"
             style={{ fontFamily: "var(--font-geist-mono)" }}>
             3D · DRAG TO ORBIT · SCROLL TO ZOOM
@@ -295,6 +337,9 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
 
   const modelSrc = project.model3d
     ? `${BASE}/projects/${project.slug}/${project.model3d}` : null;
+
+  const explodedSrc = project.model3dExploded
+    ? `${BASE}/projects/${project.slug}/${project.model3dExploded}` : undefined;
 
   const videos = (project.media ?? []).filter((m) => m.type === "video" || m.type === "youtube");
 
@@ -461,7 +506,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
           {/* 3D Model for Design section */}
           {stepIdx === 0 && modelSrc && (
             <div className="px-6 md:px-16 lg:px-24 pb-16">
-              {<ModelSection src={modelSrc} title={project.title} />}
+              <ModelSection src={modelSrc} title={project.title} explodedSrc={explodedSrc} />
             </div>
           )}
 
