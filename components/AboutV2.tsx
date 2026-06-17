@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
    Grounded in real history — edit freely, these are yours to own. */
 const FACTS = [
   { label: "BASED IN",     value: "Los Angeles · from Tunisia" },
-  { label: "LANGUAGES",    value: "Arabic · French · English" },
-  { label: "FIRST SPARK",  value: "Zero-g flight over Bordeaux, 2023" },
-  { label: "OFF THE CLOCK", value: "Astronomy & astrophotography" },
+  { label: "LANGUAGES",    value: " French · English · Arabic" },
+  { label: "FIRST SPARK",  value: "Zero-g flight with CNES, 2023" },
+  { label: "OFF THE CLOCK", value: "Sweet Potato Fries 🍠 and Soccer ⚽" },
 ];
 
 const fade = (delay = 0) => ({
@@ -47,8 +47,8 @@ export default function AboutV2() {
             className="text-xl md:text-2xl font-light text-[#e8dcc6] leading-relaxed"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            I&rsquo;m Omar &mdash; an aerospace engineering student at UCLA,
-            originally from Tunisia. I build rocket propulsion systems, but
+            I&rsquo;m Omar, an aerospace engineering student at UCLA,
+            originally from Tunisia 🇹🇳 and born in Reunion Island. I build rocket propulsion systems, but
             what actually pulls me in is the moment a design leaves the screen
             and becomes hardware that fires.
           </motion.p>
@@ -59,7 +59,7 @@ export default function AboutV2() {
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
             My path here wasn&rsquo;t a straight line. I caught the space bug
-            running experiments aboard a CNES zero-g flight over Bordeaux,
+            running experiments for a zero-g flight over Bordeaux,
             sharpened it winning national engineering competitions back home in
             Tunisia, and now I lead the feed system on UCLA&rsquo;s hybrid
             rocket. Every step taught me the same lesson: rigorous analysis
@@ -71,9 +71,9 @@ export default function AboutV2() {
             className="text-base md:text-lg text-[#a89876] font-light leading-relaxed"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            I do my best work with a hard problem, a test stand, and a team
+            I do my best work with a hard problem and a team
             that isn&rsquo;t afraid to be wrong on the way to being right. The
-            first endcap I designed leaked &mdash; fixing it taught me more than
+            first tank I built had a near catastrophic failure, threatening the entire project; fixing it taught me more than
             any lecture ever did.
           </motion.p>
         </div>
