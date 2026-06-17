@@ -328,7 +328,7 @@ The work turned "we think it's strong enough" into a defensible margin of safety
     ],
 
     media: [
-      { type: "image", file: "endcap_fea.png" },
+      { type: "image", file: "machining.jpg" },
     ],
   },
 ];
