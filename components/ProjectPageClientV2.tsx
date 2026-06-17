@@ -604,18 +604,26 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
             <section className="px-6 md:px-16 lg:px-24 pb-16">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {videos.map((v, i) => (
-                  <div key={i} className="border border-[#181410]">
-                    {v.type === "youtube" ? (
-                      <div className="aspect-video">
-                        <iframe src={`https://www.youtube.com/embed/${v.id}`}
-                          className="w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen />
-                      </div>
-                    ) : v.type === "video" ? (
-                      <video src={`${BASE}/projects/${project.slug}/${v.file}`}
-                        controls className="w-full" style={{ background: "#030303" }} />
-                    ) : null}
+                  <div key={i}>
+                    <div className="border border-[#181410]">
+                      {v.type === "youtube" ? (
+                        <div className="aspect-video">
+                          <iframe src={`https://www.youtube.com/embed/${v.id}`}
+                            className="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen />
+                        </div>
+                      ) : v.type === "video" ? (
+                        <video src={`${BASE}/projects/${project.slug}/${v.file}`}
+                          controls className="w-full" style={{ background: "#030303" }} />
+                      ) : null}
+                    </div>
+                    {v.caption && (
+                      <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
+                        style={{ fontFamily: "var(--font-geist-mono)" }}>
+                        {v.caption}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
