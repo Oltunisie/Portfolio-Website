@@ -48,7 +48,13 @@ export default function AboutV2() {
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
             I&rsquo;m Omar, an aerospace engineering student at UCLA,
-            originally from Tunisia 🇹🇳 and born in Reunion Island. I build rocket propulsion systems, but
+            originally from Tunisia
+            <img
+              src="/flag-tn.svg"
+              alt="Tunisian flag"
+              className="inline-block h-[0.8em] w-auto mx-1.5 align-[0.02em] rounded-[1px]"
+            />
+            and born in Reunion Island. I build rocket propulsion systems, but
             what actually pulls me in is the moment a design leaves the screen
             and becomes hardware that fires.
           </motion.p>
