@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { projects, type Project } from "@/data/projects";
+import { track } from "@/lib/track";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -83,6 +84,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <Link
         href={`/projects/${project.slug}`}
+        onClick={() => track(`project-open-${project.slug}`)}
         className="group block relative overflow-hidden h-[380px] md:h-[500px] border border-[#151208]
           hover:border-[#2e2010] transition-colors duration-500"
         style={{
@@ -248,7 +250,7 @@ export default function ProjectsV2() {
         className="mt-16 flex items-center gap-5"
       >
         <button
-          onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+          onClick={() => { track("cta-get-in-touch"); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
           className="group inline-flex items-center gap-3 px-7 py-3 border border-[#6b5a3e] hover:border-[#c4a97e] bg-[#0c0a06] hover:bg-[#c4a97e] text-[#cabb9f] hover:text-[#080603] text-[11px] tracking-[0.18em] rounded-sm transition-all duration-200"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >

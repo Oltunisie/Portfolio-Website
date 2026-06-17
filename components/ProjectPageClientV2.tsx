@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { projects, type Project } from "@/data/projects";
+import { track } from "@/lib/track";
 
 const ModelViewer        = dynamic(() => import("./ModelViewer"),        { ssr: false });
 const ExplodedViewer     = dynamic(() => import("./ExplodedViewer"),     { ssr: false });
@@ -228,7 +229,7 @@ function ModelSection({ src, title, explodedSrc }: { src: string; title: string;
             <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 z-10"
               style={{ fontFamily: "var(--font-geist-mono)" }}>
               <button
-                onClick={() => setIsExploded((v) => !v)}
+                onClick={() => setIsExploded((v) => { if (!v) track("3d-explode-toggle"); return !v; })}
                 className={`flex items-center gap-2 px-4 py-2 border text-[9px] tracking-[0.15em] transition-all duration-150 ${
                   isExploded
                     ? "border-[#c4a97e] text-[#c4a97e] bg-[#c4a97e]/10"
@@ -266,12 +267,12 @@ function ModelSection({ src, title, explodedSrc }: { src: string; title: string;
                   {v.label}
                 </button>
               ))}
-              <button onClick={() => setViewMode("section")}
+              <button onClick={() => { track("3d-cross-section"); setViewMode("section"); }}
                 className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
                 ✦ CROSS-SECTION
               </button>
               {explodedSrc && (
-                <button onClick={() => setViewMode("exploded")}
+                <button onClick={() => { track("3d-exploded-view"); setViewMode("exploded"); }}
                   className="px-3 py-1.5 bg-[#050505]/80 backdrop-blur border border-[#2e2010] hover:border-[#c4a97e] text-[9px] tracking-[0.15em] text-[#6b5a3e] hover:text-[#c4a97e] transition-all duration-150">
                   ✦ EXPLODED VIEW
                 </button>
@@ -354,7 +355,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
 
   const videos = (project.media ?? []).filter((m) => m.type === "video" || m.type === "youtube");
 
-  const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
+  const openLightbox = useCallback((src: string, alt: string) => { track("image-lightbox"); setLightbox({ src, alt }); }, []);
 
   // Build callout stats array (primary + optional secondary)
   const calloutPrimarySpec = project.specs?.find((s) =>
@@ -615,7 +616,8 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                         </div>
                       ) : v.type === "video" ? (
                         <video src={`${BASE}/projects/${project.slug}/${v.file}`}
-                          controls className="w-full" style={{ background: "#030303" }} />
+                          controls className="w-full" style={{ background: "#030303" }}
+                          onPlay={() => track(`video-play-${project.slug}-${v.file}`)} />
                       ) : null}
                     </div>
                     {v.caption && (
@@ -657,6 +659,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       <div className="grid grid-cols-2 border-t border-[#1a1208]">
         {prev ? (
           <Link href={`/projects/${prev.slug}`}
+            onClick={() => track(`project-prev-${prev.slug}`)}
             className="group flex flex-col gap-3 p-6 md:p-12 border-r border-[#1a1208] hover:bg-[#0a0804] transition-colors duration-300">
             <span className="text-[10px] tracking-[0.25em] text-[#7a6a4e] group-hover:text-[#c4a97e] transition-colors duration-200"
               style={{ fontFamily: "var(--font-geist-mono)" }}>
@@ -668,6 +671,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
         ) : <div />}
         {next ? (
           <Link href={`/projects/${next.slug}`}
+            onClick={() => track(`project-next-${next.slug}`)}
             className="group relative flex flex-col gap-3 p-6 md:p-12 text-right bg-[#0c0a06] hover:bg-[#16110a] transition-colors duration-300">
             {/* beige accent edge — signals this is the way forward */}
             <span aria-hidden className="absolute top-0 right-0 h-full w-[2px] bg-[#c4a97e]/40 group-hover:bg-[#c4a97e] transition-colors duration-200" />

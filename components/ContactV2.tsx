@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { track } from "@/lib/track";
 
 const EMAIL    = "olemkecher@ucla.edu";
 const GITHUB   = "https://github.com/Oltunisie";
@@ -103,6 +104,7 @@ export default function ContactV2() {
   const copyEmail = () => {
     navigator.clipboard.writeText(EMAIL);
     setCopied(true);
+    track("contact-email-copy");
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -117,6 +119,7 @@ export default function ContactV2() {
         { publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "" }
       );
       setStatus("sent");
+      track("contact-submit");
       setName(""); setEmail(""); setMsg("");
       setTimeout(() => setStatus("idle"), 5000);
     } catch {
@@ -310,6 +313,7 @@ export default function ContactV2() {
           value="Omar Lemkecher"
           sub="VIEW PROFILE ↗"
           href={LINKEDIN}
+          onClick={() => track("contact-linkedin")}
           delay={0.18}
           icon={<LinkedInIcon />}
         />
@@ -318,6 +322,7 @@ export default function ContactV2() {
           value="Oltunisie"
           sub="VIEW REPOS ↗"
           href={GITHUB}
+          onClick={() => track("contact-github")}
           delay={0.26}
           icon={<GitHubIcon />}
         />

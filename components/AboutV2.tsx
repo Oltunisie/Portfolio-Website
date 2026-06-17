@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { track } from "@/lib/track";
 
 /* ── Quick human facts (right column) ─────────────────────────────
    Grounded in real history — edit freely, these are yours to own. */
@@ -134,7 +135,7 @@ export default function AboutV2() {
       {/* ── Forward path → Projects ──────────────────────────────── */}
       <motion.div {...fade(0.1)} className="mt-16 flex items-center gap-5">
         <button
-          onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+          onClick={() => { track("cta-see-the-work"); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }}
           className="group inline-flex items-center gap-3 px-7 py-3 border border-[#6b5a3e] hover:border-[#c4a97e] bg-[#0c0a06] hover:bg-[#c4a97e] text-[#cabb9f] hover:text-[#080603] text-[11px] tracking-[0.18em] rounded-sm transition-all duration-200"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >

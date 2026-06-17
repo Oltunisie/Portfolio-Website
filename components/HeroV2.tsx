@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { track } from "@/lib/track";
 
 /* ─── animation helpers ──────────────────────────────────────── */
 const row = (i: number) => ({
@@ -150,9 +151,10 @@ export default function HeroV2() {
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
           <button
-            onClick={() =>
-              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={() => {
+              track("cta-view-projects");
+              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+            }}
             className="group inline-flex items-center gap-2.5 px-6 py-2.5 bg-[#c4a97e] hover:bg-[#e4c397] text-[#080603] font-medium text-[11px] tracking-[0.15em] rounded-sm shadow-[0_0_20px_rgba(196,169,126,0.25)] hover:shadow-[0_0_28px_rgba(196,169,126,0.45)] transition-all duration-200"
           >
             VIEW PROJECTS
@@ -165,6 +167,7 @@ export default function HeroV2() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track("resume-view")}
             className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#6b5a3e] hover:border-[#c4a97e] text-[#cabb9f] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
           >
             RESUME
@@ -174,9 +177,10 @@ export default function HeroV2() {
           </a>
 
           <button
-            onClick={() =>
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={() => {
+              track("cta-contact");
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+            }}
             className="group inline-flex items-center gap-2.5 px-6 py-2.5 border border-[#6b5a3e] hover:border-[#c4a97e] text-[#cabb9f] hover:text-[#c4a97e] text-[11px] tracking-[0.15em] rounded-sm transition-colors duration-200"
           >
             CONTACT
