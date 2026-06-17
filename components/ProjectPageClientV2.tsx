@@ -646,23 +646,31 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       )}
 
       {/* ── Prev / Next ───────────────────────────────────────── */}
-      <div className="grid grid-cols-2 border-t border-[#0f0d09]">
+      <div className="grid grid-cols-2 border-t border-[#1a1208]">
         {prev ? (
           <Link href={`/projects/${prev.slug}`}
-            className="group flex flex-col gap-3 p-6 md:p-12 border-r border-[#0f0d09] hover:bg-[#080603] transition-colors duration-300">
-            <span className="text-[9px] tracking-[0.25em] text-[#2a1f10] group-hover:text-[#c4a97e] transition-colors duration-200"
-              style={{ fontFamily: "var(--font-geist-mono)" }}>← PREVIOUS</span>
-            <span className="text-lg font-light text-[#4a3824] group-hover:text-[#c8bfb0] transition-colors duration-200"
+            className="group flex flex-col gap-3 p-6 md:p-12 border-r border-[#1a1208] hover:bg-[#0a0804] transition-colors duration-300">
+            <span className="text-[10px] tracking-[0.25em] text-[#7a6a4e] group-hover:text-[#c4a97e] transition-colors duration-200"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>
+              <span className="inline-block transition-transform duration-150 group-hover:-translate-x-1">←</span> PREVIOUS PROJECT
+            </span>
+            <span className="text-lg md:text-xl font-light text-[#9a8a6a] group-hover:text-[#f0e6d3] transition-colors duration-200"
               style={{ fontFamily: "var(--font-space-grotesk)" }}>{prev.title}</span>
           </Link>
         ) : <div />}
         {next ? (
           <Link href={`/projects/${next.slug}`}
-            className="group flex flex-col gap-3 p-6 md:p-12 text-right hover:bg-[#080603] transition-colors duration-300">
-            <span className="text-[9px] tracking-[0.25em] text-[#2a1f10] group-hover:text-[#c4a97e] transition-colors duration-200"
-              style={{ fontFamily: "var(--font-geist-mono)" }}>NEXT →</span>
-            <span className="text-lg font-light text-[#4a3824] group-hover:text-[#c8bfb0] transition-colors duration-200"
+            className="group relative flex flex-col gap-3 p-6 md:p-12 text-right bg-[#0c0a06] hover:bg-[#16110a] transition-colors duration-300">
+            {/* beige accent edge — signals this is the way forward */}
+            <span aria-hidden className="absolute top-0 right-0 h-full w-[2px] bg-[#c4a97e]/40 group-hover:bg-[#c4a97e] transition-colors duration-200" />
+            <span className="text-[10px] tracking-[0.25em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>
+              NEXT PROJECT <span className="inline-block transition-transform duration-150 group-hover:translate-x-1">→</span>
+            </span>
+            <span className="text-lg md:text-2xl font-light text-[#e8dcc6] group-hover:text-[#c4a97e] transition-colors duration-200"
               style={{ fontFamily: "var(--font-space-grotesk)" }}>{next.title}</span>
+            <span className="text-[10px] tracking-[0.2em] text-[#6b5a3e] group-hover:text-[#8a7a5a] transition-colors duration-200"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>VIEW DOSSIER →</span>
           </Link>
         ) : <div />}
       </div>

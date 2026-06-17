@@ -74,7 +74,7 @@ function ContactCard({
 
         {/* Label row */}
         <div className="flex items-center justify-between mb-4">
-          <p className="text-[9px] tracking-[0.3em] text-[#7a6a54] group-hover:text-[#c4a97e] transition-colors duration-200"
+          <p className="text-[11px] tracking-[0.3em] text-[#7a6a54] group-hover:text-[#c4a97e] transition-colors duration-200"
             style={{ fontFamily: MONO }}>{label}</p>
           {icon && (
             <span className="text-[#4a3824] group-hover:text-[#c4a97e] transition-colors duration-200">
@@ -83,7 +83,7 @@ function ContactCard({
           )}
         </div>
 
-        <p className="text-base font-light text-[#c8bfb0] group-hover:text-[#f0e6d3] transition-colors duration-200 mb-2 break-all"
+        <p className="text-lg font-light text-[#d4cbb8] group-hover:text-[#f0e6d3] transition-colors duration-200 mb-2 break-all"
           style={{ fontFamily: SANS }}>{value}</p>
         <p className="text-[10px] tracking-[0.15em] text-[#5a4a30] group-hover:text-[#8a7a5a] transition-colors duration-200"
           style={{ fontFamily: MONO }}>{sub}</p>
@@ -143,7 +143,7 @@ export default function ContactV2() {
         <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]" style={{ fontFamily: MONO }}>
           // 05
         </span>
-        <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight" style={{ fontFamily: SANS }}>
+        <h2 className="text-4xl md:text-5xl font-light text-[#f0e6d3] tracking-tight" style={{ fontFamily: SANS }}>
           Contact
         </h2>
         <div className="flex-1 h-px bg-[#1e1810]" />
@@ -167,7 +167,7 @@ export default function ContactV2() {
             <span className="text-[#c4a97e]">something</span><br />
             that flies.
           </h3>
-          <p className="text-base text-[#8a7a5a] leading-relaxed max-w-sm" style={{ fontFamily: SANS }}>
+          <p className="text-lg text-[#a89572] leading-relaxed max-w-md" style={{ fontFamily: SANS }}>
             Open to internship opportunities, research collaborations,
             and conversations about aerospace, propulsion, and engineering.
           </p>
@@ -182,25 +182,25 @@ export default function ContactV2() {
           className="md:col-span-2 flex flex-col justify-center border border-[#241e14]"
         >
           <div className="px-6 py-4 border-b border-[#241e14] flex items-center justify-between">
-            <span className="text-[9px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>STATUS</span>
-            <span className="flex items-center gap-2 text-[9px] tracking-[0.15em] text-[#c4a97e]" style={{ fontFamily: MONO }}>
+            <span className="text-[11px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>STATUS</span>
+            <span className="flex items-center gap-2 text-[11px] tracking-[0.15em] text-[#c4a97e]" style={{ fontFamily: MONO }}>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               AVAILABLE
             </span>
           </div>
           <div className="px-6 py-4 border-b border-[#241e14] flex items-center justify-between">
-            <span className="text-[9px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>SEEKING</span>
-            <span className="text-[9px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>SUMMER 2026 INTERNSHIP</span>
+            <span className="text-[11px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>SEEKING</span>
+            <span className="text-[11px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>SUMMER 2026 INTERNSHIP</span>
           </div>
           <div className="px-6 py-4 border-b border-[#241e14] flex items-center justify-between">
-            <span className="text-[9px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>LOCAL TIME</span>
-            <span className="text-[9px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>
+            <span className="text-[11px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>LOCAL TIME</span>
+            <span className="text-[11px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>
               <LAClock /> · PST
             </span>
           </div>
           <div className="px-6 py-4 flex items-center justify-between">
-            <span className="text-[9px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>RESPONSE</span>
-            <span className="text-[9px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>&lt; 24 HOURS</span>
+            <span className="text-[11px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>RESPONSE</span>
+            <span className="text-[11px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>&lt; 24 HOURS</span>
           </div>
         </motion.div>
       </div>
@@ -216,17 +216,17 @@ export default function ContactV2() {
         <div className="flex items-center justify-between px-6 py-3 border-b border-[#241e14]"
           style={{ fontFamily: MONO }}>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="text-[9px] tracking-[0.25em] text-[#c4a97e]">◆ NEW TRANSMISSION</span>
-            <span className="text-[9px] tracking-[0.15em] text-[#6b5a3e] hidden sm:inline">TO: {EMAIL}</span>
+            <span className="text-[11px] tracking-[0.25em] text-[#c4a97e]">◆ NEW TRANSMISSION</span>
+            <span className="text-[11px] tracking-[0.15em] text-[#6b5a3e] hidden sm:inline">TO: {EMAIL}</span>
           </div>
-          <span className="text-[8px] tracking-[0.2em] text-[#4a3824] hidden md:inline">SECURE CHANNEL</span>
+          <span className="text-[10px] tracking-[0.2em] text-[#4a3824] hidden md:inline">SECURE CHANNEL</span>
         </div>
 
         <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#241e14]">
           {/* Left col: name + email */}
           <div className="divide-y divide-[#241e14]">
             <div className="px-6 py-5">
-              <label className="block text-[9px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
+              <label className="block text-[11px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
                 YOUR NAME
               </label>
               <input
@@ -239,7 +239,7 @@ export default function ContactV2() {
               />
             </div>
             <div className="px-6 py-5">
-              <label className="block text-[9px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
+              <label className="block text-[11px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
                 YOUR EMAIL <span className="text-[#c4a97e]">*</span>
               </label>
               <input
@@ -255,7 +255,7 @@ export default function ContactV2() {
 
           {/* Right col: message */}
           <div className="px-6 py-5 flex flex-col">
-            <label className="block text-[9px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
+            <label className="block text-[11px] tracking-[0.25em] text-[#7a6a54] mb-3" style={{ fontFamily: MONO }}>
               MESSAGE <span className="text-[#c4a97e]">*</span>
             </label>
             <textarea
@@ -270,7 +270,7 @@ export default function ContactV2() {
         </div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-6 py-4 border-t border-[#241e14]">
-          <span className="text-[9px] tracking-[0.15em] text-[#5a4a30]" style={{ fontFamily: MONO }}>
+          <span className="text-[11px] tracking-[0.15em] text-[#5a4a30]" style={{ fontFamily: MONO }}>
             {status === "error"
               ? "⚠ TRANSMISSION FAILED — TRY AGAIN"
               : "SENT DIRECTLY — NO OUTLOOK"}
@@ -333,12 +333,12 @@ export default function ContactV2() {
         style={{ fontFamily: MONO }}
       >
         <div className="flex items-center gap-6">
-          <span className="text-[9px] tracking-[0.3em] text-[#4a3824]">◆ OL-001</span>
-          <span className="text-[9px] tracking-[0.2em] text-[#4a3824]">
+          <span className="text-[11px] tracking-[0.3em] text-[#4a3824]">◆ OL-001</span>
+          <span className="text-[11px] tracking-[0.2em] text-[#4a3824]">
             OMAR LEMKECHER · UCLA SAMUELI SCHOOL OF ENGINEERING
           </span>
         </div>
-        <span className="text-[9px] tracking-[0.2em] text-[#3a2e1e]">
+        <span className="text-[11px] tracking-[0.2em] text-[#3a2e1e]">
           LOS ANGELES · CALIFORNIA · 2026
         </span>
       </motion.div>
