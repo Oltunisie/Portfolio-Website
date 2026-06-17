@@ -2,93 +2,82 @@
 
 import { useEffect, useRef, useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
+
 type PartData = {
-  obj: THREE_Object3D;
-  origin: THREE_Vector3;
-  target: THREE_Vector3;
+  obj:    Any;   // THREE.Object3D
+  origin: Any;   // THREE.Vector3 — assembled position
+  target: Any;   // THREE.Vector3 — exploded position
 };
 
-// Loose types so we don't need full Three.js type imports at compile time
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type THREE_Object3D = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type THREE_Vector3  = any;
-
-interface ViewerState {
-  renderer:       unknown;
-  camera:         unknown;
-  controls:       unknown;
-  parts:          PartData[];
-  animFrame:      number;
-  progress:       number;   // current (animated)
-  target:         number;   // 0 = assembled, 1 = exploded
-}
-
-/* Walk the scene hierarchy to find the best level to explode.
-   Strategy: find the deepest level with ≥2 children that contain meshes.
-   Fallback: if assembly is flat, explode individual meshes directly. */
-function findExplodableParts(root: THREE_Object3D): THREE_Object3D[] {
-  function hasMesh(obj: THREE_Object3D): boolean {
-    if (obj.isMesh) return true;
-    return (obj.children ?? []).some((c: THREE_Object3D) => hasMesh(c));
-  }
-
-  function childrenWithMeshes(obj: THREE_Object3D): THREE_Object3D[] {
-    return (obj.children ?? []).filter(hasMesh);
-  }
-
-  // Walk down, collecting best candidate (most children at any level)
-  let best: THREE_Object3D[] = [];
-  let queue: THREE_Object3D[] = [root];
-
-  for (let depth = 0; depth < 12; depth++) {
-    const next: THREE_Object3D[] = [];
-    for (const node of queue) {
-      const kids = childrenWithMeshes(node);
-      if (kids.length > best.length) best = kids;
-      next.push(...kids);
-    }
-    if (next.length === 0) break;
-    queue = next;
-  }
-
-  // If best is just one part (flat GLB), fall back to individual meshes
-  if (best.length <= 1) {
-    const meshes: THREE_Object3D[] = [];
-    root.traverse((c: THREE_Object3D) => { if (c.isMesh) meshes.push(c); });
-    if (meshes.length > 1) return meshes;
-  }
-
-  return best.length > 0 ? best : [root];
-}
-
 export default function ExplodedViewer({
-  src, exploded, onLoad,
+  src,
+  exploded,
+  onLoad,
 }: {
   src:      string;
   exploded: boolean;
   onLoad?:  () => void;
 }) {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const stateRef = useRef<ViewerState | null>(null);
-  const [ready,  setReady]  = useState(false);
-  const [error,  setError]  = useState(false);
+  const mountRef   = useRef<HTMLDivElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
 
-  /* ── Bootstrap Three.js ───────────────────────────────────────── */
+  // progress: 0 = assembled, 1 = fully exploded (spring-animated)
+  const progressRef = useRef(0);
+  const targetRef   = useRef(0);
+  const partsRef    = useRef<PartData[]>([]);
+
+  const [status, setStatus] = useState("INITIALIZING…");
+  const [ready,  setReady]  = useState(false);
+  const [error,  setError]  = useState<string | null>(null);
+
   useEffect(() => {
-    if (!mountRef.current) return;
     const el = mountRef.current;
+    if (!el) { console.error("[ExplodedViewer] mountRef is null"); return; }
     let alive = true;
+    let animFrame = 0;
+
+    const log = (msg: string) => {
+      console.log(`[ExplodedViewer] ${msg}`);
+      if (alive) setStatus(msg);
+    };
+    const fail = (msg: string, raw?: unknown) => {
+      console.error(`[ExplodedViewer] FAIL: ${msg}`, raw ?? "");
+      if (alive) setError(msg);
+    };
 
     (async () => {
       try {
-        const THREE      = await import("three");
-        const { GLTFLoader }    = await import("three/addons/loaders/GLTFLoader.js" as never) as { GLTFLoader: new () => { load: (...a: unknown[]) => void } };
-        const { OrbitControls } = await import("three/addons/controls/OrbitControls.js" as never) as { OrbitControls: new (cam: unknown, dom: HTMLElement) => unknown & { enableDamping: boolean; dampingFactor: number; autoRotate: boolean; autoRotateSpeed: number; update(): void; dispose(): void } };
-
+        log("Importing three…");
+        const THREE = await import("three");
         if (!alive) return;
 
-        /* ── Renderer ── */
+        log("Importing GLTFLoader…");
+        const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js" as never) as {
+          GLTFLoader: new () => {
+            load(url: string, ok: (g: Any) => void, prog: undefined, err: (e: Any) => void): void;
+          };
+        };
+        if (!alive) return;
+
+        log("Importing OrbitControls…");
+        const { OrbitControls } = await import("three/addons/controls/OrbitControls.js" as never) as {
+          OrbitControls: new (cam: Any, dom: HTMLElement) => {
+            enableDamping: boolean; dampingFactor: number; autoRotate: boolean; autoRotateSpeed: number;
+            maxDistance: number; minDistance: number;
+            update(): void; dispose(): void;
+          };
+        };
+        if (!alive) return;
+
+        log(`Canvas size: ${el.clientWidth}×${el.clientHeight}`);
+        if (el.clientWidth === 0 || el.clientHeight === 0) {
+          fail("Container has zero size — layout not ready");
+          return;
+        }
+
+        log("Creating WebGLRenderer…");
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(el.clientWidth, el.clientHeight);
@@ -96,173 +85,224 @@ export default function ExplodedViewer({
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.2;
         el.appendChild(renderer.domElement);
+        log("Renderer mounted");
 
-        /* ── Scene + Lights ── */
         const scene = new THREE.Scene();
         scene.add(new THREE.AmbientLight(0xfff8f0, 1.2));
-
         const sun = new THREE.DirectionalLight(0xffffff, 2.5);
         sun.position.set(4, 8, 5);
         scene.add(sun);
-
         const fill = new THREE.DirectionalLight(0xd0e8ff, 0.8);
         fill.position.set(-6, -2, -4);
         scene.add(fill);
-
         const rim = new THREE.DirectionalLight(0xfff0d0, 0.4);
         rim.position.set(0, -5, 6);
         scene.add(rim);
 
-        /* ── Camera ── */
         const camera = new THREE.PerspectiveCamera(42, el.clientWidth / el.clientHeight, 0.001, 2000);
         camera.position.set(0, 0.5, 3);
 
-        /* ── Controls ── */
         const controls = new OrbitControls(camera, renderer.domElement);
-        (controls as { enableDamping: boolean }).enableDamping = true;
-        (controls as { dampingFactor: number }).dampingFactor = 0.06;
-        (controls as { autoRotate: boolean }).autoRotate = true;
-        (controls as { autoRotateSpeed: number }).autoRotateSpeed = 0.6;
+        controls.enableDamping  = true;
+        controls.dampingFactor  = 0.06;
+        controls.autoRotate     = true;
+        controls.autoRotateSpeed = 0.6;
 
-        /* ── Load GLB ── */
+        log(`Fetching GLB: ${src}`);
         const loader = new GLTFLoader();
-        loader.load(src, (gltf: { scene: THREE_Object3D }) => {
-          if (!alive) return;
+        loader.load(
+          src,
+          (gltf: Any) => {
+            if (!alive) return;
+            log("GLB loaded OK");
 
-          const model = gltf.scene;
+            const model = gltf.scene;
 
-          /* ── Center model ── */
-          const box    = new THREE.Box3().setFromObject(model);
-          const center = new THREE.Vector3();
-          box.getCenter(center);
-          model.position.sub(center);
-          scene.add(model);
+            // ── Count nodes / meshes ──────────────────────────────
+            let nodeCount = 0;
+            let meshCount = 0;
+            model.traverse((c: Any) => {
+              nodeCount++;
+              if (c.isMesh) meshCount++;
+            });
+            log(`Scene has ${nodeCount} nodes, ${meshCount} meshes`);
 
-          /* Fit camera — zoomed in */
-          const size = box.getSize(new THREE.Vector3()).length();
-          camera.position.set(0, size * 0.15, size * 0.95);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (controls as any).maxDistance = size * 6;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (controls as any).minDistance = size * 0.2;
-
-          /* Find explodable parts */
-          const rawParts = findExplodableParts(model);
-
-          /* Scene center for explosion directions */
-          const sceneCtr = new THREE.Vector3();
-          new THREE.Box3().setFromObject(model).getCenter(sceneCtr);
-
-          const parts: PartData[] = rawParts.map((part: THREE_Object3D) => {
-            const pb  = new THREE.Box3().setFromObject(part);
-            const pc  = new THREE.Vector3();
-            pb.getCenter(pc);
-
-            let dir = pc.clone().sub(sceneCtr);
-            if (dir.length() < 0.0001) {
-              dir = new THREE.Vector3(
-                Math.random() - 0.5,
-                Math.random() - 0.5,
-                Math.random() - 0.5,
-              );
+            if (meshCount === 0) {
+              fail("GLB has 0 meshes — nothing to explode");
+              return;
             }
-            dir.normalize();
 
+            // ── Center model ──────────────────────────────────────
+            const box    = new THREE.Box3().setFromObject(model);
+            const center = new THREE.Vector3();
+            box.getCenter(center);
+            model.position.sub(center);
+            scene.add(model);
+
+            const size = box.getSize(new THREE.Vector3()).length();
+            log(`Model size: ${size.toFixed(3)}`);
+
+            camera.position.set(0, size * 0.15, size * 0.95);
+            controls.maxDistance = size * 6;
+            controls.minDistance = size * 0.2;
+
+            // ── Find explodable parts ─────────────────────────────
+            // Strategy: walk hierarchy to find the level with the most
+            // mesh-containing children. Fall back to individual meshes.
+            const hasMesh = (obj: Any): boolean =>
+              obj.isMesh || (obj.children ?? []).some(hasMesh);
+
+            const childrenWithMeshes = (obj: Any): Any[] =>
+              (obj.children ?? []).filter(hasMesh);
+
+            let best: Any[] = [];
+            let queue: Any[] = [model];
+            for (let depth = 0; depth < 12; depth++) {
+              const next: Any[] = [];
+              for (const node of queue) {
+                const kids = childrenWithMeshes(node);
+                if (kids.length > best.length) best = kids;
+                next.push(...kids);
+              }
+              if (next.length === 0) break;
+              queue = next;
+            }
+            log(`Best hierarchy level: ${best.length} parts`);
+
+            // If only one group found, go to individual meshes
+            if (best.length <= 1) {
+              const meshes: Any[] = [];
+              model.traverse((c: Any) => { if (c.isMesh) meshes.push(c); });
+              log(`Falling back to ${meshes.length} individual meshes`);
+              best = meshes.length > 1 ? meshes : best;
+            }
+
+            if (best.length === 0) {
+              fail("Could not find any explodable parts in this GLB");
+              return;
+            }
+
+            log(`Exploding ${best.length} parts`);
+
+            // ── Compute explosion vectors ─────────────────────────
+            const sceneCtr = new THREE.Vector3();
+            new THREE.Box3().setFromObject(model).getCenter(sceneCtr);
             const explodeDistance = size * 0.85;
 
-            return {
-              obj:    part,
-              origin: part.position.clone(),
-              target: part.position.clone().addScaledVector(dir, explodeDistance),
-            };
-          });
+            const parts: PartData[] = best.map((part: Any, i: number) => {
+              const pb = new THREE.Box3().setFromObject(part);
+              const pc = new THREE.Vector3();
+              pb.getCenter(pc);
 
-          const state: ViewerState = {
-            renderer, camera, controls, parts,
-            animFrame: 0,
-            progress: 0,
-            target:   0,
-          };
-          stateRef.current = state;
+              let dir = pc.clone().sub(sceneCtr);
+              if (dir.length() < 0.0001) {
+                // Part sits exactly at center — give it a pseudo-random direction
+                const angle = (i / best.length) * Math.PI * 2;
+                dir = new THREE.Vector3(Math.cos(angle), (i % 3) - 1, Math.sin(angle));
+              }
+              dir.normalize();
 
-          /* ── Render loop ── */
-          const animate = () => {
-            if (!alive) return;
-            state.animFrame = requestAnimationFrame(animate);
-
-            /* Spring-like lerp toward target */
-            state.progress += (state.target - state.progress) * 0.055;
-
-            state.parts.forEach(({ obj, origin, target }) => {
-              obj.position.lerpVectors(origin, target, state.progress);
+              return {
+                obj:    part,
+                origin: part.position.clone(),
+                target: part.position.clone().addScaledVector(dir, explodeDistance),
+              };
             });
 
-            (controls as { update(): void }).update();
-            renderer.render(scene, camera);
-          };
-          animate();
+            partsRef.current = parts;
+            log(`Part vectors computed (explode distance: ${explodeDistance.toFixed(3)})`);
 
-          setReady(true);
-          onLoad?.();
-        },
-        undefined,
-        (err: unknown) => { console.error("GLB load error:", err, "src:", src); setError(true); });
+            // ── Render loop ───────────────────────────────────────
+            const animate = () => {
+              if (!alive) return;
+              animFrame = requestAnimationFrame(animate);
 
-        /* ── Resize ── */
+              // Spring toward target (0 = assembled, 1 = exploded)
+              progressRef.current += (targetRef.current - progressRef.current) * 0.055;
+
+              for (const { obj, origin, target } of partsRef.current) {
+                obj.position.lerpVectors(origin, target, progressRef.current);
+              }
+
+              controls.update();
+              renderer.render(scene, camera);
+            };
+            animate();
+
+            log("READY");
+            setReady(true);
+            onLoad?.();
+          },
+          undefined,
+          (err: Any) => {
+            fail(`GLB load error: ${err?.message ?? String(err)}`, err);
+          },
+        );
+
         const onResize = () => {
-          if (!el || !stateRef.current) return;
-          const { camera: cam, renderer: ren } = stateRef.current as { camera: { aspect: number; updateProjectionMatrix(): void }; renderer: { setSize(w: number, h: number): void } };
-          cam.aspect = el.clientWidth / el.clientHeight;
-          cam.updateProjectionMatrix();
-          ren.setSize(el.clientWidth, el.clientHeight);
+          if (!el) return;
+          camera.aspect = el.clientWidth / el.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(el.clientWidth, el.clientHeight);
         };
         window.addEventListener("resize", onResize);
 
-        /* Store cleanup handles */
-        if (!stateRef.current) {
-          stateRef.current = { renderer, camera, controls, parts: [], animFrame: 0, progress: 0, target: 0 };
-        }
-        return () => window.removeEventListener("resize", onResize);
+        cleanupRef.current = () => {
+          window.removeEventListener("resize", onResize);
+          cancelAnimationFrame(animFrame);
+          renderer.dispose();
+          controls.dispose();
+          if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement);
+        };
 
-      } catch {
-        setError(true);
+      } catch (e) {
+        fail(`Unexpected error: ${(e as Error)?.message ?? String(e)}`, e);
       }
     })();
 
     return () => {
       alive = false;
-      if (stateRef.current) {
-        cancelAnimationFrame(stateRef.current.animFrame);
-        (stateRef.current.renderer as { dispose(): void }).dispose();
-        (stateRef.current.controls as { dispose(): void }).dispose();
-      }
-      el.innerHTML = "";
+      cleanupRef.current?.();
     };
-  }, [src]); // eslint-disable-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [src]);
 
-  /* ── Sync explode state → animation target ───────────────────── */
+  // Sync exploded prop → animation target without re-mounting
   useEffect(() => {
-    if (stateRef.current) stateRef.current.target = exploded ? 1 : 0;
+    targetRef.current = exploded ? 1 : 0;
+    console.log(`[ExplodedViewer] target set to ${targetRef.current}`);
   }, [exploded]);
 
   return (
     <div className="relative w-full h-full bg-[#030303] overflow-hidden">
-      <div ref={mountRef} className="w-full h-full absolute inset-0" />
+      {/* Three.js canvas target */}
+      <div ref={mountRef} className="absolute inset-0" />
 
+      {/* Loading spinner with live step label */}
       {!ready && !error && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-[10px] tracking-[0.3em] text-[#c4a97e] animate-pulse"
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 pointer-events-none">
+          <div className="w-5 h-5 border-2 border-[#c4a97e] border-t-transparent rounded-full animate-spin" />
+          <span className="text-[10px] tracking-[0.3em] text-[#c4a97e] max-w-xs text-center"
             style={{ fontFamily: "var(--font-geist-mono)" }}>
-            LOADING MODEL…
+            {status}
           </span>
         </div>
       )}
 
+      {/* Error state */}
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-[10px] tracking-[0.2em] text-[#3a2e1e]"
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none px-10">
+          <span className="text-[10px] tracking-[0.25em] text-red-400"
             style={{ fontFamily: "var(--font-geist-mono)" }}>
-            MODEL UNAVAILABLE
+            LOAD ERROR
+          </span>
+          <span className="text-[9px] text-[#5a3030] text-center leading-relaxed"
+            style={{ fontFamily: "var(--font-geist-mono)" }}>
+            {error}
+          </span>
+          <span className="text-[8px] text-[#3a2020] tracking-widest"
+            style={{ fontFamily: "var(--font-geist-mono)" }}>
+            CHECK CONSOLE FOR DETAILS
           </span>
         </div>
       )}
