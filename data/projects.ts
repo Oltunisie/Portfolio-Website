@@ -118,6 +118,7 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
       { file: "me_and_endcap.PNG", caption: "Endcap integration" },
       { file: "endcap_removal.PNG", caption: "Endcap removal after testing" },
       { file: "waterflow1.png", caption: "Pressure vs time during cold flow test" },
+      { file: "waterflow_vid.mp4", caption: "Cold-flow / water-flow test" },
     ],
 
     media: [
@@ -322,9 +323,18 @@ There was no room for "looks strong enough." Every load path had to be backed by
 
 The work turned "we think it's strong enough" into a defensible margin of safety backed by two independent methods and a physical proof test — the standard real aerospace pressure vessels are held to.`,
 
+    design: [
+      { file: "tank_wall_calcs.png", caption: "Tank wall hoop & longitudinal stress hand calculations" },
+      { file: "bolt_calcs.png", caption: "Endcap bolt-circle sizing calculations" },
+    ],
+
     analysis: [
       { file: "endcap_fea.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
       { file: "bracket_fea.png", caption: "Support bracket FEA under combined loading" },
+    ],
+
+    tests: [
+      { file: "hydrostat.png", caption: "Hydrostatic proof test — 1125 psi (1.5× MEOP), zero leaks" },
     ],
 
     media: [

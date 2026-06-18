@@ -11,6 +11,7 @@ const ModelViewer        = dynamic(() => import("./ModelViewer"),        { ssr: 
 const ExplodedViewer     = dynamic(() => import("./ExplodedViewer"),     { ssr: false });
 const CrossSectionViewer = dynamic(() => import("./CrossSectionViewer"), { ssr: false });
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const isVideoFile = (f: string) => /\.(mp4|webm|mov)$/i.test(f);
 
 /* ─── Redacted-decode animation ─────────────────────────────── */
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789█▓▒░";
@@ -581,19 +582,34 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                 {project.tests.map((img, i) => (
                   <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                     viewport={{ once: true }} transition={{ duration: 0.5 }}>
-                    <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
-                      className="group block w-full text-left">
-                      <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
-                          className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                    {isVideoFile(img.file) ? (
+                      <div>
+                        <div className="overflow-hidden border border-[#181410]">
+                          <video src={`${BASE}/projects/${project.slug}/${img.file}`} controls
+                            className="w-full h-56 object-cover" style={{ background: "#030303" }} />
+                        </div>
+                        {img.caption && (
+                          <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
+                            style={{ fontFamily: "var(--font-geist-mono)" }}>
+                            {img.caption}
+                          </p>
+                        )}
                       </div>
-                      {img.caption && (
-                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
-                          style={{ fontFamily: "var(--font-geist-mono)" }}>
-                          {img.caption}
-                        </p>
-                      )}
-                    </button>
+                    ) : (
+                      <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                        className="group block w-full text-left">
+                        <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                          <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                            className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                        </div>
+                        {img.caption && (
+                          <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
+                            style={{ fontFamily: "var(--font-geist-mono)" }}>
+                            {img.caption}
+                          </p>
+                        )}
+                      </button>
+                    )}
                   </motion.div>
                 ))}
               </div>
