@@ -676,6 +676,38 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
         </div>
       ))}
 
+      {/* ── Project slides (embedded PDF) ─────────────────────── */}
+      {project.slidesPdf && (
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="flex items-center gap-6 mb-8">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// DECK</span>
+            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>Project Slides</h2>
+            <div className="flex-1 h-px bg-[#1a1208]" />
+          </div>
+          <div className="border border-[#181410] bg-[#030303]">
+            <iframe
+              src={`${BASE}/projects/${project.slug}/${project.slidesPdf}`}
+              title="Project slides"
+              className="w-full h-[70vh]"
+            />
+          </div>
+          <div className="mt-4">
+            <a
+              href={`${BASE}/projects/${project.slug}/${project.slidesPdf}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track(`slides-open-${project.slug}`)}
+              className="group inline-flex items-center gap-2 px-5 py-2.5 border border-[#6b5a3e] hover:border-[#c4a97e] hover:bg-[#c4a97e] text-[11px] tracking-[0.18em] text-[#cabb9f] hover:text-[#080603] rounded-sm transition-colors duration-200"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>
+              OPEN SLIDES FULLSCREEN
+              <span className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+            </a>
+          </div>
+        </section>
+      )}
+
       {/* ── Failures & Solutions ──────────────────────────────── */}
       {project.failures && (
         <section className="py-20 px-6 md:px-16 lg:px-24">

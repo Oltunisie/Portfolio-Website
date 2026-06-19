@@ -31,6 +31,7 @@ export type Project = {
   process?: ProcessStep[];
   outcome?: string;
   failures?: { body: string; images?: { file: string; caption?: string }[] };
+  slidesPdf?: string;      // PDF slideshow filename in public/projects/<slug>/
   model3d?: string;        // .glb filename in public/projects/<slug>/
   model3dExploded?: string; // exploded view .glb (same folder)
   // Drop files in public/projects/<slug>/ then list them here
@@ -136,65 +137,71 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
   },
 
   {
-    slug: "cubesat-adcs-bruinspace",
+    slug: "automatic-syringe-pump",
     specs: [
-      { label: "FORMAT",        value: "CubeSat"                     },
-      { label: "CONTROL",       value: "3-Axis Active"               },
-      { label: "ACTUATORS",     value: "Magnetorquers + Reaction Wheel" },
-      { label: "SENSORS",       value: "Magnetometer · Sun Sensor · Gyro" },
-      { label: "ORBIT",         value: "Low Earth Orbit"             },
-      { label: "STATUS",        value: "In Development"              },
+      { label: "SCHOOL",      value: "Lycée Pierre Mendès France, Tunis" },
+      { label: "COURSE",      value: "Engineering Sciences (11th grade)" },
+      { label: "CONTROL",     value: "Arduino + Phone App"               },
+      { label: "ACTUATION",   value: "Stepper Motor, Rack & Pinion"      },
+      { label: "FABRICATION", value: "3D Printed + Laser-Cut Enclosure"  },
+      { label: "BUILT",       value: "From Scratch in ~4 Weeks"          },
     ],
-    title: "CubeSat ADCS, BruinSpace",
+    title: "Automatic Syringe Pump",
     description:
-      "Leading design and development of the Attitude Determination and Control System for UCLA BruinSpace's satellite. Built the ADCS test setup to validate sensors, actuators, and control algorithms, and coordinating integration across electronics and structures subsystems.",
-    tags: ["ADCS", "Control Systems", "Sensors", "Embedded", "Satellite"],
-    github: "https://github.com/Oltunisie",
-    period: "2025 – Present",
-    status: "In Progress",
+      "My first full engineering project, built from scratch in 11th-grade Engineering Sciences at Lycée Pierre Mendès France in Tunis. An automatic syringe pump that delivers a controlled infusion to hospitalized patients with minimal human action, driven by a stepper-motor rack-and-pinion and controlled from a phone app. This was the project that made me fall in love with engineering.",
+    tags: ["Arduino", "CAD", "3D Printing", "Mechatronics", "App", "High School"],
+    period: "2024",
+    status: "Completed",
 
-    problem: `BruinSpace is developing a CubeSat with a mission that requires precise attitude control in orbit. Without a functional ADCS, the satellite cannot point its payload, maintain a stable communication link, or meet mission objectives. The challenge is designing a system that is small enough to fit within CubeSat volume constraints, power-efficient enough to run continuously on a small solar array, and reliable enough to operate autonomously in the harsh environment of low Earth orbit.
+    problem: `The class theme was "Assistive Products for Health and Safety." Hospitalized patients often need a continuous, precisely dosed infusion, and doing that by hand is tedious and error-prone. Our objective was to design an automatic syringe pump that administers an infusion by adjustable parameters (time, quantity, flow rate), limiting human action to reduce both effort and the risk of error.
 
-The ADCS must handle detumbling after deployment, transition to a stable pointing mode, and interface cleanly with the avionics and structures subsystems, all with limited heritage and a student team.`,
+This was the first time I took a project through the complete engineering cycle, from a blank page and a need, all the way to a working prototype.`,
 
     goals: [
-      "Design a 3-axis Attitude Determination and Control System for a CubeSat within volume and power constraints",
-      "Select and integrate sensors (magnetometers, sun sensors, gyroscopes) and actuators (magnetorquers, reaction wheels)",
-      "Develop and simulate detumbling and pointing control algorithms",
-      "Build a hardware-in-the-loop test setup to validate sensors, actuators, and control logic",
-      "Coordinate ADCS integration with the electronics and structures subsystems",
+      "Deliver an infusion controlled by time, quantity, and flow rate",
+      "Limit human intervention to reduce the risk of dosing errors",
+      "Control the pump from a phone app",
+      "Go through the full engineering cycle: needs analysis, design, fabrication, programming, testing",
+      "Build a working prototype on a tight four-week schedule",
     ],
 
-    myRole: `As ADCS Lead, I drive the full technical development of the attitude system, from architecture decisions down to hardware testing. I made the sensor and actuator selection trade-offs, weighing performance against mass, power, and cost constraints typical of a CubeSat program.
+    myRole: `I worked on this as part of a small team in the Engineering Sciences class, and it was my first taste of owning a project end to end. I was involved across the whole cycle: the functional needs analysis, the trade studies on the mechanism and electronics, the CAD and fabrication of the parts, the Arduino programming, and the final assembly and testing.
 
-I developed and assembled the ADCS test bench, which allows us to validate sensors and actuators in the lab before flight. I wrote the control algorithms and simulation framework to verify detumbling and pointing performance before moving to hardware. I also coordinate directly with the electronics team on PCB interfaces and with structures on mechanical mounting.`,
+More than any single deliverable, this project is where I learned what engineering actually feels like: taking an open-ended need, breaking it into decisions, and iterating from idea to hardware that works.`,
 
     process: [
       {
-        title: "Requirements & Architecture Trade Study",
+        title: "01 · NEEDS ANALYSIS & SPECIFICATIONS",
         description:
-          "Defined ADCS requirements from the mission pointing budget. Performed trade studies on sensor and actuator architectures, comparing magnetometer-only versus multi-sensor fusion, and passive magnetic stabilization versus active three-axis control. Selected a three-axis active ADCS with magnetorquers and a reaction wheel.",
+          "Started with a functional analysis of the need: who and what the system serves (the patient, the injected product, the medical staff) and what it must do, deliver a product at a controlled, selectable flow rate. This set the specifications the rest of the project had to meet.",
       },
       {
-        title: "Sensor & Actuator Selection",
+        title: "02 · BRAINSTORMING & COMPONENT SELECTION",
         description:
-          "Selected magnetometers, sun sensors, and a MEMS gyroscope for attitude determination. Sized the magnetorquers for the required detumbling torque at the target orbit altitude. Designed the sensor placement to minimize magnetic interference from other subsystems.",
+          "Worked through the key design decisions as a team: which transmission (worm screw vs. rack and pinion), which motor (stepper vs. DC), and which controller (Arduino vs. micro:bit). We chose a rack-and-pinion driven by a stepper motor and controlled by an Arduino, for simplicity, controllable power, and precise, repeatable motion.",
       },
       {
-        title: "Control Algorithm Development",
+        title: "03 · DESIGN & FABRICATION",
         description:
-          "Implemented a B-dot detumbling controller and a PD pointing controller in Python. Built a simulation environment with orbital dynamics and geomagnetic field models to validate control performance across the orbit. Tuned controller gains to meet settling time and pointing accuracy requirements.",
+          "Designed the mechanism and enclosure in CAD, then brought it to life: 3D-printed the moving parts and laser-cut the acrylic housing. The rack-and-pinion converts the stepper's rotation into the linear push that drives the syringe plunger.",
       },
       {
-        title: "Test Setup Assembly & Validation",
+        title: "04 · PROGRAMMING & APP",
         description:
-          "Assembled a hardware-in-the-loop test bench to validate sensors, actuators, and the flight software stack. Built a Helmholtz cage to simulate the Earth's magnetic field for magnetometer calibration and magnetorquer testing.",
+          "Wrote the Arduino control program to drive the stepper at the commanded flow rate, and built a phone app so a user could set the infusion parameters and start or stop the pump without touching the hardware.",
+      },
+      {
+        title: "05 · ASSEMBLY & TESTING",
+        description:
+          "Assembled the full system and ran the first tests, checking that the pump delivered fluid steadily at the set rate and responded correctly to the app. We iterated on the fit and the control until the prototype ran reliably, all within the four-week deadline.",
       },
     ],
 
-    outcome: `The ADCS test setup is assembled and sensor validation testing is underway. The detumbling and pointing algorithms have been validated in simulation and are being tested on hardware. Subsystem integration with the electronics and structures teams is progressing in parallel.
+    outcome: `We delivered a working automatic syringe pump prototype within the four-week schedule: a phone-controlled device that drives a syringe through a stepper-motor rack-and-pinion to deliver fluid at a set rate, exactly what the brief asked for.
 
-The system represents one of the most technically complex subsystems on the satellite, and the work is building a strong foundation for BruinSpace's next mission.`,
+Beyond the device itself, this is the project that got me hooked on engineering. It was my first time going from a blank page to working hardware, my first full engineering cycle, and the first time I felt the pull of turning an idea into something real. Everything I have done since, from rocket feed systems to pressure-vessel analysis, started here.`,
+
+    slidesPdf: "syringe-pump-slides.pdf",
 
     media: [],
   },
@@ -364,7 +371,7 @@ We traced the root cause to a mismatch in our calculation values. To solve it, w
 const PROJECT_ORDER = [
   "hybrid-rocket-feed-system",
   "pressure-vessel-analysis",
-  "cubesat-adcs-bruinspace",
+  "automatic-syringe-pump",
   "zero-g-experiments-cnes",
 ];
 
