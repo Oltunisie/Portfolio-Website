@@ -34,6 +34,7 @@ export type Project = {
   slidesPdf?: string;      // PDF slideshow filename in public/projects/<slug>/
   appScreens?: { file: string; caption?: string }[]; // phone screenshots, shown uncropped
   experiments?: { title: string; blurb: string; pdf?: string }[]; // experiment cards with optional PDF
+  featured?: { video?: { file: string; caption?: string }; image?: { file: string; caption?: string } }; // prominent media band after the overview
   model3d?: string;        // .glb filename in public/projects/<slug>/
   model3dExploded?: string; // exploded view .glb (same folder)
   // Drop files in public/projects/<slug>/ then list them here
@@ -232,7 +233,6 @@ Beyond the device itself, this is the project that got me hooked on engineering.
 
   {
     slug: "zero-g-experiments-cnes",
-    coverFit: "contain",
     specs: [
       { label: "CAMPAIGN",      value: "66th Parabolic Flight"   },
       { label: "AGENCY",        value: "CNES"                    },
@@ -317,8 +317,13 @@ The campaign earned two of our students a flight aboard the CNES Zero-G aircraft
       { title: "Newton's 3rd Law", blurb: "The Mentos-and-soda geyser as a clean demonstration of action and reaction.", pdf: "exp-newton.pdf" },
     ],
 
+    featured: {
+      video: { file: "video.mp4", caption: "Preparing the experiments before the campaign" },
+      image: { file: "parabola_flight.png", caption: "Inside the Zero-G cabin during a parabola" },
+    },
+
     media: [
-      { type: "image", file: "zero-g.png" },
+      { type: "image", file: "airplane_pic.png" },
     ],
   },
 

@@ -501,6 +501,47 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
         </div>
       </section>
 
+      {/* ── Featured media band (prominent, near the top) ─────── */}
+      {project.featured && (project.featured.video || project.featured.image) && (
+        <section className="px-6 md:px-16 lg:px-24 pb-4">
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-[2px] bg-[#181410] border border-[#181410]">
+            {project.featured.video && (
+              <figure className="relative bg-black overflow-hidden">
+                <video
+                  src={`${BASE}/projects/${project.slug}/${project.featured.video.file}`}
+                  className="w-full h-[280px] md:h-[460px] object-cover"
+                  autoPlay loop muted playsInline controls
+                  onPlay={() => track(`video-play-${project.slug}-featured`)}
+                />
+                {project.featured.video.caption && (
+                  <figcaption className="pointer-events-none absolute bottom-0 inset-x-0 p-4 pt-10 bg-gradient-to-t from-black/80 to-transparent text-[10px] tracking-[0.15em] text-[#cabb9f]"
+                    style={{ fontFamily: "var(--font-geist-mono)" }}>
+                    {project.featured.video.caption}
+                  </figcaption>
+                )}
+              </figure>
+            )}
+            {project.featured.image && (
+              <button
+                onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${project.featured!.image!.file}`, project.featured!.image!.caption ?? "")}
+                className="group relative block bg-black overflow-hidden">
+                <img
+                  src={`${BASE}/projects/${project.slug}/${project.featured.image.file}`}
+                  alt={project.featured.image.caption ?? ""}
+                  className="w-full h-[280px] md:h-[460px] object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                {project.featured.image.caption && (
+                  <figcaption className="pointer-events-none absolute bottom-0 inset-x-0 p-4 pt-10 bg-gradient-to-t from-black/80 to-transparent text-left text-[10px] tracking-[0.15em] text-[#cabb9f]"
+                    style={{ fontFamily: "var(--font-geist-mono)" }}>
+                    {project.featured.image.caption}
+                  </figcaption>
+                )}
+              </button>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* ── Process sections with integrated media ────────────────── */}
       {project.process && project.process.length > 0 && project.process.map((step, stepIdx) => (
         <div key={stepIdx}>
