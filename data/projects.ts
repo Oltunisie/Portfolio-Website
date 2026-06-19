@@ -33,6 +33,7 @@ export type Project = {
   failures?: { body: string; images?: { file: string; caption?: string }[] };
   slidesPdf?: string;      // PDF slideshow filename in public/projects/<slug>/
   appScreens?: { file: string; caption?: string }[]; // phone screenshots, shown uncropped
+  experiments?: { title: string; blurb: string; pdf?: string }[]; // experiment cards with optional PDF
   model3d?: string;        // .glb filename in public/projects/<slug>/
   model3dExploded?: string; // exploded view .glb (same folder)
   // Drop files in public/projects/<slug>/ then list them here
@@ -237,15 +238,15 @@ Beyond the device itself, this is the project that got me hooked on engineering.
       { label: "AGENCY",        value: "CNES"                    },
       { label: "0-g WINDOWS",   value: "~20 sec / parabola"      },
       { label: "LOCATION",      value: "Bordeaux, France"        },
-      { label: "EXPERIMENTS",   value: "3 (Thermo · Newton · Centrifugal)" },
+      { label: "EXPERIMENTS",   value: "6 across physics & chemistry" },
       { label: "OUTCOME",       value: "Full campaign success"   },
     ],
     title: "Zero-G Experiments, CNES",
 
     description:
-      "Selected for the 66th Parabolic Flight Campaign of the French CNES. Designed and conducted microgravity experiments covering thermodynamics, centrifugal forces, and Newton's Laws aboard a Zero-G aircraft in Bordeaux.",
-    tags: ["Microgravity", "Thermodynamics", "Experimental", "CNES"],
-    period: "2022 – 2023",
+      "Selected for the 66th Parabolic Flight Campaign of the French CNES. Designed and ran six original microgravity experiments spanning fluid dynamics, thermodynamics, chemistry, and classical mechanics, aboard a Zero-G aircraft over Bordeaux.",
+    tags: ["Microgravity", "Fluid Dynamics", "Experimental", "CNES"],
+    period: "2023 – 2024",
     status: "Completed",
 
     problem: `Microgravity is one of the most difficult environments to study on Earth. Standard laboratory equipment behaves unpredictably in weightlessness, and the physics governing fluid behavior, heat transfer, and inertia change fundamentally without gravity. Our team at the Horizon Astronomy Club wanted to investigate these effects hands-on, but access to real microgravity is extremely limited.
@@ -268,28 +269,53 @@ I designed the data acquisition system used to log sensor data during the parabo
       {
         title: "Experiment Concept & Selection",
         description:
-          "The team brainstormed and evaluated dozens of experiment ideas across thermodynamics, fluid mechanics, and classical mechanics. We selected three experiments based on scientific relevance, feasibility within the flight constraints, and the ability to produce measurable data: a thermodynamic convection study, a centrifugal force demonstration, and a Newton's Laws validation.",
+          "We brainstormed and evaluated dozens of ideas across fluid mechanics, thermodynamics, chemistry, and classical mechanics, then selected six experiments that would change meaningfully in weightlessness and still produce clear, observable results inside a 20-second window. Each one started as a concept sketch and a CAD model.",
       },
       {
-        title: "Design & CNES Review Process",
+        title: "Build & CNES Safety Review",
         description:
-          "Over several months, we designed, built, and iterated on the experiment hardware to meet CNES safety requirements. This involved structural reviews, material compatibility checks, and multiple design presentations to CNES engineers. Each revision made the rigs safer, simpler, and more reliable.",
+          "Over several months we built and iterated on the experiment rigs to pass CNES's safety requirements: aluminum-frame structures, sealed acrylic enclosures, and self-contained fluid apparatus. This meant structural reviews, material-compatibility checks, and repeated design presentations to CNES engineers, each revision making the hardware safer, simpler, and more reliable.",
       },
       {
-        title: "Flight Day Execution",
+        title: "Ground Testing",
         description:
-          "The campaign took place in Bordeaux aboard CNES's Zero-G aircraft. During each parabola, the aircraft follows a Keplerian arc that produces approximately 20 seconds of weightlessness. Our team ran the experiments across multiple parabolas, operating instruments, collecting data, and documenting observations in real-time.",
+          "Before flight, we ran every experiment on the ground to rehearse the procedure and set a 1-g baseline, from spinning up a vortex on a magnetic stirrer to tracking how a dye disperses through water. Ground testing is what let us trust the few seconds we would get in the air.",
       },
       {
-        title: "Post-Flight Analysis",
+        title: "Flight Day & Results",
         description:
-          "After the campaign, we processed the sensor data and video recordings to analyze the experimental results. The data confirmed our predictions for convection suppression and inertial behavior in microgravity, and was compiled into a final report submitted to CNES.",
+          "The campaign took place in Bordeaux aboard CNES's Zero-G aircraft. During each parabola the aircraft follows a Keplerian arc that produces about 20 seconds of weightlessness. We ran the experiments across multiple parabolas, operating the rigs and capturing data in real time, then processed the results afterward. Observing physics in real weightlessness, convection stopping, fluids floating free, forces behaving differently, was unlike anything a ground lab can offer.",
       },
     ],
 
-    outcome: `The campaign was a success. All three experiments ran as planned across the flight, and we collected clean data from each parabola. The experience of observing physics in real weightlessness, convection stopping, fluids floating free, forces behaving differently, was unlike anything achievable in a ground lab.
+    outcome: `The campaign was a success. All six experiments ran as planned across the flight, and we collected clean data from each parabola. Seeing the predictions hold in real weightlessness, after a year of design, building, and CNES reviews, made every late night worth it.
 
-The win earned two of our students a flight aboard the CNES Zero-G aircraft, and positioned the club for two consecutive Young Searchers Prize victories in the years that followed. It remains one of the most formative engineering and leadership experiences of my career so far.`,
+The campaign earned two of our students a flight aboard the CNES Zero-G aircraft and positioned the club for two consecutive Young Searchers Prize victories in the years that followed. It remains one of the most formative engineering and leadership experiences of my career so far.`,
+
+    design: [
+      { file: "cad_centrifuge.jpg", caption: "CAD design of the centrifuge / artificial-gravity experiment" },
+      { file: "sketch_oildrop.jpg", caption: "Whiteboard design sketch for the oil-drop experiment" },
+    ],
+
+    analysis: [
+      { file: "build_frame.jpg", caption: "Building the aluminum experiment frame" },
+      { file: "build_enclosure.jpg", caption: "Sealed acrylic enclosure on its base" },
+      { file: "build_apparatus.jpg", caption: "Fluid apparatus: chamber, syringes, and tubing" },
+    ],
+
+    tests: [
+      { file: "test_vortex.jpg", caption: "Ground test: vortex on a magnetic stirrer" },
+      { file: "test_dye.jpg", caption: "Ground test: dye dispersion in test tubes" },
+    ],
+
+    experiments: [
+      { title: "Vortex", blurb: "How a maelstrom forms, and what happens to a vortex when gravity is taken away.", pdf: "exp-vortex.pdf" },
+      { title: "Thermodynamics", blurb: "Hot rises and cold sinks on Earth. Testing whether natural convection survives in weightlessness.", pdf: "exp-thermodynamics.pdf" },
+      { title: "Centrifuge", blurb: "Spinning to create artificial gravity, a building block for long-duration space travel.", pdf: "exp-centrifuge.pdf" },
+      { title: "Miscibility & Decantation", blurb: "How immiscible liquids separate, or refuse to, when there is no gravity to drive decantation.", pdf: "exp-miscibility.pdf" },
+      { title: "Dye Diffusion", blurb: "Watching a dye spread to isolate pure molecular diffusion from gravity-driven mixing.", pdf: "exp-diffusion.pdf" },
+      { title: "Newton's 3rd Law", blurb: "The Mentos-and-soda geyser as a clean demonstration of action and reaction.", pdf: "exp-newton.pdf" },
+    ],
 
     media: [
       { type: "image", file: "zero-g.png" },

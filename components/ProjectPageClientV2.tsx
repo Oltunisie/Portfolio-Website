@@ -704,6 +704,46 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
         </div>
       ))}
 
+      {/* ── Experiments showcase (cards with optional PDF) ────── */}
+      {project.experiments && project.experiments.length > 0 && (
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="flex items-center gap-6 mb-10">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// LAB</span>
+            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>The Experiments</h2>
+            <div className="flex-1 h-px bg-[#1a1208]" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-[#181410]">
+            {project.experiments.map((e, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.4, delay: (i % 3) * 0.06 }}
+                className="group flex flex-col bg-[#050505] hover:bg-[#0c0a06] p-6 transition-colors duration-200">
+                <span className="text-[10px] tracking-[0.25em] text-[#c4a97e] mb-3"
+                  style={{ fontFamily: "var(--font-geist-mono)" }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-lg font-light text-[#f0e6d3] mb-2"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}>{e.title}</h3>
+                <p className="text-sm text-[#9a8a6a] leading-relaxed flex-1"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}>{e.blurb}</p>
+                {e.pdf && (
+                  <a href={`${BASE}/projects/${project.slug}/${e.pdf}`}
+                    target="_blank" rel="noopener noreferrer"
+                    onClick={() => track(`experiment-pdf-${e.pdf}`)}
+                    className="mt-4 inline-flex items-center gap-1.5 text-[10px] tracking-[0.2em] text-[#6b5a3e] group-hover:text-[#c4a97e] transition-colors duration-200"
+                    style={{ fontFamily: "var(--font-geist-mono)" }}>
+                    READ THE WRITE-UP
+                    <span className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                  </a>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* ── Project slides (embedded PDF) ─────────────────────── */}
       {project.slidesPdf && (
         <section className="py-20 px-6 md:px-16 lg:px-24">
