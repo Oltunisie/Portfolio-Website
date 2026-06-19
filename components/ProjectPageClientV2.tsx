@@ -400,9 +400,9 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
 
         {/* Back */}
         <Link href="/#projects"
-          className="absolute top-8 left-6 md:left-16 lg:left-24 z-10 text-[10px] tracking-[0.2em] text-[#3a2e1e] hover:text-[#c4a97e] transition-colors duration-200"
+          className="group absolute top-8 left-6 md:left-16 lg:left-24 z-10 inline-flex items-center gap-2 px-4 py-2 bg-[#050505]/70 backdrop-blur border border-[#6b5a3e] hover:border-[#c4a97e] hover:bg-[#c4a97e] text-[11px] tracking-[0.2em] text-[#cabb9f] hover:text-[#080603] rounded-sm transition-colors duration-200"
           style={{ fontFamily: "var(--font-geist-mono)" }}>
-          ← ALL PROJECTS
+          <span className="transition-transform duration-150 group-hover:-translate-x-0.5">←</span> ALL PROJECTS
         </Link>
 
         {/* Mission ID */}

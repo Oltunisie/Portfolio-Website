@@ -37,7 +37,7 @@ export type Project = {
   media?: MediaItem[];
 };
 
-export const projects: Project[] = [
+const projectsRaw: Project[] = [
   {
     slug: "hybrid-rocket-feed-system",
     specs: [
@@ -359,3 +359,15 @@ We traced the root cause to a mismatch in our calculation values. To solve it, w
     ],
   },
 ];
+
+// Display order across the site (home grid, project prev/next, static params)
+const PROJECT_ORDER = [
+  "hybrid-rocket-feed-system",
+  "pressure-vessel-analysis",
+  "cubesat-adcs-bruinspace",
+  "zero-g-experiments-cnes",
+];
+
+export const projects: Project[] = [...projectsRaw].sort(
+  (a, b) => PROJECT_ORDER.indexOf(a.slug) - PROJECT_ORDER.indexOf(b.slug)
+);
