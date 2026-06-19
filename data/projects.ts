@@ -204,6 +204,11 @@ Beyond the device itself, this is the project that got me hooked on engineering.
 
     slidesPdf: "syringe-pump-slides.pdf",
 
+    design: [
+      { file: "usercase_diagram.jpg", caption: "Use case diagram from the needs analysis" },
+      { file: "specs_def.jpg", caption: "Specifications definition" },
+    ],
+
     analysis: [
       { file: "mechanisms.jpg", caption: "Transmission trade study: rack & pinion vs. belt-and-pulley vs. linear actuator" },
       { file: "graphs.jpg", caption: "Kinematic linkage and kinematics graphs of the chosen mechanism" },
