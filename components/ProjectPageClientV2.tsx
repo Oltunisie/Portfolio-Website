@@ -673,6 +673,34 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
               </div>
             </section>
           )}
+
+          {/* App screenshots, shown uncropped in a phone-friendly row */}
+          {stepIdx === 3 && project.appScreens && project.appScreens.length > 0 && (
+            <section className="px-6 md:px-16 lg:px-24 pb-16">
+              <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+                {project.appScreens.map((s, i) => (
+                  <motion.figure key={i}
+                    initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }}
+                    className="w-[180px] sm:w-[210px] md:w-[240px]">
+                    <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${s.file}`, s.caption ?? "")}
+                      className="group block w-full">
+                      <div className="rounded-xl border border-[#2e2010] group-hover:border-[#c4a97e] bg-[#0a0804] p-2 transition-colors duration-300">
+                        <img src={`${BASE}/projects/${project.slug}/${s.file}`} alt={s.caption ?? ""}
+                          className="w-full h-auto object-contain rounded-md" />
+                      </div>
+                      {s.caption && (
+                        <figcaption className="mt-3 text-center text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
+                          style={{ fontFamily: "var(--font-geist-mono)" }}>
+                          {s.caption}
+                        </figcaption>
+                      )}
+                    </button>
+                  </motion.figure>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       ))}
 

@@ -32,6 +32,7 @@ export type Project = {
   outcome?: string;
   failures?: { body: string; images?: { file: string; caption?: string }[] };
   slidesPdf?: string;      // PDF slideshow filename in public/projects/<slug>/
+  appScreens?: { file: string; caption?: string }[]; // phone screenshots, shown uncropped
   model3d?: string;        // .glb filename in public/projects/<slug>/
   model3dExploded?: string; // exploded view .glb (same folder)
   // Drop files in public/projects/<slug>/ then list them here
@@ -207,10 +208,10 @@ Beyond the device itself, this is the project that got me hooked on engineering.
       { file: "cad.png", caption: "CAD model of the syringe pump assembly" },
     ],
 
-    integration: [
-      { file: "app_screen1.png", caption: "Control app, infusion parameters" },
-      { file: "app_screen2.png", caption: "Control app, flow-rate setup" },
-      { file: "app_screen3.png", caption: "Control app, running the pump" },
+    appScreens: [
+      { file: "app_screen1.png", caption: "MediPulse home screen" },
+      { file: "app_screen2.png", caption: "Bluetooth connection and infusion mode (continuous, single, repeated)" },
+      { file: "app_screen3.png", caption: "Continuous infusion setup: time and volume" },
     ],
 
     media: [
