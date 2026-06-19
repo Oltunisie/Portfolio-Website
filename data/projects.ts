@@ -308,9 +308,9 @@ There was no room for "looks strong enough." Every load path had to be backed by
           "Modeled the endcaps in ANSYS under combined loading — internal pressure plus bolt preload — to capture stress concentrations the hand calculations can't see (fillets, bolt holes, sealing surfaces). Checked peak von Mises stress against the material allowables and confirmed the endcaps held the required margins of safety.",
       },
       {
-        title: "03 · TANK WALL & BRACKET ANALYSIS",
+        title: "03 · TANK WALL ANALYSIS",
         description:
-          "Analyzed the tank wall and the support brackets under the same pressure case combined with mounting and bending loads. Verified that the FEA stress fields agreed with the closed-form hoop/longitudinal predictions, giving confidence that the model was trustworthy across the full assembly.",
+          "Modeled the tank wall in ANSYS under the 750 psi MEOP pressure case, using a symmetry model to resolve the hoop and radial stress fields efficiently. Verified that the FEA results agreed with the closed-form hoop/longitudinal predictions, confirming the wall held the required margins of safety.",
       },
       {
         title: "04 · HYDROSTATIC PROOF TEST",
@@ -330,10 +330,15 @@ The work turned "we think it's strong enough" into a defensible margin of safety
 
     analysis: [
       { file: "endcap_fea.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
-      { file: "bracket_fea.png", caption: "Support bracket FEA under combined loading" },
     ],
 
     tests: [
+      { file: "hoop_stress_fea.png", caption: "Tank wall hoop stress (FEA) at 750 psi MEOP" },
+      { file: "radial_stress_fea.png", caption: "Tank wall radial stress (FEA)" },
+      { file: "hoop_stress_symmetry_fea.png", caption: "Hoop stress — symmetry model" },
+    ],
+
+    integration: [
       { file: "hydrostat.png", caption: "Hydrostatic proof test — 1125 psi (1.5× MEOP), zero leaks" },
     ],
 

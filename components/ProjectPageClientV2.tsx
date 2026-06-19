@@ -647,6 +647,32 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
               </div>
             </section>
           )}
+
+          {/* Hydrostatic / final step images (integration) */}
+          {stepIdx === 3 && project.integration && project.integration.length > 0 && (
+            <section className="px-6 md:px-16 lg:px-24 pb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {project.integration.map((img, i) => (
+                  <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                    <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                      className="group block w-full text-left">
+                      <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                      {img.caption && (
+                        <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
+                          style={{ fontFamily: "var(--font-geist-mono)" }}>
+                          {img.caption}
+                        </p>
+                      )}
+                    </button>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       ))}
 
