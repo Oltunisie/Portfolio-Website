@@ -204,6 +204,11 @@ Beyond the device itself, this is the project that got me hooked on engineering.
 
     slidesPdf: "syringe-pump-slides.pdf",
 
+    analysis: [
+      { file: "mechanisms.jpg", caption: "Transmission trade study: rack & pinion vs. belt-and-pulley vs. linear actuator" },
+      { file: "graphs.jpg", caption: "Kinematic linkage and kinematics graphs of the chosen mechanism" },
+    ],
+
     tests: [
       { file: "cad.png", caption: "CAD model of the syringe pump assembly" },
     ],
