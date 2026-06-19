@@ -30,6 +30,7 @@ export type Project = {
   myRole?: string;
   process?: ProcessStep[];
   outcome?: string;
+  failures?: { body: string; images?: { file: string; caption?: string }[] };
   model3d?: string;        // .glb filename in public/projects/<slug>/
   model3dExploded?: string; // exploded view .glb (same folder)
   // Drop files in public/projects/<slug>/ then list them here
@@ -55,7 +56,7 @@ export const projects: Project[] = [
     period: "2025 – Present",
     status: "Done",
 
-    problem: `As Feed Systems Lead, I designed and tested a complete 750 psi N₂O oxidizer feed system for UCLA's hybrid rocket targeting a 20,000 ft altitude record. The challenge: reliable N₂O delivery at extreme pressure while meeting mass, safety, and integration constraints — all with zero margin for failure.`,
+    problem: `As Feed Systems Lead, I designed and tested a complete 750 psi N₂O oxidizer feed system for UCLA's hybrid rocket targeting a 20,000 ft altitude record. The challenge: reliable N₂O delivery at extreme pressure while meeting mass, safety, and integration constraints, all with zero margin for failure.`,
 
     goals: [
       "Design complete plumbing architecture (tank, valves, relief, fittings) rated 750 psi MEOP",
@@ -81,7 +82,7 @@ export const projects: Project[] = [
       {
         title: "03 · MANUFACTURING & TESTING",
         description:
-          "Machined aluminum endcaps and brackets, then executed hydrostatic proof testing at 1.5× MEOP (1125 psi). System passed with zero leaks. Led cold-flow campaign validating oxidizer flow rates, system timing, and valve sequences — each run instrumented with pressure transducers.",
+          "Machined aluminum endcaps and brackets, then executed hydrostatic proof testing at 1.5× MEOP (1125 psi). System passed with zero leaks. Led cold-flow campaign validating oxidizer flow rates, system timing, and valve sequences, each run instrumented with pressure transducers.",
       },
       {
         title: "04 · STATIC FIRE & RESULTS",
@@ -144,7 +145,7 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
       { label: "ORBIT",         value: "Low Earth Orbit"             },
       { label: "STATUS",        value: "In Development"              },
     ],
-    title: "CubeSat ADCS — BruinSpace",
+    title: "CubeSat ADCS, BruinSpace",
     description:
       "Leading design and development of the Attitude Determination and Control System for UCLA BruinSpace's satellite. Built the ADCS test setup to validate sensors, actuators, and control algorithms, and coordinating integration across electronics and structures subsystems.",
     tags: ["ADCS", "Control Systems", "Sensors", "Embedded", "Satellite"],
@@ -154,7 +155,7 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
 
     problem: `BruinSpace is developing a CubeSat with a mission that requires precise attitude control in orbit. Without a functional ADCS, the satellite cannot point its payload, maintain a stable communication link, or meet mission objectives. The challenge is designing a system that is small enough to fit within CubeSat volume constraints, power-efficient enough to run continuously on a small solar array, and reliable enough to operate autonomously in the harsh environment of low Earth orbit.
 
-The ADCS must handle detumbling after deployment, transition to a stable pointing mode, and interface cleanly with the avionics and structures subsystems — all with limited heritage and a student team.`,
+The ADCS must handle detumbling after deployment, transition to a stable pointing mode, and interface cleanly with the avionics and structures subsystems, all with limited heritage and a student team.`,
 
     goals: [
       "Design a 3-axis Attitude Determination and Control System for a CubeSat within volume and power constraints",
@@ -164,7 +165,7 @@ The ADCS must handle detumbling after deployment, transition to a stable pointin
       "Coordinate ADCS integration with the electronics and structures subsystems",
     ],
 
-    myRole: `As ADCS Lead, I drive the full technical development of the attitude system — from architecture decisions down to hardware testing. I made the sensor and actuator selection trade-offs, weighing performance against mass, power, and cost constraints typical of a CubeSat program.
+    myRole: `As ADCS Lead, I drive the full technical development of the attitude system, from architecture decisions down to hardware testing. I made the sensor and actuator selection trade-offs, weighing performance against mass, power, and cost constraints typical of a CubeSat program.
 
 I developed and assembled the ADCS test bench, which allows us to validate sensors and actuators in the lab before flight. I wrote the control algorithms and simulation framework to verify detumbling and pointing performance before moving to hardware. I also coordinate directly with the electronics team on PCB interfaces and with structures on mechanical mounting.`,
 
@@ -172,7 +173,7 @@ I developed and assembled the ADCS test bench, which allows us to validate senso
       {
         title: "Requirements & Architecture Trade Study",
         description:
-          "Defined ADCS requirements from the mission pointing budget. Performed trade studies on sensor and actuator architectures — comparing magnetometer-only versus multi-sensor fusion, and passive magnetic stabilization versus active three-axis control. Selected a three-axis active ADCS with magnetorquers and a reaction wheel.",
+          "Defined ADCS requirements from the mission pointing budget. Performed trade studies on sensor and actuator architectures, comparing magnetometer-only versus multi-sensor fusion, and passive magnetic stabilization versus active three-axis control. Selected a three-axis active ADCS with magnetorquers and a reaction wheel.",
       },
       {
         title: "Sensor & Actuator Selection",
@@ -209,7 +210,7 @@ The system represents one of the most technically complex subsystems on the sate
       { label: "EXPERIMENTS",   value: "3 (Thermo · Newton · Centrifugal)" },
       { label: "OUTCOME",       value: "Full campaign success"   },
     ],
-    title: "Zero-G Experiments — CNES",
+    title: "Zero-G Experiments, CNES",
 
     description:
       "Selected for the 66th Parabolic Flight Campaign of the French CNES. Designed and conducted microgravity experiments covering thermodynamics, centrifugal forces, and Newton's Laws aboard a Zero-G aircraft in Bordeaux.",
@@ -217,7 +218,7 @@ The system represents one of the most technically complex subsystems on the sate
     period: "2022 – 2023",
     status: "Completed",
 
-    problem: `Microgravity is one of the most difficult environments to study on Earth. Standard laboratory equipment behaves unpredictably in weightlessness, and the physics governing fluid behavior, heat transfer, and inertia change fundamentally without gravity. Our team at the Horizon Astronomy Club wanted to investigate these effects hands-on — but access to real microgravity is extremely limited.
+    problem: `Microgravity is one of the most difficult environments to study on Earth. Standard laboratory equipment behaves unpredictably in weightlessness, and the physics governing fluid behavior, heat transfer, and inertia change fundamentally without gravity. Our team at the Horizon Astronomy Club wanted to investigate these effects hands-on, but access to real microgravity is extremely limited.
 
 The French National Space Studies Center (CNES) runs a yearly Parabolic Flight Campaign open to student teams. Competing for a spot required designing rigorous, scientifically valid experiments that could safely run during 20-second weightlessness windows aboard a modified Airbus A310, and convincing CNES experts our team was ready to execute.`,
 
@@ -229,7 +230,7 @@ The French National Space Studies Center (CNES) runs a yearly Parabolic Flight C
       "Represent the Horizon Astronomy Club at an international level",
     ],
 
-    myRole: `As Lead Programmer and Club President, I was responsible for coordinating the experiment design process and the technical development. I led the team through a full year of preparation — from concept selection through CNES design reviews to flight day operations.
+    myRole: `As Lead Programmer and Club President, I was responsible for coordinating the experiment design process and the technical development. I led the team through a full year of preparation, from concept selection through CNES design reviews to flight day operations.
 
 I designed the data acquisition system used to log sensor data during the parabolas and oversaw the instrumentation integration on our experiment rigs. On flight day, I was part of the team that boarded the aircraft and ran the experiments in real-time during the parabolic maneuvers.`,
 
@@ -256,7 +257,7 @@ I designed the data acquisition system used to log sensor data during the parabo
       },
     ],
 
-    outcome: `The campaign was a success. All three experiments ran as planned across the flight, and we collected clean data from each parabola. The experience of observing physics in real weightlessness — convection stopping, fluids floating free, forces behaving differently — was unlike anything achievable in a ground lab.
+    outcome: `The campaign was a success. All three experiments ran as planned across the flight, and we collected clean data from each parabola. The experience of observing physics in real weightlessness, convection stopping, fluids floating free, forces behaving differently, was unlike anything achievable in a ground lab.
 
 The win earned two of our students a flight aboard the CNES Zero-G aircraft, and positioned the club for two consecutive Young Searchers Prize victories in the years that followed. It remains one of the most formative engineering and leadership experiences of my career so far.`,
 
@@ -270,8 +271,8 @@ The win earned two of our students a flight aboard the CNES Zero-G aircraft, and
     specs: [
       { label: "MEOP",          value: "750 psi"            },
       { label: "PROOF PRESSURE", value: "1125 psi (1.5×)"   },
-      { label: "FoS — YIELD",   value: "2.0"                },
-      { label: "FoS — ULTIMATE", value: "2.5"               },
+      { label: "FoS, YIELD",   value: "2.0"                },
+      { label: "FoS, ULTIMATE", value: "2.5"               },
       { label: "MATERIAL",      value: "6061-T6 Aluminum"   },
       { label: "METHOD",        value: "FEA (ANSYS) + Hand Calc" },
     ],
@@ -282,14 +283,14 @@ The win earned two of our students a flight aboard the CNES Zero-G aircraft, and
     period: "2025",
     status: "Completed",
 
-    problem: `The oxidizer feed system stores N₂O at 750 psi MEOP, and the tank and its endcaps sit directly in the pressure boundary — a failure here is catastrophic. The challenge was to prove, analytically and with FEA, that both the tank wall and the endcaps carry the internal pressure (plus bolt preload on the caps) with required margins of safety, while staying as light as possible.
+    problem: `The oxidizer feed system stores N₂O at 750 psi MEOP, and the tank and its endcaps sit directly in the pressure boundary, a failure here is catastrophic. The challenge was to prove, analytically and with FEA, that both the tank wall and the endcaps carry the internal pressure (plus bolt preload on the caps) with required margins of safety, while staying as light as possible.
 
 There was no room for "looks strong enough." Every load path had to be backed by hand calculations, correlated with finite-element analysis, and finally confirmed on the bench with a hydrostatic proof test.`,
 
     goals: [
       "Size the tank wall and endcaps to contain 750 psi MEOP within required margins of safety",
       "Validate against both yield (FoS 2.0) and ultimate (FoS 2.5)",
-      "FEA the endcaps under combined loading — internal pressure plus bolt preload",
+      "FEA the endcaps under combined loading, internal pressure plus bolt preload",
       "Correlate FEA results with closed-form hoop/longitudinal stress hand calculations",
       "Confirm structural integrity with a hydrostatic proof test at 1.5× MEOP (1125 psi)",
     ],
@@ -305,7 +306,7 @@ There was no room for "looks strong enough." Every load path had to be backed by
       {
         title: "02 · ENDCAP FEA",
         description:
-          "Modeled the endcaps in ANSYS under combined loading — internal pressure plus bolt preload — to capture stress concentrations the hand calculations can't see (fillets, bolt holes, sealing surfaces). Checked peak von Mises stress against the material allowables and confirmed the endcaps held the required margins of safety.",
+          "Modeled the endcaps in ANSYS under combined loading, internal pressure plus bolt preload, to capture stress concentrations the hand calculations can't see (fillets, bolt holes, sealing surfaces). Checked peak von Mises stress against the material allowables and confirmed the endcaps held the required margins of safety.",
       },
       {
         title: "03 · TANK WALL ANALYSIS",
@@ -315,13 +316,22 @@ There was no room for "looks strong enough." Every load path had to be backed by
       {
         title: "04 · HYDROSTATIC PROOF TEST",
         description:
-          "Validated the analysis on the real hardware with a hydrostatic proof test at 1.5× MEOP (1125 psi). The vessel held with zero leaks and no yielding — confirming the analysis and clearing the pressure vessel for the cold-flow and static fire campaigns.",
+          "Validated the analysis on the real hardware with a hydrostatic proof test at 1.5× MEOP (1125 psi). The vessel held with zero leaks and no yielding, confirming the analysis and clearing the pressure vessel for the cold-flow and static fire campaigns.",
       },
     ],
 
     outcome: `Both the tank and the endcaps were validated analytically, confirmed in FEA, and proof-tested to 1.5× operating pressure (1125 psi) with zero leaks and no permanent deformation. The hand calculations and FEA agreed, which is exactly what you want before trusting a pressure vessel with a high-pressure oxidizer.
 
-The work turned "we think it's strong enough" into a defensible margin of safety backed by two independent methods and a physical proof test — the standard real aerospace pressure vessels are held to.`,
+The work turned "we think it's strong enough" into a defensible margin of safety backed by two independent methods and a physical proof test, the standard real aerospace pressure vessels are held to.`,
+
+    failures: {
+      body: `Our endcap initially leaked, which forced us to rethink our O-rings and the groove geometry, the thickness, and the whole sealing approach. After remachining the grooves we reached a good compromise that resolved the leaking. But when we moved on to proof-testing the tank, a far worse failure appeared: the tank holes bored out completely, a catastrophic failure that threatened to push back our entire timeline.
+
+We traced the root cause to a mismatch in our calculation values. To solve it, we spent five days non-stop adding 8 holes to the endcap to add strength, cycling through remachining and many iterations. After a focused hydrostatic proof-testing campaign, we finally resolved the issue, a hard lesson in how the smallest mistakes can destroy a project.`,
+      images: [
+        { file: "tank_bearing.png", caption: "Tank holes bored out during proof testing, the catastrophic failure" },
+      ],
+    },
 
     design: [
       { file: "tank_wall_calcs.png", caption: "Tank wall hoop & longitudinal stress hand calculations" },
@@ -331,17 +341,17 @@ The work turned "we think it's strong enough" into a defensible margin of safety
     analysis: [
       { file: "endcap_mesh.png", caption: "Endcap FEA mesh" },
       { file: "endcap_fea_stress.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
-      { file: "endcap_fea_crossection.png", caption: "Endcap stress — cross-section view" },
+      { file: "endcap_fea_crossection.png", caption: "Endcap stress, cross-section view" },
     ],
 
     tests: [
       { file: "hoop_stress_fea.png", caption: "Tank wall hoop stress (FEA) at 750 psi MEOP" },
       { file: "radial_stress_fea.png", caption: "Tank wall radial stress (FEA)" },
-      { file: "hoop_stress_symmetry_fea.png", caption: "Hoop stress — symmetry model" },
+      { file: "hoop_stress_symmetry_fea.png", caption: "Hoop stress, symmetry model" },
     ],
 
     integration: [
-      { file: "hydrostat.png", caption: "Hydrostatic proof test — 1125 psi (1.5× MEOP), zero leaks" },
+      { file: "hydrostat.png", caption: "Hydrostatic proof test, 1125 psi (1.5× MEOP), zero leaks" },
     ],
 
     media: [

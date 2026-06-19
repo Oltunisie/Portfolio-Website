@@ -275,8 +275,8 @@ export default function ContactV2() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-6 py-4 border-t border-[#241e14]">
           <span className="text-[11px] tracking-[0.15em] text-[#5a4a30]" style={{ fontFamily: MONO }}>
             {status === "error"
-              ? "⚠ TRANSMISSION FAILED — TRY AGAIN"
-              : "SENT DIRECTLY — NO OUTLOOK"}
+              ? "⚠ TRANSMISSION FAILED, TRY AGAIN"
+              : "SENT DIRECTLY, NO OUTLOOK"}
           </span>
           <button
             onClick={transmit}
@@ -292,7 +292,7 @@ export default function ContactV2() {
           >
             {status === "sent"    ? <>TRANSMITTED ✓</> :
              status === "sending" ? <>TRANSMITTING…</> :
-             status === "error"   ? <>FAILED — RETRY</> :
+             status === "error"   ? <>FAILED, RETRY</> :
              <>TRANSMIT <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150 inline-block">↗</span></>}
           </button>
         </div>

@@ -257,7 +257,7 @@ function ModelSection({ src, title, explodedSrc }: { src: string; title: string;
           </div>
         )}
 
-        {/* Control overlay — only in model mode */}
+        {/* Control overlay, only in model mode */}
         {viewMode === "model" && (
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 pointer-events-none z-10">
             {/* Left: viewpoints + tool buttons */}
@@ -414,7 +414,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
           </div>
         </div>
 
-        {/* Title block — spans full bottom */}
+        {/* Title block, spans full bottom */}
         <div className="absolute bottom-0 left-0 right-0 px-6 md:px-16 lg:px-24 pb-12 z-10">
           <div className="flex items-center gap-3 mb-4" style={{ fontFamily: "var(--font-geist-mono)" }}>
             {project.status === "In Progress" && (
@@ -447,7 +447,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
         </div>
       </div>
 
-      {/* ── Specs grid — full width ────────────────────────────── */}
+      {/* ── Specs grid, full width ────────────────────────────── */}
       {project.specs && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[1px] bg-[#181410]">
           {project.specs.map((s) => (
@@ -459,7 +459,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       {/* ── Big stat callout ──────────────────────────────────── */}
       {calloutStats.length > 0 && <StatCallout stats={calloutStats} />}
 
-      {/* ── Brief — two columns ───────────────────────────────── */}
+      {/* ── Brief, two columns ───────────────────────────────── */}
       <section className="py-20 px-6 md:px-16 lg:px-24">
         <div className="flex items-center gap-6 mb-10">
           <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
@@ -676,12 +676,51 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
         </div>
       ))}
 
+      {/* ── Failures & Solutions ──────────────────────────────── */}
+      {project.failures && (
+        <section className="py-20 px-6 md:px-16 lg:px-24">
+          <div className="flex items-center gap-6 mb-10">
+            <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// 08</span>
+            <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>Failures &amp; Solutions</h2>
+            <div className="flex-1 h-px bg-[#1a1208]" />
+          </div>
+          <div className="grid md:grid-cols-2 gap-12">
+            <p className="text-lg text-[#c4b5a0] leading-relaxed whitespace-pre-line"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              {project.failures.body}
+            </p>
+            {project.failures.images && project.failures.images.length > 0 && (
+              <div className="space-y-4">
+                {project.failures.images.map((img, i) => (
+                  <button key={i}
+                    onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
+                    className="group block w-full text-left">
+                    <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
+                      <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                        className="w-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+                    {img.caption && (
+                      <p className="mt-2 text-[10px] tracking-[0.12em] text-[#8b7d6b] leading-snug"
+                        style={{ fontFamily: "var(--font-geist-mono)" }}>
+                        {img.caption}
+                      </p>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* ── Outcome ───────────────────────────────────────────── */}
       {project.outcome && (
         <section className="py-20 px-6 md:px-16 lg:px-24">
           <div className="flex items-center gap-6 mb-10">
             <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
-              style={{ fontFamily: "var(--font-geist-mono)" }}>// 08</span>
+              style={{ fontFamily: "var(--font-geist-mono)" }}>// 09</span>
             <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
               style={{ fontFamily: "var(--font-space-grotesk)" }}>Outcome</h2>
             <div className="flex-1 h-px bg-[#1a1208]" />
@@ -715,7 +754,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
           <Link href={`/projects/${next.slug}`}
             onClick={() => track(`project-next-${next.slug}`)}
             className="group relative flex flex-col gap-3 p-6 md:p-12 text-right bg-[#0c0a06] hover:bg-[#16110a] transition-colors duration-300">
-            {/* beige accent edge — signals this is the way forward */}
+            {/* beige accent edge, signals this is the way forward */}
             <span aria-hidden className="absolute top-0 right-0 h-full w-[2px] bg-[#c4a97e]/40 group-hover:bg-[#c4a97e] transition-colors duration-200" />
             <span className="text-[10px] tracking-[0.25em] text-[#c4a97e]"
               style={{ fontFamily: "var(--font-geist-mono)" }}>

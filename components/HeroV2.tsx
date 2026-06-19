@@ -46,7 +46,7 @@ export default function HeroV2() {
         <source src="/website_video.mp4" type="video/mp4" />
       </video>
 
-      {/* ── Gradient overlay — wider dark zone on left ─────────── */}
+      {/* ── Gradient overlay, wider dark zone on left ─────────── */}
       <div
         aria-hidden
         className="absolute inset-0"
@@ -191,7 +191,7 @@ export default function HeroV2() {
         </motion.div>
       </div>
 
-      {/* ── UCLA logo — bottom left ─────────────────────────────── */}
+      {/* ── UCLA logo, bottom left ─────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -207,7 +207,7 @@ export default function HeroV2() {
           <p className="text-[10px] tracking-[0.15em] text-[#4a3824] mt-0.5">SCHOOL OF ENGINEERING</p>
         </div>
 
-        {/* Logo image — B&W via CSS filter */}
+        {/* Logo image, B&W via CSS filter */}
         <Image
           src="/ucla-eng.png"
           alt="UCLA Samueli School of Engineering"
@@ -219,7 +219,7 @@ export default function HeroV2() {
         />
       </motion.div>
 
-      {/* ── Corner marker — bottom right ───────────────────────── */}
+      {/* ── Corner marker, bottom right ───────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

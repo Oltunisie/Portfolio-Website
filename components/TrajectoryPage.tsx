@@ -76,7 +76,7 @@ const NODES: Node[] = [
   {
     id: "orbit", year: "★", cx: 1215, cy: 32,
     title: "Target Orbit", sub: "SpaceX · NASA · Blue Origin",
-    detail: "The mission continues. Building the future of flight — one equation at a time.",
+    detail: "The mission continues. Building the future of flight, one equation at a time.",
     phase: "ORBIT", type: "star", labelPos: "above",
   },
 ];
@@ -242,7 +242,7 @@ export default function TrajectoryPage() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.35 }}
           className="text-[11px] tracking-[0.12em] text-[#5a4a30]">
-          From Sfax to Westwood — hover each node to read the mission log.
+          From Sfax to Westwood, hover each node to read the mission log.
         </motion.p>
       </div>
 
@@ -295,7 +295,7 @@ export default function TrajectoryPage() {
                 transition={{ duration: 2.8, ease: "easeInOut", delay: 0.4 }}
               />
 
-              {/* Velocity indicators — small perpendicular ticks along the path */}
+              {/* Velocity indicators, small perpendicular ticks along the path */}
               {NODES.slice(0, -1).map((n, i) => {
                 const next = NODES[i + 1];
                 const mx = (n.cx + next.cx) / 2;
@@ -352,7 +352,7 @@ export default function TrajectoryPage() {
           </div>
         </div>
 
-        {/* Detail panel — sticks to bottom */}
+        {/* Detail panel, sticks to bottom */}
         <DetailPanel node={activeNode} />
       </div>
 

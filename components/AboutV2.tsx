@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { track } from "@/lib/track";
 
 /* ── Quick human facts (right column) ─────────────────────────────
-   Grounded in real history — edit freely, these are yours to own. */
+   Grounded in real history, edit freely, these are yours to own. */
 const FACTS = [
   { label: "BASED IN",     value: "Los Angeles · from Tunisia" },
   { label: "LANGUAGES",    value: " French · English · Arabic" },
@@ -88,7 +88,7 @@ export default function AboutV2() {
         {/* ── Photo + quick facts (right column) ───────────────── */}
         <div className="flex flex-col lg:h-full">
 
-          {/* On-site portrait — flexes to fill the column so it matches
+          {/* On-site portrait, flexes to fill the column so it matches
               the text column height; image crops via object-cover. */}
           <figure className="flex flex-col flex-1 min-h-0">
             <div className="relative flex-1 min-h-[260px] lg:min-h-0 overflow-hidden border border-[#2e2415]">
@@ -146,7 +146,7 @@ export default function AboutV2() {
           className="hidden sm:block text-[10px] tracking-[0.2em] text-[#6b5a3e]"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
-          NEXT &mdash; 02 PROJECTS
+          NEXT, 02 PROJECTS
         </span>
       </motion.div>
     </section>

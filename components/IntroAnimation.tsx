@@ -27,7 +27,7 @@ export default function IntroAnimation() {
   }, [leaving]);
 
   useEffect(() => {
-    // Only on the landing page — never gate direct links to project pages
+    // Only on the landing page, never gate direct links to project pages
     if (pathname !== "/") return;
     if (sessionStorage.getItem("ol_intro_seen")) return;
     setVisible(true);
@@ -71,7 +71,7 @@ export default function IntroAnimation() {
             INITIALIZING OL-001&hellip;
           </motion.p>
 
-          {/* Name — big */}
+          {/* Name, big */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

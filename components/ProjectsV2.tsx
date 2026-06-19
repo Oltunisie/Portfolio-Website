@@ -120,7 +120,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           }}
         />
 
-        {/* ── Top beige accent line — slides in on hover ──────── */}
+        {/* ── Top beige accent line, slides in on hover ──────── */}
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-[#c4a97e] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
         {/* ── Scan-line at panel edge ──────────────────────────── */}
@@ -154,7 +154,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </span>
         </div>
 
-        {/* ── Index + status — top left ────────────────────────── */}
+        {/* ── Index + status, top left ────────────────────────── */}
         <div className="absolute top-5 left-5 flex items-center gap-3">
           <span
             className="text-[11px] tracking-[0.25em] text-[#c4a97e]"
@@ -173,7 +173,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           )}
         </div>
 
-        {/* ── Period — top right ───────────────────────────────── */}
+        {/* ── Period, top right ───────────────────────────────── */}
         {project.period && (
           <div className="absolute top-5 right-5">
             <span
@@ -185,7 +185,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
         )}
 
-        {/* ── Title — bottom, fades out when panel opens ──────── */}
+        {/* ── Title, bottom, fades out when panel opens ──────── */}
         <div className="absolute bottom-5 left-5 right-5 group-hover:opacity-0 transition-opacity duration-200">
           <h3
             className="text-xl md:text-2xl font-light text-[#f0e6d3] leading-snug"
@@ -234,7 +234,7 @@ export default function ProjectsV2() {
         </p>
       </motion.div>
 
-      {/* ── 2×2 card grid — 2px gap feels like tiles ────────────── */}
+      {/* ── 2×2 card grid, 2px gap feels like tiles ────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px] border border-[#2e2415]">
         {projects.map((p, i) => (
           <ProjectCard key={p.slug} project={p} index={i} />
@@ -261,7 +261,7 @@ export default function ProjectsV2() {
           className="hidden sm:block text-[10px] tracking-[0.2em] text-[#6b5a3e]"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
-          NEXT &mdash; 03 CONTACT
+          NEXT, 03 CONTACT
         </span>
       </motion.div>
 
