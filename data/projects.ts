@@ -203,7 +203,13 @@ Beyond the device itself, this is the project that got me hooked on engineering.
 
     slidesPdf: "syringe-pump-slides.pdf",
 
-    media: [],
+    tests: [
+      { file: "cad.png", caption: "CAD model of the syringe pump assembly" },
+    ],
+
+    media: [
+      { type: "image", file: "cad.png" },
+    ],
   },
 
   {
