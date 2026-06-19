@@ -329,7 +329,9 @@ The work turned "we think it's strong enough" into a defensible margin of safety
     ],
 
     analysis: [
-      { file: "endcap_fea.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
+      { file: "endcap_mesh.png", caption: "Endcap FEA mesh" },
+      { file: "endcap_fea_stress.png", caption: "Endcap von Mises stress at 750 psi MEOP" },
+      { file: "endcap_fea_crossection.png", caption: "Endcap stress — cross-section view" },
     ],
 
     tests: [
