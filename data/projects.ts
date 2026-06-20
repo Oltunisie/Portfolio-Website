@@ -227,7 +227,7 @@ Beyond the device itself, this is the project that got me hooked on engineering.
     ],
 
     media: [
-      { type: "image", file: "cad.png" },
+      { type: "image", file: "cad_cover.png" },
     ],
   },
 

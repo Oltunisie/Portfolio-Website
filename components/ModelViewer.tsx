@@ -37,6 +37,7 @@ export default function ModelViewer({
     <model-viewer
       src={src}
       alt={alt}
+      loading="lazy"
       camera-controls
       camera-orbit="0deg 75deg 80%"
       {...(autoRotate ? { "auto-rotate": true } : {})}

@@ -314,7 +314,7 @@ function ModelSection({ src, title, explodedSrc }: { src: string; title: string;
 /* ─── Big stat callout (breaks the layout) ───────────────────── */
 function StatCallout({ stats }: { stats: { value: string; unit: string; label: string }[] }) {
   return (
-    <div className="py-16 px-6 md:px-16 lg:px-24 flex items-end gap-12 md:gap-20 border-y border-[#0f0d09]">
+    <div className="py-16 px-6 md:px-16 lg:px-24 flex flex-wrap items-end gap-x-10 gap-y-8 md:gap-20 border-y border-[#0f0d09]">
       {stats.map((s, i) => (
         <div key={i} className="flex items-end gap-4">
           <span className="text-[clamp(3rem,10vw,8rem)] font-extralight text-[#c4a97e] leading-none tracking-tight"
@@ -574,7 +574,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                     <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
                       className="group block w-full text-left">
                       <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""} loading="lazy" decoding="async"
                           className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       {img.caption && (
@@ -600,7 +600,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                     <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
                       className="group block w-full text-left">
                       <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""} loading="lazy" decoding="async"
                           className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       {img.caption && (
@@ -626,7 +626,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                     {isVideoFile(img.file) ? (
                       <div>
                         <div className="overflow-hidden border border-[#181410]">
-                          <video src={`${BASE}/projects/${project.slug}/${img.file}`} controls
+                          <video src={`${BASE}/projects/${project.slug}/${img.file}`} controls preload="none"
                             className="w-full h-56 object-cover" style={{ background: "#030303" }} />
                         </div>
                         {img.caption && (
@@ -640,7 +640,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                       <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
                         className="group block w-full text-left">
                         <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                          <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                          <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""} loading="lazy" decoding="async"
                             className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
                         </div>
                         {img.caption && (
@@ -673,7 +673,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                         </div>
                       ) : v.type === "video" ? (
                         <video src={`${BASE}/projects/${project.slug}/${v.file}`}
-                          controls className="w-full" style={{ background: "#030303" }}
+                          controls preload="none" className="w-full" style={{ background: "#030303" }}
                           onPlay={() => track(`video-play-${project.slug}-${v.file}`)} />
                       ) : null}
                     </div>
@@ -699,7 +699,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                     <button onClick={() => openLightbox(`${BASE}/projects/${project.slug}/${img.file}`, img.caption ?? "")}
                       className="group block w-full text-left">
                       <div className="overflow-hidden border border-[#181410] group-hover:border-[#2e2010] transition-colors">
-                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""}
+                        <img src={`${BASE}/projects/${project.slug}/${img.file}`} alt={img.caption ?? ""} loading="lazy" decoding="async"
                           className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       {img.caption && (
@@ -748,13 +748,17 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
       {/* ── Experiments showcase (cards with optional PDF) ────── */}
       {project.experiments && project.experiments.length > 0 && (
         <section className="py-20 px-6 md:px-16 lg:px-24">
-          <div className="flex items-center gap-6 mb-10">
+          <div className="flex items-center gap-6 mb-3">
             <span className="text-[10px] tracking-[0.3em] text-[#c4a97e]"
               style={{ fontFamily: "var(--font-geist-mono)" }}>// LAB</span>
             <h2 className="text-2xl font-light text-[#f0e6d3] tracking-tight"
               style={{ fontFamily: "var(--font-space-grotesk)" }}>The Experiments</h2>
             <div className="flex-1 h-px bg-[#1a1208]" />
           </div>
+          <p className="mb-10 text-[10px] tracking-[0.2em] text-[#6b5a3e]"
+            style={{ fontFamily: "var(--font-geist-mono)" }}>
+            DETAILED WRITE-UPS LINKED ON EACH CARD · IN FRENCH
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-[#181410]">
             {project.experiments.map((e, i) => (
               <motion.div key={i}
@@ -799,6 +803,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
             <iframe
               src={`${BASE}/projects/${project.slug}/${project.slidesPdf}`}
               title="Project slides"
+              loading="lazy"
               className="w-full h-[70vh]"
             />
           </div>
