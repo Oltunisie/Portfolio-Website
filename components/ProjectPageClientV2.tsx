@@ -509,6 +509,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
               <figure className="relative bg-black overflow-hidden">
                 <video
                   src={`${BASE}/projects/${project.slug}/${project.featured.video.file}`}
+                  poster={`${BASE}/projects/${project.slug}/${project.featured.video.file.replace(/\.\w+$/, "_poster.jpg")}`}
                   className="w-full h-[280px] md:h-[460px] object-cover"
                   autoPlay loop muted playsInline controls
                   onPlay={() => track(`video-play-${project.slug}-featured`)}
@@ -626,7 +627,9 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                     {isVideoFile(img.file) ? (
                       <div>
                         <div className="overflow-hidden border border-[#181410]">
-                          <video src={`${BASE}/projects/${project.slug}/${img.file}`} controls preload="none"
+                          <video src={`${BASE}/projects/${project.slug}/${img.file}`}
+                            poster={`${BASE}/projects/${project.slug}/${img.file.replace(/\.\w+$/, "_poster.jpg")}`}
+                            controls preload="none"
                             className="w-full h-56 object-cover" style={{ background: "#030303" }} />
                         </div>
                         {img.caption && (
@@ -673,6 +676,7 @@ export default function ProjectPageClientV2({ project }: { project: Project }) {
                         </div>
                       ) : v.type === "video" ? (
                         <video src={`${BASE}/projects/${project.slug}/${v.file}`}
+                          poster={`${BASE}/projects/${project.slug}/${v.file.replace(/\.\w+$/, "_poster.jpg")}`}
                           controls preload="none" className="w-full" style={{ background: "#030303" }}
                           onPlay={() => track(`video-play-${project.slug}-${v.file}`)} />
                       ) : null}

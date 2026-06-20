@@ -129,9 +129,9 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
     media: [
       { type: "image", file: "fire.jpg" },
       { type: "image", file: "HF2_group.jpg" },
-      { type: "video", file: "HF2.mp4" },
-      { type: "video", file: "static_fire.mp4", caption: "Static fire test" },
+      { type: "video", file: "static_fire.mp4", caption: "Reaction to the launch" },
       { type: "video", file: "launch_cam.mp4", caption: "Launch camera" },
+      { type: "video", file: "HF2.mp4", caption: "Hotfire test" },
       { type: "image", file: "Mach_diamonds.jpg" },
       { type: "image", file: "horizon.jpg" },
       { type: "image", file: "setup.jpg" },
