@@ -26,12 +26,12 @@ const SITE_URL = "https://omarlemkecher.com";
 export const metadata: Metadata = {
   title: "Omar Lemkecher — Aerospace Engineering",
   description:
-    "Portfolio of Omar Lemkecher — Aerospace Engineering student at UCLA Samueli (4.0 GPA). Hybrid rocket propulsion, CubeSat ADCS, microgravity experiments.",
+    "Portfolio of Omar Lemkecher, Aerospace Engineering student at UCLA Samueli. Hybrid rocket propulsion, pressure vessel analysis, and microgravity experiments.",
   metadataBase: new URL(SITE_URL),
   icons: { icon: "/favicon.svg" },
   openGraph: {
     title:       "Omar Lemkecher — Aerospace Engineering · UCLA",
-    description: "Hybrid rocket propulsion · CubeSat ADCS · Zero-G experiments. Aerospace Engineering student at UCLA Samueli.",
+    description: "Hybrid rocket propulsion · Pressure vessel analysis · Zero-G experiments. Aerospace Engineering student at UCLA Samueli.",
     url:         SITE_URL,
     siteName:    "Omar Lemkecher",
     locale:      "en_US",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card:        "summary_large_image",
     title:       "Omar Lemkecher — Aerospace Engineering · UCLA",
-    description: "Hybrid rocket propulsion · CubeSat ADCS · Zero-G experiments.",
+    description: "Hybrid rocket propulsion · Pressure vessel analysis · Zero-G experiments.",
   },
 };
 
