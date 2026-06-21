@@ -388,7 +388,7 @@ The work turned "we think it's strong enough" into a defensible margin of safety
     failures: {
       body: `Our endcap initially leaked, which forced us to rethink our O-rings and the groove geometry, the thickness, and the whole sealing approach. After remachining the grooves we reached a good compromise that resolved the leaking. But when we moved on to proof-testing the tank, a far worse failure appeared: the tank holes bored out completely, a catastrophic failure that threatened to push back our entire timeline.
 
-We traced the root cause to a mismatch in our calculation values. To solve it, we spent five days non-stop adding 8 holes to the endcap to add strength, cycling through remachining and many iterations. After a focused hydrostatic proof-testing campaign, we finally resolved the issue, a hard lesson in how the smallest mistakes can destroy a project.`,
+We traced the root cause to a mismatch in our calculation values. To solve it, we spent five days non-stop adding 8 holes to the endcap to add strength, cycling through remachining and many iterations. After a focused hydrostatic proof-testing campaign, we finally resolved the issue, a hard lesson in how the smallest mistakes can have catastrophic consequences on a project.`,
       images: [
         { file: "tank_bearing.png", caption: "Tank holes bored out during proof testing, the catastrophic failure" },
       ],
