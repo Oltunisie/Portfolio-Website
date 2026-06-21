@@ -122,7 +122,7 @@ This was real engineering: pressure testing, iteration from FEA to hardware, ins
       { file: "machining.jpg", caption: "Radial Holes Manufacturing" },
       { file: "me_and_endcap.PNG", caption: "Endcap integration" },
       { file: "endcap_removal.PNG", caption: "Endcap removal after testing" },
-      { file: "waterflow1.png", caption: "Pressure vs time during cold flow test" },
+      { file: "waterflow1.png", caption: "Pressure vs time during water flow test" },
       { file: "waterflow_vid.mp4", caption: "Cold-flow / water-flow test" },
     ],
 
