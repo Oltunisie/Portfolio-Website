@@ -7,7 +7,7 @@ import { track } from "@/lib/track";
    Grounded in real history, edit freely, these are yours to own. */
 const FACTS = [
   { label: "BASED IN",     value: "Los Angeles · from Tunisia" },
-  { label: "LANGUAGES",    value: " French · English · Arabic" },
+  { label: "LANGUAGES",    value: "French · English" },
   { label: "FIRST SPARK",  value: "Zero-g flight with CNES, 2023" },
   { label: "OFF THE CLOCK", value: "Sweet Potato Fries 🍠 and Soccer ⚽" },
 ];
