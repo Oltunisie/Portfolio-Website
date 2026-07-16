@@ -25,8 +25,8 @@ const line = (delay: number) => ({
 const fields = [
   { label: "ENGINEER",     value: "OMAR LEMKECHER",                       highlight: true },
   { label: "INSTITUTION",  value: "UCLA SAMUELI · LOS ANGELES"                           },
-  { label: "DISCIPLINE",   value: "AEROSPACE ENGINEERING · PROPULSION"                   },
-  { label: "AVAILABILITY", value: "SUMMER 2026 INTERNSHIP"                               },
+  { label: "DISCIPLINE",   value: "AEROSPACE · PROPULSION & STRUCTURES"                  },
+  { label: "AVAILABILITY", value: "SUMMER 2027 INTERNSHIP"                               },
 ];
 
 export default function HeroV2() {

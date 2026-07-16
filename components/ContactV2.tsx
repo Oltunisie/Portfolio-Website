@@ -193,7 +193,7 @@ export default function ContactV2() {
           </div>
           <div className="px-6 py-4 border-b border-[#241e14] flex items-center justify-between">
             <span className="text-[11px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>SEEKING</span>
-            <span className="text-[11px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>SUMMER 2026 INTERNSHIP</span>
+            <span className="text-[11px] tracking-[0.12em] text-[#9a8a6a]" style={{ fontFamily: MONO }}>SUMMER 2027 INTERNSHIP</span>
           </div>
           <div className="px-6 py-4 border-b border-[#241e14] flex items-center justify-between">
             <span className="text-[11px] tracking-[0.25em] text-[#7a6a54]" style={{ fontFamily: MONO }}>LOCAL TIME</span>
