@@ -16,6 +16,7 @@ function getCover(p: Project): string | null {
 
 /* Fallback gradients */
 const fallbacks: Record<string, string> = {
+  "liquid-propulsion-feed-system": "linear-gradient(135deg,#0a1420 0%,#050505 55%,#1a0d05 100%)",
   "hybrid-rocket-feed-system":  "linear-gradient(135deg,#1a0800 0%,#050505 100%)",
   "cubesat-adcs-bruinspace":    "linear-gradient(135deg,#04101e 0%,#050505 100%)",
   "zero-g-experiments-cnes":    "linear-gradient(160deg,#060c1e 0%,#03060f 60%,#010205 100%)",

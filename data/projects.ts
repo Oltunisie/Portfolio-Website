@@ -43,6 +43,18 @@ export type Project = {
 
 const projectsRaw: Project[] = [
   {
+    slug: "liquid-propulsion-feed-system",
+    title: "Liquid Propulsion Feed System",
+    description:
+      "Feed System Lead for UCLA's first liquid rocket, a LOX/ethanol pressure-fed system at 585 psi MEOP. Built an end-to-end Python simulation of helium blowdown, the pressure ladder, and cryogenic thermal analysis, and led the structural design through IDR.",
+    tags: ["Python", "CoolProp", "SolidWorks", "FEA", "Cryogenics", "Pressure Systems"],
+    github: "https://github.com/Oltunisie",
+    period: "2026 – Present",
+    status: "In Progress",
+    media: [],
+  },
+
+  {
     slug: "hybrid-rocket-feed-system",
     specs: [
       { label: "THRUST TARGET",   value: "586 lbf"         },
@@ -423,6 +435,7 @@ We traced the root cause to a mismatch in our calculation values. To solve it, w
 
 // Display order across the site (home grid, project prev/next, static params)
 const PROJECT_ORDER = [
+  "liquid-propulsion-feed-system",
   "hybrid-rocket-feed-system",
   "pressure-vessel-analysis",
   "automatic-syringe-pump",
