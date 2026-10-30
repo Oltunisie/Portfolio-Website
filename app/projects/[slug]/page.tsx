@@ -2,6 +2,7 @@ import { projects } from "@/data/projects";
 import { notFound } from "next/navigation";
 import ProjectPageClientV2 from "@/components/ProjectPageClientV2";
 import LiquidFeedSystemPage from "@/components/LiquidFeedSystemPage";
+import ComingSoon from "@/components/ComingSoon";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -25,6 +26,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
+  if (project.comingSoon) return <ComingSoon project={project} />;
   if (slug === "liquid-propulsion-feed-system") return <LiquidFeedSystemPage />;
   return <ProjectPageClientV2 project={project} />;
 }

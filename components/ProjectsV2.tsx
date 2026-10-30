@@ -76,6 +76,50 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const isLive = project.status === "In Progress";
   const isZeroG = project.slug === "zero-g-experiments-cnes";
 
+  /* ── Coming-soon card: visible but not clickable, page hidden ── */
+  if (project.comingSoon) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
+      >
+        <div className="relative overflow-hidden h-[380px] md:h-[500px] border border-[#151208] cursor-default select-none">
+          <div className="absolute inset-0" style={{ background: fallbacks[project.slug] ?? "#050505" }} />
+          <div className="absolute inset-0 bg-[#050505]/50" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0.3) 55%, rgba(5,5,5,0.2) 100%)" }} />
+
+          <div className="absolute top-5 left-5">
+            <span className="text-[11px] tracking-[0.25em] text-[#6b5a3e]" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </div>
+          {project.period && (
+            <div className="absolute top-5 right-5">
+              <span className="text-[10px] tracking-[0.15em] text-[#2e2010]" style={{ fontFamily: "var(--font-geist-mono)" }}>{project.period}</span>
+            </div>
+          )}
+
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="px-5 py-2 border border-[#6b5a3e] bg-[#050505]/60 backdrop-blur text-[11px] tracking-[0.3em] text-[#cabb9f]" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              UPDATING SOON
+            </span>
+          </div>
+
+          <div className="absolute bottom-5 left-5 right-5">
+            <p className="text-[10px] tracking-[0.2em] text-[#5a4a2e] mb-2" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              {project.tags.slice(0, 4).join(" · ")}
+            </p>
+            <h3 className="text-xl md:text-2xl font-light text-[#c8bca6] leading-snug" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              {project.title}
+            </h3>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}

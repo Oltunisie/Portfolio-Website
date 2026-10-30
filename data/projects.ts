@@ -19,6 +19,7 @@ export type Project = {
   period?: string;
   status?: string;
   coverFit?: "cover" | "contain";
+  comingSoon?: boolean;   // card shows a "coming soon" badge and is not clickable; page is hidden
   specs?: { label: string; value: string; redacted?: boolean }[];
   design?: { caption?: string; file: string }[];
   analysis?: { caption?: string; file: string }[];
@@ -51,6 +52,7 @@ const projectsRaw: Project[] = [
     github: "https://github.com/Oltunisie",
     period: "2026 – Present",
     status: "In Progress",
+    comingSoon: true,
     media: [],
   },
 

@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "monthly", priority: 1 },
-    ...projects.map((p) => ({
+    ...projects.filter((p) => !p.comingSoon).map((p) => ({
       url: `${SITE_URL}/projects/${p.slug}/`,
       lastModified: now,
       changeFrequency: "monthly" as const,
